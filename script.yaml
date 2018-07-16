@@ -1,0 +1,106 @@
+alarm_lr:
+  alias: Alarm Living Room
+  sequence:
+    - service: media_player.play_media
+      entity_id: media_player.speaker
+      data:
+        media_content_id: /home/homeassistant/.homeassistant/alarm.mp3
+        media_content_type: music
+    - service: notify.jerry
+      data:
+        message: 'Movement alarm in Living Room'
+
+doorbell_lr:
+  alias: Doorbell Living Room
+  sequence:
+    - service: media_player.play_media
+      entity_id: media_player.speaker
+      data:
+        media_content_id: /home/homeassistant/.homeassistant/doorbell-2.mp3
+        media_content_type: music
+
+
+switches_off:
+  sequence:
+    service: input_boolean.turn_off
+
+press_button:
+  sequence:
+    service: input_text.set_value
+    data:
+      entity_id: input_text.command
+    data_template:
+      value: "{{ value }}"
+        
+lr_light_flash:
+  alias: LR Light flash on
+  sequence:
+    - service: homeassistant.turn_on
+      data:
+        entity_id: switch.lr_wall_light_switch
+    - delay:
+        # time for flash light on
+        #seconds: 1
+        milliseconds: 150
+    - service: homeassistant.turn_off
+      data:
+        entity_id: switch.lr_wall_light_switch
+    - service: script.turn_on
+      data:
+        entity_id: script.lr_light_loop
+        
+lr_light_loop:
+  alias: LR Light flash loop
+  sequence:
+    - delay:
+        # time for flash light off
+        #seconds: 1
+        milliseconds: 150
+    - service: script.turn_on
+      data:
+        entity_id: script.lr_light_flash
+
+        
+hue_light_flash:
+  alias: Hue Light flash on
+  sequence:
+    - service: homeassistant.turn_on
+      data:
+        entity_id: light.hue_white_lamp_2
+    - delay:
+        # time for flash light on
+        #seconds: 1
+        milliseconds: 150
+    - service: homeassistant.turn_off
+      data:
+        entity_id: light.hue_white_lamp_2
+    - service: script.turn_on
+      data:
+        entity_id: script.hue_light_loop
+        
+hue_light_loop:
+  alias: Hue Light flash loop
+  sequence:
+    - delay:
+        # time for flash light off
+        #seconds: 1
+        milliseconds: 150
+    - service: script.turn_on
+      data:
+        entity_id: script.hue_light_flash
+
+lock_front_door:
+  alias: Lock Front Door
+  sequence:
+    - service: lock.lock
+      data:
+        entity_id: lock.locked_2
+        code: 0127
+
+unlock_front_door:
+  alias: Unlock Front Door
+  sequence:
+    - service: lock.unlock
+      data:
+        entity_id: lock.locked_2
+        code: 0127

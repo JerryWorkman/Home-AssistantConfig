@@ -1,0 +1,30 @@
+#scene:
+  - name: Home
+    entities:
+      group.living_room_light: on
+      climate.homelr:
+        state: auto
+        away_mode: off
+  - name: Away
+    entities:
+      group.living_room_light: off
+      group.fr_light: off
+#      climate.homelr:
+#        state: auto
+#        away_mode: on
+
+  - name: Night
+    entities:
+      switch.front_light_switch: on
+      switch.back_flood_switch: on
+      switch.patio_light_auto: on
+      switch.back_driveway_auto: on
+
+  - name: Day
+    entities:
+      switch.front_light_switch: off
+      switch.back_flood_switch: off
+      switch.patio_light_auto: off
+      switch.back_patio_light_switch: off
+      switch.back_driveway_auto: off
+      switch.back_driveway_switch: off

@@ -1,0 +1,6 @@
+#  device: /dev/tty0
+#  device: /dev/serial/by-id/usb-RFXCOM_RFXrec433_04XOSET4-if00-port0
+# set by udev rule. see: http://domogik-plugin-ozwave.readthedocs.io/en/master/ozwave.html#create-the-udev-rule-for-controller
+  device: /dev/rfxcom
+  debug: True
+  dummy: False

@@ -1,0 +1,14 @@
+ - platform: rfxtrx
+   automatic_add: True
+   value_template: "{{ value|round(1) }}"
+   devices:
+      0a520100f40200ff320079:
+        name: LR
+      0a520101fd01011e310069:
+        name: Out
+      0a520102f20400d6370169:
+        name: FR
+
+#      data_type:
+#       - Humidity
+#       - Temperature

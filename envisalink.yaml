@@ -1,0 +1,49 @@
+#required
+host: '192.168.10.21'
+panel_type: HONEYWELL
+user_name: user
+password: user
+code: '0127'
+
+#optional
+#port: 4025
+#evl_version: 3
+#keepalive_interval: 60
+#zonedump_interval: 30
+
+
+zones:
+  1:
+    name: 'Front 01'
+    type: 'opening'
+  2:
+    name: 'Back 02'
+    type: 'opening'
+  3:
+    name: 'Front Windows 03'
+    type: 'opening'
+  4:
+    name: 'Back Windows 04'
+    type: 'opening'
+  5:
+    name: 'Glass Break 05'
+    type: 'detected'
+  6:
+    name: 'Smoke Detectors 06'
+    type: 'detected'
+  7:
+    name: 'Heat Detectors 07'
+    type: 'tripped'
+  8:
+    name: 'PIR 08'
+    type: 'tripped'
+  9:
+    name: 'PIR 09'
+    type: 'tripped'
+  10:
+    name: 'PIR 10'
+    type: 'tripped'
+
+partitions:
+  1:
+    name: 'Home Alarm'

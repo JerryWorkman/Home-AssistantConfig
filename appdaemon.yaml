@@ -1,0 +1,23 @@
+appdaemon:
+  threads: 10
+  app_dir: /home/homeassistant/.homeassistant/appdaemon/apps
+  plugins:
+    HASS:
+      type: hass
+      ha_url: http://home.jerryworkman.com:8123
+      ha_key: !secret API_PASSWORD
+
+log:
+  logfile: /var/log/appdaemon/appdaemon.log
+  errorfile: /var/log/appdaemon/appdaemonerr.log
+  accessfile: /var/log/appdaemon/appdaemon.log
+  logsize: 100000
+  log_generations: 3
+
+hadashboard:
+  dash_url: http://0.0.0.0:5050
+  dash_password: !secret API_PASSWORD
+  dashboard_dir: /home/homeassistant/.homeassistant/dashboards
+  dash_force_compile: 1
+  dash_compile_on_start: 1
+

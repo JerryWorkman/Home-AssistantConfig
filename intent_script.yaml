@@ -1,0 +1,33 @@
+#https://community.home-assistant.io/t/ha-not-recognising-intents-from-alexa/26993/2
+#https://github.com/auchter/haaska
+
+WhereAreWeIntent:
+  speech:
+    type: plaintext
+    text: >
+      {%- if is_state('device_tracker.jerry_s7', 'home') and
+             is_state('device_tracker.louise_lc', 'home') -%}
+        You are both home, you silly
+      {%- else -%}
+        Louise is at {{ states("device_tracker.louise_lc") }}
+        and Jerry is at {{ states("device_tracker.jerry_s7") }}
+      {% endif %}
+LocateIntent:
+  action:
+    service: notify.jerry
+    data_template:
+      message: The location of {{ User }} has been queried via Alexa.
+  speech:
+    type: plaintext
+    text: >
+      {%- for state in states.device_tracker -%}
+        {%- if state.name.lower() == User.lower() -%}
+          {{ state.name }} is at {{ state.state }}
+        {%- endif -%}
+      {%- else -%}
+        I am sorry, I do not know where {{ User }} is.
+      {%- endfor -%}
+  card:
+     type: simple
+     title: Sample title
+     content: Some more content

@@ -1,0 +1,56 @@
+platform: bwalarm
+name: house
+code: '0127'
+panic_code: '0127'
+pending_time: 30
+trigger_time: 600
+alarm: switch.Alarm
+warning: switch.door_bell
+clock: True
+weather: True
+persistence: True
+hide_sensor_groups: False
+
+##[STATE RELATED]
+#[OPTIONAL]
+#armed_perimeter:
+
+#[REQUIRED]
+armed_home: 
+  #[OPTIONAL] State specific overrides default time above
+  pending_time: 10
+  #[OPTIONAL] State specific overrides default time above
+  trigger_time: 300 
+  ##[OPTIONAL however either an immediate or delayed group must exist] Sensors in this group tigger the alarm immediately 
+  immediate:
+    - lock.locked_2
+#    - lock.kwikset_touchpad_electronic_deadbolt_locked
+    - binary_sensor.front_01
+#    - binary_sensor.back_02
+    - binary_sensor.front_windows_03
+    - binary_sensor.back_windows_04
+    - binary_sensor.glass_break_05
+    - binary_sensor.front_garage_door_tilt_sensor
+    - binary_sensor.back_garage_door_tilt_sensor
+  
+#headsup:
+##    - lock.Back_Door_Locked
+##    - lock.Front_Door_Locked
+##    - binary_sensor.Garage_Door
+#    - binary_sensor.front_garage_door_tilt_sensor
+#    - binary_sensor.back_garage_door_tilt_sensor
+
+armed_away:
+  pending_time: 25
+  immediate:
+#    - binary_sensor.Primary_Motion
+    - binary_sensor.pir_08
+    - binary_sensor.pir_09
+    - binary_sensor.pir_10     
+#    - binary_sensor.fr_pir_sensor # cat can trigger
+#    - binary_sensor.fr_pir_2_sensor
+    - group.garage_pir_sensors
+  delayed:
+    - binary_sensor.back_02
+    - group.garage_sensors
+

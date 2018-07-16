@@ -1,0 +1,1086 @@
+# NOTE:
+# Check Envisalink connection if system does not start
+
+homeassistant:
+  name:                              Home
+  latitude:                          !secret LATITUDE
+  longitude:                         !secret LONGITUDE
+  elevation:                         1057
+  unit_system:                       imperial
+  time_zone:                         America/New_York
+  customize:                         !include customize.yaml
+
+  customize_glob:
+    "sensor.*_*_alarm_*":
+      hidden:                        true
+    "sensor.*_*_burglar":
+      hidden:                        true
+    "sensor.*_*_sourcenodeid":
+      hidden:                        true
+    "sensor.*_*_power_management":
+      hidden:                        true
+    "sensor.*_temphygro_alarm_*":
+      hidden:                        true    
+#    "switch.*":
+#      custom_ui_state_card:         state-card-custom-ui
+      
+# Enables the frontend
+frontend:
+  javascript_version:                latest
+  extra_html_url:
+    - /local/custom_ui/state-card-custom-ui.html
+    - /local/custom_ui/state-card-tiles.html
+  extra_html_url_es5:
+    - /local/custom_ui/state-card-custom-ui-es5.html
+    - /local/custom_ui/state-card-tiles.html  
+
+logger:
+  default:                           warning
+  logs:
+    homeassistant.components.automation:        info
+    homeassistant.components.camera: critical
+#    battery_state:                  debug
+#    influxdb:                        debug
+#    notify:                         debug
+    homeassistant.components.rfxtrx: debug
+#    homeassistant.components.zwave: debug
+#    zwave.front_door_lock:          debug
+#    custom_components.alarm_control_panel.bwalarm: debug
+#    flashing_switch:                debug
+#    homeassistant.components.http:  warning
+#    homeassistant.components.mqtt:  debug
+#    sensor.power_meter:             debug
+#    custom_components.sensor.ambient: debug
+#    custom_components.sensor.countdown_timer: debug
+#    custom_components.device_countdown_timer: debug
+#    sensor.torque:                  debug
+#    hdmi_cec:                       debug
+#    components.climate.nest:        debug
+#    components.binary_sensor.nest:  debug
+#    components.sensor.envisalink:   debug
+
+# Show links to resources in log and frontend
+#introduction:
+
+# Enables configuration UI
+config:
+
+# Enables support for tracking state changes over time.
+recorder:
+  db_url:                            !secret DB_URL
+  # Delete events and states older than 7 days every day
+  purge_interval:                    1
+  purge_keep_days:                   7
+  exclude:
+    domains:
+      - automation
+      - camera
+      - device_tracker
+      - input_text
+      - media_player
+      - scene
+      - script
+      - weblink
+      - updater
+      - glances
+    entities:
+      - sun.sun
+      - sensor.date    
+      - sensor.time
+      - sensor.dark_sky_apparent_temperature
+      - sensor.dark_sky_summary
+      - sensor.dark_sky_daily_summary
+      - sensor.dark_sky_hourly_summary
+      - sensor.dark_sky_humidity
+      - sensor.dark_sky_humidity_1
+      - sensor.dark_sky_humidity_7
+      - sensor.dark_sky_icon
+      - sensor.dark_sky_icon_1
+      - sensor.dark_sky_icon_7
+      - sensor.dark_sky_minutely_summary
+      - sensor.dark_sky_nearest_storm_bearing
+      - sensor.dark_sky_nearest_storm_distance
+      - sensor.dark_sky_precip_intensity
+      - sensor.dark_sky_precip_intensity_1
+      - sensor.dark_sky_precip_intensity_7
+      - sensor.dark_sky_precip_probability
+      - sensor.dark_sky_precip_probability_1
+      - sensor.dark_sky_precip_probability_7
+      - sensor.dark_sky_pressure
+      - sensor.dark_sky_pressure_1
+      - sensor.dark_sky_pressure_7
+      - sensor.dark_sky_temperature
+      - sensor.dark_sky_visibility
+      - sensor.dark_sky_wind_bearing
+      - sensor.dark_sky_wind_bearing_1
+      - sensor.dark_sky_wind_bearing_7
+      - sensor.dark_sky_wind_speed
+      - sensor.dark_sky_wind_speed_1
+      - sensor.dark_sky_wind_speed_7
+      
+      - sensor.back_driveway_pir_alarm_level
+      - sensor.back_garage_door_tilt_alarm_level
+      - sensor.front_door_pir_alarm_level
+      - sensor.front_garage_door_tilt_alarm_level
+      - sensor.fr_pir_2_alarm_level
+      - sensor.fr_pir_alarm_level
+      - sensor.garage_back_pir_alarm_level
+      - sensor.garage_side_pir_alarm_level
+      - sensor.garage_temphygro_alarm_level
+      - sensor.kwikset_touchpad_electronic_deadbolt_alarm_level
+      - sensor.lr_pir_alarm_level
+      - sensor.patio_pir_alarm_level
+      - sensor.back_driveway_pir_alarm_type
+      - sensor.back_garage_door_tilt_alarm_type
+      - sensor.front_door_pir_alarm_type
+      - sensor.front_garage_door_tilt_alarm_type
+      - sensor.fr_pir_2_alarm_type
+      - sensor.fr_pir_alarm_type
+      - sensor.garage_back_pir_alarm_type
+      - sensor.garage_side_pir_alarm_type
+      - sensor.garage_temphygro_alarm_type
+      - sensor.kwikset_touchpad_electronic_deadbolt_alarm_type
+      - sensor.lr_pir_alarm_type
+      - sensor.patio_pir_alarm_type
+      - sensor.back_driveway_pir_burglar
+      - sensor.back_garage_door_tilt_burglar
+      - sensor.front_door_pir_burglar
+      - sensor.front_garage_door_tilt_burglar
+      - sensor.fr_pir_2_burglar
+      - sensor.fr_pir_burglar
+      - sensor.garage_back_pir_burglar
+      - sensor.garage_side_pir_burglar
+      - sensor.lr_pir_burglar
+      - sensor.patio_pir_burglar      
+      - sensor.back_driveway_pir_sourcenodeid
+      - sensor.back_garage_door_tilt_sourcenodeid
+      - sensor.front_door_pir_sourcenodeid
+      - sensor.front_garage_door_tilt_sourcenodeid
+      - sensor.fr_pir_2_sourcenodeid
+      - sensor.fr_pir_sourcenodeid
+      - sensor.garage_back_pir_sourcenodeid
+      - sensor.garage_side_pir_sourcenodeid
+      - sensor.lr_pir_sourcenodeid
+      - sensor.patio_pir_sourcenodeid
+      - sensor.fr_temperature_battery
+      - sensor.garage_temperature_battery
+      - sensor.lock_side_door_battery
+      - sensor.out_temperature_battery
+      - sensor.up_temperature_battery
+      - zwave.back_driveway_pir_battery
+      - zwave.back_garage_door_tilt_battery
+      - zwave.front_door_pir_battery
+      - zwave.front_garage_door_tilt_battery
+      - zwave.fr_pir_2_battery
+      - zwave.fr_pir_battery
+      - zwave.garage_back_pir_battery
+      - zwave.garage_side_pir_battery
+      - zwave.garage_temphygro_battery
+      - zwave.kwikset_touchpad_electronic_deadbolt_battery
+      - zwave.lr_pir_battery
+      - zwave.patio_pir_battery
+      - sensor.back_driveway_timed_light
+      - sensor.family_room_timed_light
+      - sensor.garage_timed_light
+      - sensor.living_room_timed_light
+      - sensor.patio_timed_light
+
+influxdb:
+  host:                              127.0.0.1
+  default_measurement:               state
+  include:
+    entities:
+    #power
+      - sensor.line_voltage
+      - sensor.power_meter
+      - sensor.meter_avg_for_last_hour
+      - sensor.daily_power_cost
+      - sensor.humidifier
+      - sensor.up_heat_pump
+      - sensor.down_air_handler
+      - sensor.down_heat_pump
+      #temp/humidity
+      - sensor.living_room_thermostat_temperature
+      - sensor.up_temperature
+      - sensor.fr_temperature
+      - sensor.fr_temperature_humidity
+      - sensor.up_temperature_humidity
+      - sensor.garage_temperature
+      - sensor.garage_temperature_humidity
+      - sensor.out_temperature
+      - sensor.out_temperature_humidity
+      #bandwidth
+      - binary_sensor.ping_google
+
+http:
+  base_url:                          !secret BASE_URL
+  api_password:                      !secret API_PASSWORD
+#  ssl_certificate:                  /home/homeassistant/.homeassistant/certbot/fullchain.pem
+#  ssl_key:                          /home/homeassistant/.homeassistant/certbot/privkey.pem
+
+#customizer:
+#  custom_ui:                        local
+  
+# Checks for available updates
+updater:
+  include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+#conversation:
+
+websocket_api:
+
+# Enables support for tracking state changes over time.
+history:
+  include:
+    domains:
+      - sensor
+      - binary_sensor
+      - switch
+#  exclude:
+#    entities:
+#      group.darksky
+
+# View all events in a logbook
+logbook:
+
+# Text to speech
+tts:
+  - platform:                        google
+  
+#  - platform:                       amazon_polly
+#    aws_access_key_id:              !secret AWS_ACCESS_KEY_ID
+#    aws_secret_access_key:          !secret AWS_SECRET_ACCESS_KEY
+#    profile_name:                   default
+#    region_name:                    'us-east-1'
+#    voice:                          Joanna
+
+#  - platform:                       picotts
+#    language:                       'en-US'
+  
+# Track the sun
+sun:
+
+battery_state:
+#  include:
+#    - sensor.garage_door_burglar_3
+#    - sensor.office_multisensor_temperature_5
+#    - sensor.frontroom_multisensor_temperature_4
+
+humidity_state:
+
+cloud:
+  alexa:
+    filter:
+#      include_entities:
+#        - light.kitchen
+#        - light.kitchen_left
+      include_domains:
+        - switch
+#      exclude_entities:
+#        - switch.outside
+#    entity_config:
+#      light.kitchen:
+#        name:                       Custom Name for Alexa
+#        description:                The light in the kitchen
+#      switch.stairs:
+#        display_categories:         LIGHT
+
+wemo:
+
+# This is HA alarm
+#alarm_control_panel:
+#  platform:                         manual
+##  code:                            0127
+#  pending_time:                     60
+##  disarm_after_trigger:            True
+
+ring:
+#  username: !secret RING_USERNAME
+#  password: !secret RING_PASSWORD
+  username: jerry.workman@gmail.com
+  password: 898!Centers
+
+binary_sensor:
+  platform: ring
+  scan_interval: 20
+  monitored_conditions:
+    - ding
+    - motion
+    
+#alarm_control_panel:                 !include alarm.yaml
+
+#Mike's mFi
+#switch:
+#   platform:                        mfi
+#   host:                            mcoyne50.ddns.net
+#   username:                        admin
+#   password:                        admin
+
+
+#For Alexa
+#emulated_hue:
+
+# Weather Prediction
+sensor yr:
+  platform:                          yr
+
+sensor time_date:
+  - platform:                        time_date
+    display_options:
+      - 'time'
+
+sensor snmp:
+  - platform: snmp
+    name: snmp_wan_in
+    host: 192.168.10.1
+    baseoid: 1.3.6.1.2.1.2.2.1.10.5
+
+  - platform: snmp
+    name: snmp_wan_out
+    host: 192.168.10.1
+    baseoid: 1.3.6.1.2.1.2.2.1.16.5
+
+  - platform: template
+    sensors:
+        internet_speed_in:
+          friendly_name: 'Internet Down'
+          value_template: '{{ ((states.input_number.internet_traffic_delta_in.state | float ) / 1000000 ) | round(2) }}'
+#          value_template: '{{ ((states.input_number.internet_traffic_delta_in.state | float ) / 1000 ) | round(2) }}'
+          unit_of_measurement: 'Mbps'
+
+  - platform: template
+    sensors:
+        internet_speed_out:
+          friendly_name: 'Internet Up'
+          value_template: '{{ ((states.input_number.internet_traffic_delta_out.state | float ) / 1000000 ) | round(2) }}'
+#          value_template: '{{ ((states.input_number.internet_traffic_delta_out.state | float ) / 1000 ) | round(2) }}'
+          unit_of_measurement: 'Mbps'
+
+  - platform: statistics
+    name: 'WAN Traffic IN'
+    entity_id: sensor.internet_speed_in
+
+  - platform: statistics
+    name: 'WAN Traffic OUT'
+    entity_id: sensor.internet_speed_out
+
+twilio:
+  account_sid:                       !secret TWILLIO_ACCOUNT_SID
+  auth_token:                        !secret TWILLIO_AUTH_TOKEN
+
+notify:
+  - name:                            jerry
+    platform:                        pushbullet
+    api_key:                         !secret PUSHBULLET_API_KEY
+  - name:                            twilio_sms
+    platform:                        twilio_sms
+    from_number:                     !secret TTWILIO_SMS_FROM_NUMBER
+    
+shell_command:
+  sound_alarm:                       "mplayer -loop 1 /home/homeassistant/.homeassistant/alarm.mp3"
+  sound_alarm_5:                     "mplayer -loop 5 /home/homeassistant/.homeassistant/alarm.mp3"
+  door_bell:                         "mplayer -loop 1 /home/homeassistant/.homeassistant/doorbell-2.mp3"
+
+switch door_bell:
+  platform:                          command_line
+  switches:
+    door_bell:
+      command_on:                    "mplayer -loop 1 /home/homeassistant/.homeassistant/doorbell-2.mp3"
+    
+switch alarm:
+  platform:                          command_line
+  switches:
+    alarm:
+      command_on:                    "mplayer -loop 1 /home/homeassistant/.homeassistant/alarm.mp3"
+    alarm5:
+      command_on:                    "mplayer -loop 5 /home/homeassistant/.homeassistant/alarm.mp3"
+    
+ifttt:
+  key:                               !secret IFTTT_KEY
+
+# sensor cpu:
+#   - platform:                      cpuspeed
+
+panel_iframe:
+#  emoncms:
+#    title:                          'EmonCMS'
+#    icon:                           mdi:chart-line
+#    url:                            !secret EMONCMS_URL
+
+  charts:
+    title:                           Google Charts
+    url:                             /local/bower_components/google-chart/demo/index.html
+
+  iron_flex_layout:
+    title:                           Polymer Iron Flex Layouts
+    url:                             /local/iron-flex-layout.html
+
+  basic_flex_layout:
+    title:                           Basic Flex Layouts
+    url:                             /local/basic-flex.html
+
+#  wc_guages:
+#    title:                          Web Components Guages
+#    icon:                           mdi:hand-pointing-right
+#    url:                            /local/wc-guages.html
+
+  power:
+    title:                           Power
+    icon:                            mdi:checkbox-marked-outline
+    url:                             !secret POWER_URL
+
+  google_guages:
+    title:                           Google Guages
+    icon:                            mdi:hand-pointing-right
+    url:                             /local/google-guages.html
+
+  ha_websocket:
+    title:                           Websocket Panel
+    icon:                            mdi:hand-pointing-right
+    url:                             /local/ha-websocket.html
+    
+panel_custom:
+  - name:                            alarm
+    sidebar_title:                   Alarm
+    sidebar_icon:                    mdi:security-home
+    config:
+      alarmid:                       alarm_control_panel.house
+
+  - name:                            react
+    sidebar_title:                   TodoMVC
+    sidebar_icon:                    mdi:checkbox-marked-outline
+    url_path:                        react
+    config:
+      title:                         ToDo
+
+#  - name:                           hello
+#    sidebar_title:                  Hello World
+#    sidebar_icon:                   mdi:hand-pointing-right
+#    url_path:                       hello
+#    config:
+#      who:                          Jerry
+
+  - name:                            sensor
+    sidebar_title:                   Power Meter
+    sidebar_icon:                    mdi:hand-pointing-right
+    config:
+      sensor:                        sensor.power_meter
+
+  - name:                            show_sensors
+    sidebar_title:                   Power Sensors
+    sidebar_icon:                    mdi:hand-pointing-right
+    config:
+      sensors:                       sensor.power_meter,sensor.humidifier,sensor.up_heat_pump,sensor.down_air_handler,sensor.down_heat_pump
+
+#ffmpeg:
+#  ffmpeg_bin:                       /usr/bin/avconv
+ffmpeg:
+  ffmpeg_bin:                        /usr/bin/ffmpeg
+  
+camera jerry:
+  name:                              Jerry
+  platform:                          generic
+  still_image_url:                   https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.jerry_s7.attributes.latitude }},{{ states.device_tracker.jerry_S7.attributes.longitude }}&zoom=13&size=500x500&maptype=roadmap&markers=color:blue%7Clabel:J%7C{{ states.device_tracker.jerry_S7.attributes.latitude }},{{ states.device_tracker.jerry_s7.attributes.longitude }}
+  limit_refetch_to_url_change:       true
+
+camera louise:
+  name:                              Louise
+  platform:                          generic
+  still_image_url:                   https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.louise_lc.attributes.latitude }},{{ states.device_tracker.louise_lc.attributes.longitude }}&zoom=13&size=500x500&maptype=roadmap&markers=color:blue%7Clabel:L%7C{{ states.device_tracker.louise_lc.attributes.latitude }},{{ states.device_tracker.louise_lc.attributes.longitude }}
+  limit_refetch_to_url_change:       true
+
+#mqtt:
+#  embeded
+# sensor:                            !include sensor_mqtt.yaml
+
+# mqtt:                              !include mqtt.yaml
+mqtt:
+#  broker:                           192.168.10.190
+  broker:                            127.0.0.1
+  port:                              1883
+  client_id:                         hass
+  keepalive:                         60
+  username:                          !secret MQTT_USERNAME
+  password:                          !secret MQTT_PASSWORD
+#  protocol:                         3.1
+#  certificate:                      /home/paulus/dev/addtrustexternalcaroot.crt
+
+amcrest:
+  - host:                            192.168.10.51
+    username:                        admin
+    password:                        !secret AMCREST_PASSWORD
+    name:                            Living Room
+#    sensors:
+#      - motion_detector
+#      - sdcard
+
+sensor mqtt:
+
+  - platform:                        mqtt
+    state_topic:                     'home/power/voltage/V_VOLTS'
+    name:                            'Line Voltage'
+    unit_of_measurement:             'Volts'
+    #qos:                            1
+    value_template:                  '{{ value|round(1) }}'
+
+  - platform:                        mqtt
+    state_topic:                     'home/power/meter/V_WATTS'
+    name:                            'Power Meter'
+    unit_of_measurement:             'Watts'
+    #qos:                            1
+    value_template:                  '{{ value|round(0) }}'
+    #value_template:                 '{{ [0, value]|max }}'
+
+  - platform:                        mqtt
+    state_topic:                     'home/power/humidifier/V_WATTS'
+    name:                            'Humidifier'
+    #qos:                            1
+    unit_of_measurement:             'Watts'
+    #value_template:                 '{{ [0, value]|max }}'
+
+  - platform:                        mqtt
+    state_topic:                     'home/power/uphp/V_WATTS'
+    name:                            'Up Heat Pump'
+    #qos:                            1
+    unit_of_measurement:             'Watts'
+    #value_template:                 '{{ [0, value]|max }}'
+
+  - platform:                        mqtt
+    state_topic:                     'home/power/downah/V_WATTS'
+    name:                            'Down Air Handler'
+    #qos:                            1
+    unit_of_measurement:             'Watts'
+    #value_template:                 '{{ [0, value]|max }}'
+
+  - platform:                        mqtt
+    state_topic:                     'home/power/downhp/V_WATTS'
+    name:                            'Down Heat Pump'
+    #qos:                            1
+    unit_of_measurement:             'Watts'
+    #value_template:                 '{{ [0, value]|max }}'
+
+#mqtt_eventstream:
+#  publish_topic:                    ha1
+#  subscribe_topic:                  OtherHaServerName
+
+
+#mqtt_publish:
+#  host:                             bw.mtncad.com
+#  host:                             localhost
+#  port:                             1883
+#  client_id:                        ha
+#  username:                         ha
+#  password:                         homeassistant
+#  qos:                              0
+#  include:                          sensor,binary_sensor,switch
+#  exclude_regex:                    _cam|_pir_|_sourcenodeid_|dark_sky|_burglar_|_alarm_|^time$
+#  json_payload:                     True
+
+#  platform:
+
+sensor countdown_timer:
+  platform:                          countdown_timer
+  timers:
+    Living Room Timed Light:
+      sensors:                       binary_sensor.lr_pir_sensor
+      enable_switch:                 switch.lr_light_auto
+      switch:                        switch.lr_wall_light_switch
+      #entity_id:                    input_number.lr_delay
+    Family Room Timed Light:
+      sensors:                       binary_sensor.fr_pir_sensor,binary_sensor.fr_pir_2_sensor
+      enable_switch:                 switch.fr_light_auto
+      switch:                        switch.fr_light_switch
+      restart:                       True
+    Garage Timed Light:
+      sensors:                       binary_sensor.garage_side_pir_sensor,binary_sensor.garage_back_pir_sensor
+      switch:                        group.garage_switches
+      #switch:                        light.garage_light
+      enable_switch:                 switch.garage_light_auto
+      #entity_id:                    input_number.garage_delay
+      restart:                       True
+    Patio Timed Light:
+      sensors:                       binary_sensor.patio_pir_sensor
+      switch:                        switch.back_patio_light_switch
+      enable_switch:                 switch.patio_light_auto
+      delay:                         5
+    Back Driveway Timed Light:
+      sensors:                       binary_sensor.back_driveway_pir_sensor
+      switch:                        switch.back_driveway_switch
+      enable_switch:                 switch.back_driveway_auto
+      delay:                         5
+
+sensor:
+  - platform:                        glances
+    host:                            localhost
+    resources:
+      - 'disk_use_percent'
+      #- 'disk_use'
+      #- 'disk_free'
+      - 'memory_use_percent'
+      #- 'memory_use'
+      #- 'memory_free'
+      #- 'swap_use_percent'
+      #- 'swap_use'
+      #- 'swap_free'
+      - 'processor_load'
+      #- 'process_running'
+      - 'process_total'
+      - 'process_thread'
+      #- 'process_sleeping'
+      #- 'cpu_temp'
+
+cover tilt:
+  platform:                          tilt
+  covers:
+    front_garage_door:
+      tilt_sensor:                   binary_sensor.front_garage_door_tilt_sensor
+      switch:                        switch.garage_door_switch
+      contact_delay:                 1
+      run_time:                      10
+
+## garage_door.py must be on PATH
+#switch command_line:
+#  platform:                         command_line
+#  switches:
+#    garage_door:
+#      command_on:                   garage_door.py on
+#      command_off:                  garage_door.py off
+#      command_state:                garage_door.py
+#      value_template:               '{{ value == "on" }}'
+#      friendly_name:                Garage Door
+
+switch flashing:
+#  platform:                         flashing
+#  switches:
+#    lr_flashing_light:
+#      switch:                       switch.lr_wall_light_switch
+
+## redo
+#switch file:
+#  platform:                         file
+#  switches:
+#    file_path:                      /tmp/FILE_TEST
+
+# name of switch and initial state.
+switch mock:
+  platform:                          mock
+  switches:
+    FR Light Auto:                   on
+    LR Light Auto:                   on
+    LR Flashing Light:               off
+    Garage Light Auto:               on
+    Patio Light Auto:                on
+    Back Driveway Auto:              on
+#    Alarm Active:                   off
+#    Alarm Sound:                    off
+#    Someone Home:                   on
+
+# Weather Prediction
+#sensor Weather:
+#  platform:                         yr
+
+sensor darksky:
+  - platform:                        darksky
+    api_key:                         !secret DARKSKY_API_KEY
+    forecast:
+      - 1
+      - 7
+    update_interval:
+      minutes:                       10
+    monitored_conditions:
+      - summary
+      - icon
+      - temperature
+      - humidity
+      - precip_probability
+      - precip_intensity
+      - wind_speed
+      - pressure
+      - wind_bearing
+      - apparent_temperature
+
+#sensor ambient:
+#  platform:                         ambient
+#  host:                             192.168.10.35
+##  update_interval:                 60
+##  exclude:                         yearly_rain,indoor_sensor,outdoor_sensor1,outdoor_sensor2,unnamed_device,uv,uvi
+##  prefix:                          ''
+
+device_tracker:
+  - platform:                        owntracks
+    max_gps_accuracy:                200
+    waypoints:                       True
+
+#  - platform:                       bluetooth_tracker
+
+  - platform:                        nmap_tracker
+    hosts:                           192.168.10.194/32, 192.168.10.201/32
+    #Louise: 192.168.10.201 #Jerry: 192.168.10.194
+    home_interval:                   10
+
+# This will override the default home zone
+zone home:
+  name:                              Home
+  latitude:                          38.340593
+  longitude:                         -81.603318
+  radius:                            300
+  icon:                              mdi:home
+
+zone mtncad:
+  name:                              Mountain CAD
+  latitude:                          38.368710
+  longitude:                         -81.694436
+  radius:                            300
+  icon:                              mdi:office
+
+zone bailey:
+  name:                              Bailey & Wyant
+  latitude:                          38.351180
+  longitude:                         -81.637878
+  radius:                            300
+  icon:                              mdi:office
+
+remote:
+#  - platform:                       harmony
+#    name:                           Living Room
+#    host:                           192.168.10.130
+    
+#  - platform:                        harmony
+#    name:                            Living Room
+#    activity:                        Watch TV    
+#    host:                            192.168.10.130
+
+#sensor harmony_living_room:
+#  - platform:                        template
+#    sensors:
+#      harmony_living_room:
+#        value_template:              '{{ states.remote.living_room.attributes.current_activity }}'
+
+zwave:                               !include zwave.yaml
+
+camera:                              !include camera.yaml
+
+envisalink:                          !include envisalink.yaml
+
+weblink:                             !include weblink.yaml
+
+sensor influxdb:
+  platform:                          influxdb
+  host:                              localhost
+  queries:
+    #SELECT mean("value") AS "mean_value" FROM "home_assistant"."autogen"."Watts" WHERE time > now() - 1h 
+    #GROUP BY time(10s) FILL(null)
+    #SELECT mean("value") AS "mean_value" FROM "home_assistant"."autogen"."Watts" 
+    #WHERE time > :dashboardTime: AND "entity_id"='power_meter' GROUP BY :interval: FILL(null)
+#    - name:                         last value of meter watts
+#      unit_of_measurement:          watts
+#      value_template:               '{{ value | round(0) }}'
+#      group_function:               last
+#      where:                        '"entity_id" = ''power_meter'''
+#      #measurement:                 '"Watts"'
+#      measurement:                  '"home_assistant"."autogen"."Watts"'
+#      field:                        value
+#      database:                     home_assistant
+      
+    - name:                          Meter Avg for last hour
+      unit_of_measurement:           'Watts'
+      value_template:                '{{ value | round(0) }}'
+      group_function:                mean
+      where:                         '"entity_id" = ''power_meter'' and time > now() - 1h'
+      measurement:                   '"home_assistant"."autogen"."Watts"'
+      field:                         value
+      database:                      home_assistant
+      
+########### in postgresql ############
+#select 
+#  state,
+#  created - lead(created) OVER (ORDER BY created DESC) as duration
+#  from states
+#where entity_id = 'sensor.power_meter' 
+#    and state <> 'unknown' 
+#    and created > now() - interval '1 hour'
+#  order by created;
+######### 107 mseconds ########
+
+    - name:                          Daily Power Cost
+      unit_of_measurement:           '$/day'
+      # 24 hrs * .094 cents/KWH / 1000 W/KW = 0.002256 $/day
+      value_template:                '{{ (float(value) * 0.002256) | round(2) }}' 
+      group_function:                mean
+      where:                         '"entity_id" = ''power_meter'' and time > now() - 24h'
+      measurement:                   '"home_assistant"."autogen"."Watts"'
+      field:                         value
+      database:                      home_assistant
+
+binary_sensor 1:
+  platform:                          command_line
+#  command:                          ping -c 1 192.168.10.52 | grep "1 received" | wc -l
+  command:                           'nmap -p 80 192.168.10.52 | grep 80 | wc -l'
+  name:                              'Front Cam Online'
+  payload_on:                        1
+  payload_off:                       0
+
+
+binary_sensor 2:
+  platform:                          command_line
+#  command:                          'ping -c 1 192.168.10.56 | grep "1 received" | wc -l'
+  command:                           'nmap -p 80 192.168.10.56 | grep 80 | wc -l'
+  name:                              'Back Cam Online'
+  payload_on:                        1
+  payload_off:                       0
+
+binary_sensor ping_google:
+  name: 'Ping Google'
+  platform: ping
+  host: 8.8.8.8
+  count: 2
+  scan_interval: 30  
+
+binary_sensor lr_cam_online:
+  platform:                          command_line
+#  command:                          'ping -c 1 192.168.10.51 | grep "1 received" | wc -l'
+  command:                           'nmap -p 80 192.168.10.51 | grep 80 | wc -l'
+  name:                              'LR Cam Online'
+  payload_on:                        1
+  payload_off:                       0
+
+
+binary_sensor fr_cam_online:
+  platform:                          command_line
+#  command:                          'ping -c 1 192.168.10.54 | grep "1 received" | wc -l'
+  command:                           'nmap -p 80 192.168.10.54 | grep 80 | wc -l'
+  name:                              'FR Cam Online'
+  payload_on:                        1
+  payload_off:                       0
+
+
+binary_sensor garage_cam_online:
+  platform:                          command_line
+#  command:                          'ping -c 1 192.168.10.55 | grep "1 received" | wc -l'
+  command:                           'nmap -p 80 192.168.10.55 | grep 80 | wc -l'
+  name:                              'Garage Cam Online'
+  payload_on:                        1
+  payload_off:                       0
+
+binary_sensor garage_freeze_alert:
+  - platform:                        template
+    sensors:
+      garage_freeze_alert:
+        friendly_name:               "Garage Freeze Alert"
+        value_template:              >-
+          {{ states('sensor.garage_temperature')|float <= 32.0 
+            and states('sensor.garage_temperature') }}
+
+binary_sensor outdoor_freeze_alert:
+  - platform:                        template
+    sensors:
+      outdoor_freeze_alert:
+        friendly_name:               "Outdoor Freeze Alert"
+        value_template:              >-
+          {{ states('sensor.out_temperature')|float <= 32.0
+            and states('sensor.out_temperature') }}
+          
+#binary_sensor mfi_online:
+#  platform:                         command_line
+#  command:                          'nmap -p 6080 mcoyne50.ddns.net | grep 6080 | wc -l'
+#  name:                             "Mike's mFi Online"
+#  payload_on:                       1
+#  payload_off:                      0
+
+
+#Doesn't work - rate limited
+#climate:
+#  platform:                         honeywell
+#  username:                         jerry.workman@gmail.com
+#  password:                         secret! HONEYWELL_PASSWORD
+#  region:                           us
+#  scan_interval:                    600
+    
+#  platform:                         radiotherm
+#  host:
+#    - 192.168.10.175
+#  hold_temp:                        True
+
+
+#firetv-server -d 192.168.10.25:5555 &
+#media_player lr-firetv:
+#  platform:                         firetv
+#  host:                             localhost
+#  port:                             5556
+#  device:                           default
+#  name:                             LR Fire TV
+
+sensor speedtest:
+  platform:                          speedtest
+  #server_id:                        5434
+  minute:
+    - 0
+    - 30
+  monitored_conditions:
+    - ping
+    - download
+    - upload
+
+rfxtrx:
+  device:                            /dev/rfxcom
+# device:                            /dev/ttyUSB1
+# device:                            /dev/serial/by-id/usb-RFXCOM_RFXrec433_04XOSET4-if00-port0
+# set by udev rule. see:             http://domogik-plugin-ozwave.readthedocs.io/en/master/ozwave.html#create-the-udev-rule-for-controller
+# debug:                             True
+# dummy:                             False
+
+#Device_id: f304
+#Device_id: e601
+#Device_id: 1e02
+#Device_id: ed04
+#Device_id: 5404
+
+sensor rfxtrx:
+  platform:                          rfxtrx
+  automatic_add:                     True
+  value_template:                    "{{ value|round(1) }}"
+  devices:
+    0a5201021e0200d8150269:
+      name:                          UP # sensor.up_temperature
+    0a520105e60100752f0069:
+      name:                          Out
+    0a520102ed0400d6370169:
+      name:                          FR
+    0a520103f3040060170269:
+      name:                          Garage
+    0a520103ee0400d83c0169:
+      name:                          LR
+
+#      data_type:
+#       - Humidity
+#       - Temperature
+
+configurator:
+  philips_hue
+
+#light hue1:
+#  platform:                         hue
+#  host:                             192.168.10.169
+#  allow_unreachable:                true
+#  filename:                         my_hue_hub_token.conf
+
+#sensor temp:
+#  - platform:                       template
+#    sensors:
+#      lr_temperature:
+#        #states.switch.kettle.attributes.kwh
+#        #value_template:            '{{ "%.1f"|format(float(states.sensor.lr.state)) }}'
+#        value_template:             '{{ "%.1f"|format(float(states.sensor.lr.state)) }}'
+#        friendly_name:              'LR Temp'
+#        #unit_of_measurement:       "\u2109"
+#        unit_of_measurement:        'degF'
+#      fr_temperature:
+#        value_template:             '{{ "%.1f"|format(float(states.sensor.fr.state)) }}'
+#        friendly_name:              'FR Temp'
+#        #unit_of_measurement:       '\u2109'
+#        unit_of_measurement:        'degF'
+#      out_temperature:
+#        value_template:             '{{ "%.1f"|format(float(states.sensor.out.state)) }}'
+#        friendly_name:              'Out Temp'
+#        #unit_of_measurement:       '\u2109'
+#        unit_of_measurement:        'degF'
+
+#hdmi_cec:
+#  devices:
+#    TV:                             2.0.0.0
+    #Raspberry Pi:                   1.0.0.0
+    #DirecTV DVR:                    2.0.0.0
+    #Amazon Fire:                    f.f.f.f
+
+
+media_player:
+  - platform:                        vlc
+    name:                            speaker
+    arguments:                       '--alsa-audio-device=hw:0,0'
+
+# Only the main box has an IP address
+  - platform:                        directv
+    host:                            192.168.10.158
+    port:                            8080
+    name:                            LR DirecTV
+    device:                          0
+
+alexa:
+  #intents:
+
+#timer:
+#  flash_timer:
+#    duration:                       '00:00:05'
+
+input_boolean:
+  kiosk_mode:
+    name:                            Kiosk Mode
+    initial:                         off
+    icon:                            mdi:cast
+    
+input_text:
+  command:
+    name:                            Button
+  light_tiles:
+    name:                            Buttons
+
+input_number:
+  garage_delay:
+    name:                            Garage Light Delay
+    initial:                         20
+    min:                             5
+    max:                             30
+    step:                            5
+  lr_delay:
+    name:                            LR Light Delay
+    initial:                         20
+    min:                             5
+    max:                             30
+    step:                            5
+  internet_traffic_delta_in:
+    name:                            Internet Traffic Delta In
+    initial:                         0
+    min:                             0
+    max:                             250000
+    step:                            1000
+  internet_traffic_delta_out:
+    name:                            Internet Traffic Delta Out
+    initial:                         0
+    min:                             0
+    max:                             250000
+    step:                            1000
+
+#         {% elif is_state_attr("lock.kwikset_touchpad_electronic_deadbolt_locked", "lock_status", "Unlocked with Keypad by user 2") %} 
+#           U2
+#         {% elif is_state_attr("lock.kwikset_touchpad_electronic_deadbolt_locked", "lock_status", "Locked with Keypad by user 2") %} 
+#           L2
+
+sensor lock_status:
+  - platform:                        template
+    sensors:
+      lock_side_door_battery:
+        friendly_name:               'Side Door Lock Battery'
+        value_template:              '{{ states.zwave.kwikset_touchpad_electronic_deadbolt.attributes.battery_level }}'
+        unit_of_measurement:         '%'
+        #entity_id:                  zwave.kwikset_touchpad_electronic_deadbolt
+      lock_front_door_status:        
+        friendly_name:               'Side Door Lock Status'
+        value_template:              '{{ states.lock.kwikset_touchpad_electronic_deadbolt_locked.attributes.lock_status }}'
+        #entity_id:                  lock.kwikset_touchpad_electronic_deadbolt_locked
+        
+intent_script:                       !include intent_script.yaml
+
+automation:                          !include automations.yaml
+
+automation manual:                   !include_dir_list automation
+
+script:                              !include script.yaml
+
+group:                               !include group.yaml
+
+scene:                               !include scenes.yaml
+

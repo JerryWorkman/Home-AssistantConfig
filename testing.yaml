@@ -1,0 +1,165 @@
+homeassistant:
+  name: Home
+  latitude: 38.340593
+  longitude: -81.603318
+  elevation: 1057
+  unit_system: imperial
+  time_zone: America/New_York
+  customize: !include customize.yaml
+
+logger:
+    default: info
+#  logs:
+#    homeassistant.components.device_tracker: info
+#    homeassistant.components.camera: critical
+
+# Show links to resources in log and frontend
+#introduction:
+
+# Enables the frontend
+frontend:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  api_password: 012749
+
+# Checks for available updates
+updater:
+
+# Discover some devices automatically
+discovery:
+
+ifttt:
+  key: mMDiljYMNA3yktvP-EdQLFobrvLPtv7UCkt_SYV4W0H
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+notify:
+  platform: pushbullet
+  # Optional name for the notify service
+  name: jerry
+  # api_key is a required config key by the pushbullet platform
+  api_key: o.8kHwgi2UO2XU4PHFJTlvSuH1nolQvq9S
+
+
+# Weather Prediction
+sensor Weather:
+  platform: yr
+
+
+mqtt:
+  broker: 127.0.0.1
+  port: 1883
+  client_id: home-assistant-1
+  keepalive: 60
+  username: emonpi
+  password: emonpimqtt2016
+  protocol: 3.1
+#  certificate: /home/paulus/dev/addtrustexternalcaroot.crt
+
+sensor:
+  - platform: mqtt
+    state_topic: "home/power/meter/V_WATTS"
+    name: "Power Meter"
+    unit_of_measurement: "Watts"
+    qos: 1
+    value_template: "{{ value|round(0) }}"
+
+  - platform: mqtt
+    state_topic: "home/power/upah/V_WATTS"
+    name: "Up Air Handler"
+    qos: 1
+    unit_of_measurement: "Watts"
+
+  - platform: mqtt
+    state_topic: "home/power/uphp/V_WATTS"
+    name: "Up Heat Pump"
+    qos: 1
+    unit_of_measurement: "Watts"
+
+  - platform: mqtt
+    state_topic: "home/power/downah/V_WATTS"
+    name: "Down Air Handler"
+    qos: 1
+    unit_of_measurement: "Watts"
+
+  - platform: mqtt
+    state_topic: "home/power/downhp/V_WATTS"
+    name: "Down Heat Pump"
+    qos: 1
+    unit_of_measurement: "Watts"
+
+#switch:
+#  - platform: vera
+
+binary_sensor front_cam_alive:
+  platform: command_line
+  command: 'ping -c 1 192.168.10.52 | grep "1 received" | wc -l'
+  name: 'is_front_cam_online'
+  payload_on: 1
+  payload_off: 0
+
+climate:
+  platform: radiotherm
+  host:
+    - 192.168.10.175
+  hold_temp: True
+
+#firetv-server -d 192.168.10.25:5555 &
+media_player lr-firetv:
+  platform: firetv
+  host: localhost
+  port: 5556
+  device: default
+  name: LR Fire TV
+
+sensor speedtest:
+  platform: speedtest
+  server_id: 5434
+  monitored_conditions:
+    - ping
+    - download
+    - upload
+
+rfxtrx:
+  device:                            /dev/rfxcom
+
+sensor rfxtrx:
+  platform:                          rfxtrx
+  automatic_add:                     True
+  value_template:                    "{{ value|round(1) }}"
+  devices:
+    0a5201021e0200d8150269:
+      name:                          UP # sensor.up_temperature
+    0a520105e60100752f0069:
+      name:                          Out
+#    0a520102f20400d6370169:
+    0a520102ed0400d6370169:
+      name:                          FR
+    0a520103f3040060170269:
+      name:                          Garage
+
+automation: !include_dir_list  automation
+
+script: !include script.yaml
+
+group: !include group.yaml
+
+zwave:                               !include zwave.yaml
+
+camera:                              !include camera.yaml
+
+envisalink:                          !include envisalink.yaml
+
+weblink:                             !include weblink.yaml
+

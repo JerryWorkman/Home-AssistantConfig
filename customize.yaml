@@ -1,0 +1,171 @@
+cover.front_garage_door:
+  friendly_name: Front Garage Door
+group.all_scripts:
+  hidden: true
+binary_sensor.floorplan:
+  custom_ui_state_card: floorplan
+  floorplan_image: /local/custom-ui/floorplan.svg
+  stylesheet: /local/custom-ui/floorplan/floorplan.css
+  color_on: '#F8B9BE'
+  color_off: '#C4EDB1'
+  track_duration: 10
+  last_motion_entity: sensor.template_last_motion
+  entities:
+  - switch.lr_wall_light_switch
+  - switch.fr_light_switch
+input_text.light_tiles:
+  friendly_name: Lights
+  custom_ui_state_card: state-card-tiles
+  config:
+    columns: 4
+    column_width: 85px
+    rows: 2
+    row_height: 75px
+    gap: 4px
+    color: blue
+    color_on: green
+    color_off: red
+    entities:
+    - entity: switch.lr_wall_light_switch
+      label: LR
+      icon: mdi:lightbulb
+      data:
+        value: right
+    - entity: switch.front_light_switch
+      label: Front
+      icon: mdi:lightbulb
+    - entity: switch.back_flood_switch
+      label: Back
+      icon: mdi:lightbulb
+    - entity: switch.back_deck_door_light_switch
+      label: Deck
+      data:
+        value: bottom
+      icon: mdi:lightbulb
+    - entity: switch.back_driveway_switch
+      label: Back DW
+      icon: mdi:lightbulb
+    - entity: switch.garage_light_switch_switch
+      label: Gar Lite
+      icon: mdi:lightbulb
+    - entity: switch.garage_light_auto
+      label: GL Auto
+      icon: mdi:lightbulb
+    - entity: cover.front_garage_door
+      label: Garage
+      icon: mdi:garage
+lock.kwikset_touchpad_electronic_deadbolt_locked:
+  friendly_name: Side Door Lock
+lock.locked_2:
+  friendly_name: Front Door Lock
+switch.back_deck_door_light_switch:
+  friendly_name: Deck Door Light
+switch.back_flood_switch:
+  friendly_name: Back Flood Light
+  icon: mdi:sunglasses
+switch.lr_wall_light_switch:
+  friendly_name: Living Room Wall Light
+switch.unknown_switch_5_0:
+  friendly_name: Unknown Switch
+switch.back_patio_light_switch:
+  friendly_name: Back Patio Light
+switch.back_driveway_switch:
+  friendly_name: Back Driveway Light
+binary_sensor.lr_pir_sensor:
+  friendly_name: LR PIR
+sensor.living_room_timed_light:
+  friendly_name: LivingRoom Light Timer
+binary_sensor.fr_pir_sensor:
+  friendly_name: FR PIR 1
+binary_sensor.fr_pir_2_sensor:
+  friendly_name: FR PIR 2
+switch.fr_light_switch:
+  friendly_name: Family Room Light
+switch.front_light_switch:
+  friendly_name: Front Light
+switch.garage_light_switch_switch:
+  friendly_name: Garage Light
+#  polling_intensity: 1
+device_tracker.dehx6700bt__:
+  hidden: true
+device_tracker.obdii:
+  hidden: true
+binary_sensor.garage_back_pir_sensor:
+  friendly_name: Garage PIR 2
+binary_sensor.garage_side_pir_sensor:
+  friendly_name: Garage PIR 1
+binary_sensor.back_garage_door_tilt_sensor:
+  friendly_name: Back Garage Door Tilt
+binary_sensor.back_driveway_pir_sensor:
+  friendly_name: Back Driveway PIR Sensor
+sensor.garage_temphygro_temperature:
+  hidden: true
+sensor.garage_temphygro_relative_humidity:
+  hidden: true
+binary_sensor.front_garage_door_tilt_sensor:
+  friendly_name: Front Garage Door Tilt
+binary_sensor.patio_pir_sensor:
+  friendly_name: Back Patio PIR
+binary_sensor.front_door_pir_sensor:
+  friendly_name: Front Door PIR
+binary_sensor.front_01:
+  friendly_name: Front Door
+binary_sensor.back_02:
+  friendly_name: Back Sliding Glass Door
+binary_sensor.front_windows_03:
+  friendly_name: Front Windows
+binary_sensor.back_windows_04:
+  friendly_name: Back Windows
+binary_sensor.glass_break_05:
+  friendly_name: Glass Break
+binary_sensor.smoke_detectors_06:
+  friendly_name: Smoke
+binary_sensor.heat_detectors_07:
+  friendly_name: Heat
+binary_sensor.pir_08:
+  friendly_name: PIR 08
+binary_sensor.pir_09:
+  friendly_name: LR PIR
+binary_sensor.pir_10:
+  friendly_name: PIR 10
+media_player.liv:
+  friendly_name: DirecTV Living room
+media_player.rec_room:
+  friendly_name: DirecTV Family room
+media_player.mast:
+  friendly_name: DirecTV Bed room
+device_tracker.louise_lc:
+  friendly_name: Louise
+  entity_picture: /local/louise.jpg
+device_tracker.jerry_s7:
+  friendly_name: Jerry
+sensor.ambient_:
+  hidden: true
+#switch.gate:
+#  friendly_name: Mikes Gate Switch
+sensor.harmony_living_room:
+  friendly_name: Harmony Living Room
+
+sensor.download_speed_mean:
+  friendly_name: 'Speedtest Download Average'
+  icon: mdi:speedometer
+
+sensor.upload_speed_mean:
+  friendly_name: 'Speedtest Upload Average'
+  icon: mdi:speedometer
+
+sensor.ping_time_mean:
+  friendly_name: 'Speedtest Ping Average'
+  icon: mdi:clock-fast
+
+sensor.wan_traffic_in_mean:
+  friendly_name: 'WAN Download Average'
+  icon: mdi:download
+
+sensor.wan_traffic_out_mean:
+  friendly_name: 'WAN Upload Average'
+  icon: mdi:upload
+
+#fan.ge_12730_fan_control_switch_level:
+#  friendly_name: FR Fan Control Level
+  

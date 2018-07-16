@@ -1,0 +1,17 @@
+#  broker: 192.168.10.17
+#  port: 1883
+#  client_id: hass
+#  keepalive: 60
+#  username: emonpi
+#  password: emonpimqtt2016
+
+  broker: 127.0.0.1
+  port: 1883
+  client_id: hass
+  keepalive: 60
+  username: hass
+  password: 012749
+
+
+#  protocol: 3.1
+#  certificate: /home/paulus/dev/addtrustexternalcaroot.crt
