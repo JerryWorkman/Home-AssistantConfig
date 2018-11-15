@@ -1,12 +1,10 @@
 ## Living Room
+# Now in configuration.yaml
 #- platform: amcrest
-
-#  name Living Room
+#  name: Living Room
 #  host: 192.168.10.51
 #  username: admin
-#  password: 012749
-#  stream_source: snapshot
-#  resolution: low 
+#  password:                        !secret AMCREST_PASSWORD
 
 #- platform: mjpeg
 #  mjpeg_url: http://192.168.10.51/cgi-bin/snapshot.cgi?channel=0
@@ -14,7 +12,6 @@
 #  port: 80
 #  stream_source: mjpeg
 ##  stream_source: rtsp
-
 
 # Crashes HA
 #- platform: ffmpeg
@@ -30,17 +27,21 @@
 # Front Door
 - platform: ring
   name: Front Door
-  scan_interval: 120
+  scan_interval: 90
+
+# Front Garage
+- platform: amcrest
+  mjpeg_url: http://admin:012749@192.168.10.228/snapshot.cgi
+  name: Front Outside
 
 # Front Outside
-- platform: mjpeg
-  mjpeg_url: http://admin:012749@192.168.10.52/snapshot.cgi
-  name: Front Camera
+#- platform: mjpeg
+#  mjpeg_url: http://admin:012749@192.168.10.52/snapshot.cgi
+#  name: Front Camera
 
 # Garage
 - platform: generic
   name: Garage
-
 #  still_image_url: http://home.jerryworkman.com:1027/CGIProxy.fcgi?cmd=snapPicture2&usr=admin&pwd=012749
   still_image_url: http://192.168.10.55/CGIProxy.fcgi?cmd=snapPicture2&usr=admin&pwd=012749
   
@@ -63,20 +64,19 @@
 #  ip: 192.168.10.54
 #  username: admin
 #  password: 012749
-  name: 'Family Room'
+  name: Family Room
 
 - platform: generic
   still_image_url: http://admin:012749@192.168.10.56/snapshot.cgi
   name: Outside Back
 
-- platform: mjpeg
-  mjpeg_url: http://admin:mtncad@foscam.mtncad.com/snapshot.cgi?resolution=320X240
-#  ip: foscam.mtncad.com
-#  username: admin
-#  password: mtncad
-  name: 'Office'
+#- platform: mjpeg
+#  mjpeg_url: http://admin:mtncad@foscam.mtncad.com/snapshot.cgi?resolution=320X240
+##  ip: foscam.mtncad.com
+##  username: admin
+##  password: mtncad
+#  name: 'Office'
 
 #- platform: generic
 #  still_image_url: http://mcoyne50.ddns.net:800/snapshot.jpg
 #  name: Mike's Gate
-  

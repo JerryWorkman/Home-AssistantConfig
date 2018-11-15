@@ -1,0 +1,56 @@
+# ZWave entities
+
+  Deck Door Light:
+    entities:
+      - switch.fr_light_switch
+  Outside Back Light:
+    entities:
+      - switch.outside_back_swi_switch
+  Front Door Light:
+    entities:
+      - switch.front_light_switch
+  Back Driveway PIR:
+    entities:
+      - binary_sensor.ecolink_motion_detector_sensor
+  Back Driveway Light:
+    entities:
+      - switch.ge_14292_inwall_smart_toggle_switch_switch
+  Patio PIR Sensor:
+    entities:
+      - binary_sensor.patio_pir_sensor
+  Patio Light:
+    entities:
+      - switch.patio_light_switch
+  living_room_pir:
+    entities:
+      - binary_sensor.pir_09
+  living_room_light:
+    entities:
+      - switch.evolve_guest_controls_lsm15_wall_switch_switch_2
+  Family Room Light:
+    entities:
+      - switch.fr_wall_switch_switch
+  Family Room Fan:
+    entities:
+      - fan.ge_12730_fan_control_switch_level_2
+  Family Room Back PIR:
+    entities:
+      - binary_sensor.back_02
+  Family Room Side PIR:
+    entities:
+      - binary_sensor.ecolink_motion_sensor_sensor_2
+  Garage Light:
+    entities:
+    - switch.ge_14291_inwall_smart_switch_switch
+  Garage Side PIR Sensor:
+    entities:
+      - binary_sensor.garage_side_pir_sensor
+  Garage Back PIR:
+    entities:
+      - binary_sensor.garage_back_pir_sensor
+  Garage PIRS:
+    entities:
+      - binary_sensor.garage_back_pir_sensor
+      - binary_sensor.garage_side_pir_sensor
+
+##############################

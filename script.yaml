@@ -94,7 +94,7 @@ lock_front_door:
   sequence:
     - service: lock.lock
       data:
-        entity_id: lock.locked_2
+        entity_id: lock.schlage_be469_touchscreen_deadbolt_locked
         code: 0127
 
 unlock_front_door:
@@ -102,5 +102,5 @@ unlock_front_door:
   sequence:
     - service: lock.unlock
       data:
-        entity_id: lock.locked_2
+        entity_id: lock.schlage_be469_touchscreen_deadbolt_locked
         code: 0127

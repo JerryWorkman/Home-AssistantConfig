@@ -10,17 +10,20 @@ homeassistant:
   time_zone:                         America/New_York
   customize:                         !include customize.yaml
 
+
   customize_glob:
-    "sensor.*_*_alarm_*":
+    "*sensor.*alarm*":
       hidden:                        true
-    "sensor.*_*_burglar":
+    "*sensor.*burglar*":
       hidden:                        true
-    "sensor.*_*_sourcenodeid":
+    "*sensor.*_*_sourcenodeid":
       hidden:                        true
-    "sensor.*_*_power_management":
+    "*sensor.*sourcenodeid*":
       hidden:                        true
-    "sensor.*_temphygro_alarm_*":
-      hidden:                        true    
+    "*sensor.*power_management":
+      hidden:                        true
+    "*sensor.*temphygro_alarm*":
+      hidden:                        true
 #    "switch.*":
 #      custom_ui_state_card:         state-card-custom-ui
       
@@ -32,17 +35,17 @@ frontend:
     - /local/custom_ui/state-card-tiles.html
   extra_html_url_es5:
     - /local/custom_ui/state-card-custom-ui-es5.html
-    - /local/custom_ui/state-card-tiles.html  
+    - /local/custom_ui/state-card-tiles.html
 
 logger:
   default:                           warning
   logs:
-    homeassistant.components.automation:        info
+#    homeassistant.components.automation:        info
     homeassistant.components.camera: critical
 #    battery_state:                  debug
 #    influxdb:                        debug
 #    notify:                         debug
-    homeassistant.components.rfxtrx: debug
+#    homeassistant.components.rfxtrx: debug
 #    homeassistant.components.zwave: debug
 #    zwave.front_door_lock:          debug
 #    custom_components.alarm_control_panel.bwalarm: debug
@@ -51,7 +54,7 @@ logger:
 #    homeassistant.components.mqtt:  debug
 #    sensor.power_meter:             debug
 #    custom_components.sensor.ambient: debug
-#    custom_components.sensor.countdown_timer: debug
+    custom_components.sensor.countdown_timer: debug
 #    custom_components.device_countdown_timer: debug
 #    sensor.torque:                  debug
 #    hdmi_cec:                       debug
@@ -85,7 +88,7 @@ recorder:
       - glances
     entities:
       - sun.sun
-      - sensor.date    
+      - sensor.date
       - sensor.time
       - sensor.dark_sky_apparent_temperature
       - sensor.dark_sky_summary
@@ -151,7 +154,7 @@ recorder:
       - sensor.garage_back_pir_burglar
       - sensor.garage_side_pir_burglar
       - sensor.lr_pir_burglar
-      - sensor.patio_pir_burglar      
+      - sensor.patio_pir_burglar
       - sensor.back_driveway_pir_sourcenodeid
       - sensor.back_garage_door_tilt_sourcenodeid
       - sensor.front_door_pir_sourcenodeid
@@ -348,17 +351,17 @@ sensor snmp:
     sensors:
         internet_speed_in:
           friendly_name: 'Internet Down'
-          value_template: '{{ ((states.input_number.internet_traffic_delta_in.state | float ) / 1000000 ) | round(2) }}'
+          value_template: '{{ ((states.input_number.internet_traffic_delta_in.state | float ) / 1000 ) | round(2) }}'
 #          value_template: '{{ ((states.input_number.internet_traffic_delta_in.state | float ) / 1000 ) | round(2) }}'
-          unit_of_measurement: 'Mbps'
+          unit_of_measurement: 'Kbps'
 
   - platform: template
     sensors:
         internet_speed_out:
           friendly_name: 'Internet Up'
-          value_template: '{{ ((states.input_number.internet_traffic_delta_out.state | float ) / 1000000 ) | round(2) }}'
+          value_template: '{{ ((states.input_number.internet_traffic_delta_out.state | float ) / 1000 ) | round(2) }}'
 #          value_template: '{{ ((states.input_number.internet_traffic_delta_out.state | float ) / 1000 ) | round(2) }}'
-          unit_of_measurement: 'Mbps'
+          unit_of_measurement: 'Kbps'
 
   - platform: statistics
     name: 'WAN Traffic IN'
@@ -433,6 +436,16 @@ panel_iframe:
     icon:                            mdi:checkbox-marked-outline
     url:                             !secret POWER_URL
 
+#  lovelace:
+#    title:                           Lovelace UI
+#    icon:                            mdi:hand-pointing-right
+#    url:                             /lovelace
+
+#  coolie_guages:
+#    title:                           Coolie Guages
+#    icon:                            mdi:hand-pointing-right
+#    url:                             /local/coolie_guages.html
+
   google_guages:
     title:                           Google Guages
     icon:                            mdi:hand-pointing-right
@@ -484,14 +497,29 @@ ffmpeg:
 camera jerry:
   name:                              Jerry
   platform:                          generic
-  still_image_url:                   https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.jerry_s7.attributes.latitude }},{{ states.device_tracker.jerry_S7.attributes.longitude }}&zoom=13&size=500x500&maptype=roadmap&markers=color:blue%7Clabel:J%7C{{ states.device_tracker.jerry_S7.attributes.latitude }},{{ states.device_tracker.jerry_s7.attributes.longitude }}
+  still_image_url:                   https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.jerry_s7.attributes.latitude }},{{ states.device_tracker.jerry_S7.attributes.longitude }}&zoom=13&size=500x500&maptype=roadmap&markers=color:blue%7Clabel:J%7C{{ states.device_tracker.jerry_S7.attributes.latitude }},{{ states.device_tracker.jerry_s7.attributes.longitude }}&key=AIzaSyBaGYOI7p4Iofh6MzKoAKAIxmtGt_7uAVc
   limit_refetch_to_url_change:       true
 
 camera louise:
   name:                              Louise
   platform:                          generic
-  still_image_url:                   https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.louise_lc.attributes.latitude }},{{ states.device_tracker.louise_lc.attributes.longitude }}&zoom=13&size=500x500&maptype=roadmap&markers=color:blue%7Clabel:L%7C{{ states.device_tracker.louise_lc.attributes.latitude }},{{ states.device_tracker.louise_lc.attributes.longitude }}
+  still_image_url:                   https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.louise_lc.attributes.latitude }},{{ states.device_tracker.louise_lc.attributes.longitude }}&zoom=13&size=500x500&maptype=roadmap&markers=color:blue%7Clabel:L%7C{{ states.device_tracker.louise_lc.attributes.latitude }},{{ states.device_tracker.louise_lc.attributes.longitude }}&key=AIzaSyBaGYOI7p4Iofh6MzKoAKAIxmtGt_7uAVc
   limit_refetch_to_url_change:       true
+
+amcrest:
+  - host:                            192.168.10.51
+    username:                        admin
+    password:                        !secret AMCREST_PASSWORD
+    name:                            Living Room
+#    sensors:
+#      - motion_detector
+#      - sdcard
+
+# Front Garage
+  - host:                            192.168.10.57
+    username:                        admin
+    password:                        !secret AMCREST_GARAGE_PASSWORD
+    name:                            Front Garage
 
 #mqtt:
 #  embeded
@@ -508,15 +536,6 @@ mqtt:
   password:                          !secret MQTT_PASSWORD
 #  protocol:                         3.1
 #  certificate:                      /home/paulus/dev/addtrustexternalcaroot.crt
-
-amcrest:
-  - host:                            192.168.10.51
-    username:                        admin
-    password:                        !secret AMCREST_PASSWORD
-    name:                            Living Room
-#    sensors:
-#      - motion_detector
-#      - sdcard
 
 sensor mqtt:
 
@@ -563,6 +582,33 @@ sensor mqtt:
     unit_of_measurement:             'Watts'
     #value_template:                 '{{ [0, value]|max }}'
 
+  #monitor.sh
+
+  - platform: mqtt
+    state_topic: 'monitor/livingroom/94:76:B7:80:B2:86'
+    value_template: '{{ value_json.confidence }}'
+    unit_of_measurement: '%'
+    name: 'Jerry Home'
+    gravatar: jerry.workman@gmail.com
+
+  - platform: mqtt
+    state_topic: 'monitor/livingroom/90:60:F1:4E:07:61'
+    value_template: '{{ value_json.confidence }}'
+    unit_of_measurement: '%'
+    name: 'Louise Home'
+
+  - platform: mqtt
+    state_topic: 'monitor/livingroom/DD:9D:F9:67:44:09'
+    value_template: '{{ value_json.confidence }}'
+    unit_of_measurement: '%'
+    name: 'Laptop Case'
+
+  - platform: mqtt
+    state_topic: 'monitor/livingroom/F7:CD:E6:0F:50:D0'
+    value_template: '{{ value_json.confidence }}'
+    unit_of_measurement: '%'
+    name: 'F150 Truck'
+
 #mqtt_eventstream:
 #  publish_topic:                    ha1
 #  subscribe_topic:                  OtherHaServerName
@@ -586,30 +632,30 @@ sensor countdown_timer:
   platform:                          countdown_timer
   timers:
     Living Room Timed Light:
-      sensors:                       binary_sensor.lr_pir_sensor
+      sensors:                       binary_sensor.pir_09
+#      sensors:                       group.living_room_pir
       enable_switch:                 switch.lr_light_auto
-      switch:                        switch.lr_wall_light_switch
-      #entity_id:                    input_number.lr_delay
+      switch:                        switch.evolve_guest_controls_lsm15_wall_switch_switch_2
+#    switch:                          group.living_room_light
     Family Room Timed Light:
-      sensors:                       binary_sensor.fr_pir_sensor,binary_sensor.fr_pir_2_sensor
+      sensors:                       binary_sensor.back_02,binary_sensor.ecolink_motion_sensor_sensor_2
       enable_switch:                 switch.fr_light_auto
-      switch:                        switch.fr_light_switch
+      switch:                        switch.fr_wall_switch_switch
       restart:                       True
     Garage Timed Light:
       sensors:                       binary_sensor.garage_side_pir_sensor,binary_sensor.garage_back_pir_sensor
-      switch:                        group.garage_switches
-      #switch:                        light.garage_light
+      switch:                        switch.ge_14291_inwall_smart_switch_switch
       enable_switch:                 switch.garage_light_auto
       #entity_id:                    input_number.garage_delay
       restart:                       True
     Patio Timed Light:
       sensors:                       binary_sensor.patio_pir_sensor
-      switch:                        switch.back_patio_light_switch
+      switch:                        switch.patio_light_switch
       enable_switch:                 switch.patio_light_auto
       delay:                         5
     Back Driveway Timed Light:
-      sensors:                       binary_sensor.back_driveway_pir_sensor
-      switch:                        switch.back_driveway_switch
+      sensors:                       binary_sensor.ecolink_motion_detector_sensor
+      switch:                        switch.ge_14292_inwall_smart_toggle_switch_switch
       enable_switch:                 switch.back_driveway_auto
       delay:                         5
 
@@ -683,6 +729,10 @@ switch mock:
 #sensor Weather:
 #  platform:                         yr
 
+weather darksky:
+  - platform:                        darksky
+    api_key:                         !secret DARKSKY_API_KEY
+
 sensor darksky:
   - platform:                        darksky
     api_key:                         !secret DARKSKY_API_KEY
@@ -715,12 +765,14 @@ device_tracker:
     max_gps_accuracy:                200
     waypoints:                       True
 
-#  - platform:                       bluetooth_tracker
-
-  - platform:                        nmap_tracker
-    hosts:                           192.168.10.194/32, 192.168.10.201/32
-    #Louise: 192.168.10.201 #Jerry: 192.168.10.194
-    home_interval:                   10
+  - platform: tile
+    username: jerry.workman@gmail.com
+    password: secret! TILE_PASSWORD
+    
+#  - platform:                        nmap_tracker
+#    hosts:                           192.168.10.194/32, 192.168.10.201/32
+#    #Louise: 192.168.10.201 #Jerry: 192.168.10.194
+#    home_interval:                   10
 
 # This will override the default home zone
 zone home:
@@ -734,6 +786,13 @@ zone mtncad:
   name:                              Mountain CAD
   latitude:                          38.368710
   longitude:                         -81.694436
+  radius:                            300
+  icon:                              mdi:office
+
+zone Office:
+  Name:                              Charleston Area Alliance
+  latitude:                          38.350802
+  longitude:                         -81.625556
   radius:                            300
   icon:                              mdi:office
 
@@ -751,7 +810,7 @@ remote:
     
 #  - platform:                        harmony
 #    name:                            Living Room
-#    activity:                        Watch TV    
+#    activity:                        Watch TV
 #    host:                            192.168.10.130
 
 #sensor harmony_living_room:
@@ -772,9 +831,9 @@ sensor influxdb:
   platform:                          influxdb
   host:                              localhost
   queries:
-    #SELECT mean("value") AS "mean_value" FROM "home_assistant"."autogen"."Watts" WHERE time > now() - 1h 
+    #SELECT mean("value") AS "mean_value" FROM "home_assistant"."autogen"."Watts" WHERE time > now() - 1h
     #GROUP BY time(10s) FILL(null)
-    #SELECT mean("value") AS "mean_value" FROM "home_assistant"."autogen"."Watts" 
+    #SELECT mean("value") AS "mean_value" FROM "home_assistant"."autogen"."Watts"
     #WHERE time > :dashboardTime: AND "entity_id"='power_meter' GROUP BY :interval: FILL(null)
 #    - name:                         last value of meter watts
 #      unit_of_measurement:          watts
@@ -796,12 +855,12 @@ sensor influxdb:
       database:                      home_assistant
       
 ########### in postgresql ############
-#select 
+#select
 #  state,
 #  created - lead(created) OVER (ORDER BY created DESC) as duration
 #  from states
-#where entity_id = 'sensor.power_meter' 
-#    and state <> 'unknown' 
+#where entity_id = 'sensor.power_meter'
+#    and state <> 'unknown'
 #    and created > now() - interval '1 hour'
 #  order by created;
 ######### 107 mseconds ########
@@ -809,7 +868,7 @@ sensor influxdb:
     - name:                          Daily Power Cost
       unit_of_measurement:           '$/day'
       # 24 hrs * .094 cents/KWH / 1000 W/KW = 0.002256 $/day
-      value_template:                '{{ (float(value) * 0.002256) | round(2) }}' 
+      value_template:                '{{ (float(value) * 0.002256) | round(2) }}'
       group_function:                mean
       where:                         '"entity_id" = ''power_meter'' and time > now() - 24h'
       measurement:                   '"home_assistant"."autogen"."Watts"'
@@ -838,7 +897,7 @@ binary_sensor ping_google:
   platform: ping
   host: 8.8.8.8
   count: 2
-  scan_interval: 30  
+  scan_interval: 30
 
 binary_sensor lr_cam_online:
   platform:                          command_line
@@ -872,7 +931,7 @@ binary_sensor garage_freeze_alert:
       garage_freeze_alert:
         friendly_name:               "Garage Freeze Alert"
         value_template:              >-
-          {{ states('sensor.garage_temperature')|float <= 32.0 
+          {{ states('sensor.garage_temperature')|float <= 32.0
             and states('sensor.garage_temperature') }}
 
 binary_sensor outdoor_freeze_alert:
@@ -914,16 +973,16 @@ binary_sensor outdoor_freeze_alert:
 #  device:                           default
 #  name:                             LR Fire TV
 
-sensor speedtest:
-  platform:                          speedtest
-  #server_id:                        5434
-  minute:
-    - 0
-    - 30
-  monitored_conditions:
-    - ping
-    - download
-    - upload
+#sensor speedtest:
+#  platform:                          speedtest
+#  #server_id:                        5434
+#  minute:
+#    - 0
+#    - 30
+#  monitored_conditions:
+#    - ping
+#    - download
+#    - upload
 
 rfxtrx:
   device:                            /dev/rfxcom
@@ -1004,7 +1063,7 @@ media_player:
 
 # Only the main box has an IP address
   - platform:                        directv
-    host:                            192.168.10.158
+    host:                            192.168.10.213
     port:                            8080
     name:                            LR DirecTV
     device:                          0
@@ -1045,32 +1104,32 @@ input_number:
     name:                            Internet Traffic Delta In
     initial:                         0
     min:                             0
-    max:                             250000
+    max:                             1500000
     step:                            1000
   internet_traffic_delta_out:
     name:                            Internet Traffic Delta Out
     initial:                         0
     min:                             0
-    max:                             250000
+    max:                             1500000
     step:                            1000
 
-#         {% elif is_state_attr("lock.kwikset_touchpad_electronic_deadbolt_locked", "lock_status", "Unlocked with Keypad by user 2") %} 
+#         {% elif is_state_attr("lock.kwikset_touchpad_electronic_deadbolt_locked", "lock_status", "Unlocked with Keypad by user 2") %}
 #           U2
-#         {% elif is_state_attr("lock.kwikset_touchpad_electronic_deadbolt_locked", "lock_status", "Locked with Keypad by user 2") %} 
+#         {% elif is_state_attr("lock.kwikset_touchpad_electronic_deadbolt_locked", "lock_status", "Locked with Keypad by user 2") %}
 #           L2
 
-sensor lock_status:
-  - platform:                        template
-    sensors:
-      lock_side_door_battery:
-        friendly_name:               'Side Door Lock Battery'
-        value_template:              '{{ states.zwave.kwikset_touchpad_electronic_deadbolt.attributes.battery_level }}'
-        unit_of_measurement:         '%'
+#sensor lock_status:
+#  - platform:                        template
+#    sensors:
+#      lock_side_door_battery:
+#        friendly_name:               'Side Door Lock Battery'
+#        value_template:              '{{ states.zwave.kwikset_touchpad_electronic_deadbolt.attributes.battery_level }}'
+#        unit_of_measurement:         '%'
         #entity_id:                  zwave.kwikset_touchpad_electronic_deadbolt
-      lock_front_door_status:        
-        friendly_name:               'Side Door Lock Status'
-        value_template:              '{{ states.lock.kwikset_touchpad_electronic_deadbolt_locked.attributes.lock_status }}'
-        #entity_id:                  lock.kwikset_touchpad_electronic_deadbolt_locked
+#      lock_side_door_status:
+#        friendly_name:               'Side Door Lock Status'
+#        value_template:              '{{ states.lock.kwikset_touchpad_electronic_deadbolt_locked_2.attributes.lock_status }}'
+#        #entity_id:                  lock.kwikset_touchpad_electronic_deadbolt_locked_2
         
 intent_script:                       !include intent_script.yaml
 

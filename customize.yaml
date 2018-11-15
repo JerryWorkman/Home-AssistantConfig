@@ -11,7 +11,7 @@ binary_sensor.floorplan:
   track_duration: 10
   last_motion_entity: sensor.template_last_motion
   entities:
-  - switch.lr_wall_light_switch
+  - switch.evolve_guest_controls_lsm15_wall_switch_switch_2
   - switch.fr_light_switch
 input_text.light_tiles:
   friendly_name: Lights
@@ -26,7 +26,7 @@ input_text.light_tiles:
     color_on: green
     color_off: red
     entities:
-    - entity: switch.lr_wall_light_switch
+    - entity: switch.evolve_guest_controls_lsm15_wall_switch_switch_2
       label: LR
       icon: mdi:lightbulb
       data:
@@ -54,36 +54,41 @@ input_text.light_tiles:
     - entity: cover.front_garage_door
       label: Garage
       icon: mdi:garage
-lock.kwikset_touchpad_electronic_deadbolt_locked:
+lock.kwikset_touchpad_electronic_deadbolt_locked_2:
   friendly_name: Side Door Lock
-lock.locked_2:
+lock.schlage_be469_touchscreen_deadbolt_locked:
   friendly_name: Front Door Lock
-switch.back_deck_door_light_switch:
+#switch.back_deck_door_light_switch:
+switch.fr_light_switch:
   friendly_name: Deck Door Light
-switch.back_flood_switch:
+switch.outside_back_swi_switch:
   friendly_name: Back Flood Light
   icon: mdi:sunglasses
-switch.lr_wall_light_switch:
+switch.evolve_guest_controls_lsm15_wall_switch_switch_2:
   friendly_name: Living Room Wall Light
-switch.unknown_switch_5_0:
-  friendly_name: Unknown Switch
+#switch.unknown_switch_5_0:
+#  friendly_name: Unknown Switch
 switch.back_patio_light_switch:
   friendly_name: Back Patio Light
-switch.back_driveway_switch:
+switch.ge_14292_inwall_smart_toggle_switch_switch:
   friendly_name: Back Driveway Light
-binary_sensor.lr_pir_sensor:
-  friendly_name: LR PIR
+binary_sensor.ecolink_motion_sensor_sensor:
+  friendly_name: Garage PIR 1
 sensor.living_room_timed_light:
   friendly_name: LivingRoom Light Timer
-binary_sensor.fr_pir_sensor:
+binary_sensor.ecolink_motion_sensor_sensor_2:
   friendly_name: FR PIR 1
 binary_sensor.fr_pir_2_sensor:
   friendly_name: FR PIR 2
-switch.fr_light_switch:
+binary_sensor.ecolink_motion_sensor_sensor_3:
+  friendly_name: Patio PIR
+#switch.fr_light_switch:
+switch.fr_wall_switch_switch:
   friendly_name: Family Room Light
 switch.front_light_switch:
   friendly_name: Front Light
-switch.garage_light_switch_switch:
+#switch.garage_light_switch_switch:
+switch.ge_14291_inwall_smart_switch_switch:
   friendly_name: Garage Light
 #  polling_intensity: 1
 device_tracker.dehx6700bt__:
@@ -126,8 +131,6 @@ binary_sensor.pir_08:
   friendly_name: PIR 08
 binary_sensor.pir_09:
   friendly_name: LR PIR
-binary_sensor.pir_10:
-  friendly_name: PIR 10
 media_player.liv:
   friendly_name: DirecTV Living room
 media_player.rec_room:

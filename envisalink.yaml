@@ -4,13 +4,11 @@ panel_type: HONEYWELL
 user_name: user
 password: user
 code: '0127'
-
-#optional
-#port: 4025
-#evl_version: 3
-#keepalive_interval: 60
-#zonedump_interval: 30
-
+port: 4025
+evl_version: 3
+keepalive_interval: 60
+zonedump_interval: 30
+panic_type: Police
 
 zones:
   1:

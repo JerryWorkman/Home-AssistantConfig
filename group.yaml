@@ -1,4 +1,3 @@
-
   X default_view:
     view: yes
     entities:
@@ -6,6 +5,7 @@
       - climate.thermostat76b427
       - sensor.speedtest
       - camera.front_camera
+      - camera.front_garage
       - camera.outside_back
       - group.security_lights
       #- weblink
@@ -51,7 +51,7 @@
       - weblink.losant
       - weblink.router
       - weblink.home_assistant
-      - weblink.office_vera  
+      - weblink.office_vera
       - weblink.power
       - weblink.guages
       - weblink.alarm
@@ -69,7 +69,9 @@
     entities:
 #    - zone.home
     - device_tracker.jerry_s7
+    - sensor.jerry_home
     - device_tracker.louise_lc
+    - sensor.louise_home
 #    - device_tracker.louisesiphone
 
   Media:
@@ -86,6 +88,7 @@
     entities:
       - camera.front_door
       - camera.front_camera
+      - camera.front_garage
       - camera.living_room
       - camera.family_room
       - camera.outside_back
@@ -160,6 +163,7 @@
       - sensor.out_temperature
       - sensor.out_temperature_humidity
       - climate.homelr
+      - weather.dark_sky
       - group.darksky
       - group.ambient_weather_station
       - camera.outside_back
@@ -212,7 +216,7 @@
     entities:
       - binary_sensor.pir_08
       - binary_sensor.pir_09
-      - binary_sensor.pir_10     
+      - binary_sensor.pir_10
       - binary_sensor.lr_pir_sensor
       - binary_sensor.fr_pir_sensor
       - binary_sensor.fr_pir_2_sensor
@@ -237,7 +241,7 @@
       - group.away_sensors
       - binary_sensor.pir_08
       - binary_sensor.pir_09
-      - binary_sensor.pir_10     
+      - binary_sensor.pir_10
       - binary_sensor.lr_pir_sensor
       - binary_sensor.fr_pir_sensor
       - binary_sensor.fr_pir_2_sensor
@@ -264,29 +268,32 @@
   Security Lights:
     entities:
       - switch.front_light_switch
-      - switch.back_flood_switch
+      - switch.outside_back_swi_switch
 
   Deck:
     entities:
-      - switch.back_deck_door_light_switch
+      group.deck_zwave
+#      - switch.back_deck_door_light_switch
+#      - switch.fr_light_switch
 
   Patio:
     entities:
       - binary_sensor.patio_pir_sensor
-      - switch.back_patio_light_switch
+      - switch.patio_light_switch
       - switch.patio_light_auto
       - sensor.patio_timed_light
   
   Back Driveway:
     entities:
-      - binary_sensor.back_driveway_pir_sensor
-      - switch.back_driveway_switch
+      - binary_sensor.ecolink_motion_detector_sensor
+      - switch.ge_14292_inwall_smart_toggle_switch_switch
       - switch.back_driveway_auto
       - sensor.back_driveway_timed_light
   
   Outside:
     view: yes
     entities:
+      #- weather.dark_sky
       - binary_sensor.front_door_pir_sensor
       - sensor.out_temperature
       - sensor.out_humidity
@@ -300,6 +307,7 @@
       - group.back_driveway
       - camera.front_door
       - camera.front_camera
+      - camera.front_garage
       - camera.outside_back
       #- camera.mikes_gate
       - binary_sensor.garage_freeze_alert
@@ -315,33 +323,30 @@
 
   Living Room Lights:
     entities:
-      - binary_sensor.lr_pir_sensor
-      - switch.lr_wall_light_switch
+      - binary_sensor.pir_09
+#       - group.living_room_pir
+      - switch.evolve_guest_controls_lsm15_wall_switch_switch_2
+#      - group.living_room_light
       - switch.lr_light_auto
       - input_number.lr_delay
       - sensor.living_room_timed_light
       - switch.lr_flashing_light
 
-  Front Door Lock:
+  Door Locks:
     view: no
     entities:
-      - lock.locked
-      - lock.locked_2
-
-  Side Door Lock:
-    view: no
-    entities:
-      - lock.kwikset_touchpad_electronic_deadbolt_locked
+      - lock.schlage_be469_touchscreen_deadbolt_locked
       - sensor.lock_front_door_status
       - sensor.lock_front_door_battery
+#      - lock.kwikset_touchpad_electronic_deadbolt_locked_2
+      - lock.side_door_lock_locked
 
   Living Room:
     view: yes
     entities:
       - group.living_room_lights
       - group.hue_lights
-      - group.front_door_lock
-      - group.side_door_lock
+      - group.door_locks
       - group.media
 #      - sensor.living_room_thermostat_temperature
 #      - binary_sensor.nest
@@ -383,17 +388,10 @@
 
 ##################### FR ####################
 
-  FR PIR:
-    entities:
-      - binary_sensor.fr_pir_sensor
-      - binary_sensor.fr_pir_2_sensor
-
   FR Light:
     entities:
-      - binary_sensor.fr_pir_sensor
-      - binary_sensor.fr_pir_2_sensor
       - switch.fr_light_auto
-      - switch.fr_light_switch
+      - switch.fr_wall_switch_switch
       - sensor.family_room_timed_light
 
   Family Room:
@@ -401,12 +399,11 @@
     entities:
       - sensor.fr_temperature
       - sensor.fr_temperature_humidity
-      - binary_sensor.fr_pir_sensor
-      - binary_sensor.fr_pir_2_sensor
-      - switch.fr_light_switch
-#      - fan.fr_fan_control_level
-      - fan.ge_12730_fan_control_switch_level
+      - switch.fr_wall_switch_switch
+      - fan.ge_12730_fan_control_switch_level_2
       - binary_sensor.back_02
+      - binary_sensor.ecolink_motion_sensor_sensor_2
+      - binary_sensor.fr_pir_2_sensor
       - group.fr_light
       - group.patio_light
       - group.back_driveway_light
@@ -417,8 +414,9 @@
 ##################### Garage ####################
 
   Garage Switches:
-    - switch.garage_light_switch_switch
-    - switch.wemo_mini 
+#    - switch.garage_light_switch_switch
+    - switch.ge_14291_inwall_smart_switch_switch
+    - switch.wemo_mini
 
   Garage PIR Sensors:
     entities:
@@ -440,12 +438,13 @@
   Garage Door Actions:
     entities:
       - cover.front_garage_door
-      - switch.garage_door_switch
+#      - switch.garage_door_switch
+      - switch.ge_14291_inwall_smart_switch_switch
       - switch.garage_light_auto
       - switch.garage_light_switch_switch
       - input_number.garage_delay
       - sensor.garage_timed_light
-      - switch.wemo_mini 
+      - switch.wemo_mini
 
   Garage:
     view: yes
