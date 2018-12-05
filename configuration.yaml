@@ -3,26 +3,26 @@
 
 homeassistant:
   name:                              Home
+#  server_port:                       8123
   latitude:                          !secret LATITUDE
   longitude:                         !secret LONGITUDE
   elevation:                         1057
   unit_system:                       imperial
   time_zone:                         America/New_York
   customize:                         !include customize.yaml
-
+  packages:                          !include_dir_named packages
 
   customize_glob:
     "*sensor.*alarm*":
       hidden:                        true
     "*sensor.*burglar*":
       hidden:                        true
-    "*sensor.*_*_sourcenodeid":
-      hidden:                        true
     "*sensor.*sourcenodeid*":
       hidden:                        true
-    "*sensor.*power_management":
+    "*sensor.*power_management*":
       hidden:                        true
     "*sensor.*temphygro_alarm*":
+    
       hidden:                        true
 #    "switch.*":
 #      custom_ui_state_card:         state-card-custom-ui
@@ -42,6 +42,7 @@ logger:
   logs:
 #    homeassistant.components.automation:        info
     homeassistant.components.camera: critical
+    input_boolean:                   debug
 #    battery_state:                  debug
 #    influxdb:                        debug
 #    notify:                         debug
@@ -54,8 +55,7 @@ logger:
 #    homeassistant.components.mqtt:  debug
 #    sensor.power_meter:             debug
 #    custom_components.sensor.ambient: debug
-    custom_components.sensor.countdown_timer: debug
-#    custom_components.device_countdown_timer: debug
+#    custom_components.sensor.countdown_timer: debug
 #    sensor.torque:                  debug
 #    hdmi_cec:                       debug
 #    components.climate.nest:        debug
@@ -292,7 +292,7 @@ cloud:
 #      switch.stairs:
 #        display_categories:         LIGHT
 
-wemo:
+# wemo:
 
 # This is HA alarm
 #alarm_control_panel:
@@ -306,6 +306,9 @@ ring:
 #  password: !secret RING_PASSWORD
   username: jerry.workman@gmail.com
   password: 898!Centers
+
+#sensor version:
+#  platform: version
 
 binary_sensor:
   platform: ring
@@ -470,6 +473,11 @@ panel_custom:
     config:
       title:                         ToDo
 
+  - name:                            lovelace
+    sidebar_title:                   Lovelace UI
+    sidebar_icon:                    mdi:hand-pointing-right
+    url_path:                        /lovelace
+
 #  - name:                           hello
 #    sidebar_title:                  Hello World
 #    sidebar_icon:                   mdi:hand-pointing-right
@@ -582,7 +590,8 @@ sensor mqtt:
     unit_of_measurement:             'Watts'
     #value_template:                 '{{ [0, value]|max }}'
 
-  #monitor.sh
+# TODO: Use packages here
+# monitor.sh
 
   - platform: mqtt
     state_topic: 'monitor/livingroom/94:76:B7:80:B2:86'
@@ -592,10 +601,22 @@ sensor mqtt:
     gravatar: jerry.workman@gmail.com
 
   - platform: mqtt
+    state_topic: 'monitor/familyroom/94:76:B7:80:B2:86'
+    value_template: '{{ value_json.confidence }}'
+    unit_of_measurement: '%'
+    name: 'Jerry Family Room'
+
+  - platform: mqtt
     state_topic: 'monitor/livingroom/90:60:F1:4E:07:61'
     value_template: '{{ value_json.confidence }}'
     unit_of_measurement: '%'
     name: 'Louise Home'
+
+  - platform: mqtt
+    state_topic: 'monitor/familyroom/90:60:F1:4E:07:61'
+    value_template: '{{ value_json.confidence }}'
+    unit_of_measurement: '%'
+    name: 'Louise Family Room'
 
   - platform: mqtt
     state_topic: 'monitor/livingroom/DD:9D:F9:67:44:09'
@@ -607,12 +628,21 @@ sensor mqtt:
     state_topic: 'monitor/livingroom/F7:CD:E6:0F:50:D0'
     value_template: '{{ value_json.confidence }}'
     unit_of_measurement: '%'
-    name: 'F150 Truck'
+    name: 'F150 Truck Tile'
 
-#mqtt_eventstream:
+  - platform: min_max
+    name: "Home Occupancy Confidence"
+    type: max
+    round_digits: 0
+    entity_ids:
+      - sensor.jerry_home
+      - sensor.jerry_family_room
+      - sensor.louise_home
+      - sensor.louise_family_room
+
+# mqtt_eventstream:
 #  publish_topic:                    ha1
 #  subscribe_topic:                  OtherHaServerName
-
 
 #mqtt_publish:
 #  host:                             bw.mtncad.com
@@ -627,6 +657,7 @@ sensor mqtt:
 #  json_payload:                     True
 
 #  platform:
+
 
 sensor countdown_timer:
   platform:                          countdown_timer
@@ -659,25 +690,25 @@ sensor countdown_timer:
       enable_switch:                 switch.back_driveway_auto
       delay:                         5
 
-sensor:
-  - platform:                        glances
-    host:                            localhost
-    resources:
-      - 'disk_use_percent'
-      #- 'disk_use'
-      #- 'disk_free'
-      - 'memory_use_percent'
-      #- 'memory_use'
-      #- 'memory_free'
-      #- 'swap_use_percent'
-      #- 'swap_use'
-      #- 'swap_free'
-      - 'processor_load'
-      #- 'process_running'
-      - 'process_total'
-      - 'process_thread'
-      #- 'process_sleeping'
-      #- 'cpu_temp'
+#sensor glances:
+#  - platform:                        glances
+#    host:                            localhost
+#    resources:
+#      - 'disk_use_percent'
+#      #- 'disk_use'
+#      #- 'disk_free'
+#      - 'memory_use_percent'
+#      #- 'memory_use'
+#      #- 'memory_free'
+#      #- 'swap_use_percent'
+#      #- 'swap_use'
+#      #- 'swap_free'
+#      - 'processor_load'
+#      #- 'process_running'
+#      - 'process_total'
+#      - 'process_thread'
+#      #- 'process_sleeping'
+#      #- 'cpu_temp'
 
 cover tilt:
   platform:                          tilt
@@ -699,7 +730,7 @@ cover tilt:
 #      value_template:               '{{ value == "on" }}'
 #      friendly_name:                Garage Door
 
-switch flashing:
+#switch flashing:
 #  platform:                         flashing
 #  switches:
 #    lr_flashing_light:
@@ -760,14 +791,15 @@ sensor darksky:
 ##  exclude:                         yearly_rain,indoor_sensor,outdoor_sensor1,outdoor_sensor2,unnamed_device,uv,uvi
 ##  prefix:                          ''
 
-device_tracker:
-  - platform:                        owntracks
-    max_gps_accuracy:                200
-    waypoints:                       True
+#device_tracker:
+#  - platform:                        owntracks
+owntracks:
+  max_gps_accuracy:                200
+  waypoints:                       True
 
-  - platform: tile
-    username: jerry.workman@gmail.com
-    password: secret! TILE_PASSWORD
+#  - platform: tile
+#    username: jerry.workman@gmail.com
+#    password: secret! TILE_PASSWORD
     
 #  - platform:                        nmap_tracker
 #    hosts:                           192.168.10.194/32, 192.168.10.201/32
@@ -782,12 +814,12 @@ zone home:
   radius:                            300
   icon:                              mdi:home
 
-zone mtncad:
-  name:                              Mountain CAD
-  latitude:                          38.368710
-  longitude:                         -81.694436
-  radius:                            300
-  icon:                              mdi:office
+#zone mtncad:
+#  name:                              Mountain CAD
+#  latitude:                          38.368710
+#  longitude:                         -81.694436
+#  radius:                            300
+#  icon:                              mdi:office
 
 zone Office:
   Name:                              Charleston Area Alliance
@@ -803,7 +835,7 @@ zone bailey:
   radius:                            300
   icon:                              mdi:office
 
-remote:
+#remote:
 #  - platform:                       harmony
 #    name:                           Living Room
 #    host:                           192.168.10.130
@@ -1019,13 +1051,14 @@ sensor rfxtrx:
 #       - Temperature
 
 configurator:
-  philips_hue
 
-#light hue1:
-#  platform:                         hue
-#  host:                             192.168.10.169
-#  allow_unreachable:                true
-#  filename:                         my_hue_hub_token.conf
+#  philips_hue
+
+light hue1:
+  platform:                         hue
+  host:                             192.168.10.169
+  allow_unreachable:                false
+  filename:                         my_hue_hub_token.conf
 
 #sensor temp:
 #  - platform:                       template
@@ -1080,6 +1113,10 @@ input_boolean:
     name:                            Kiosk Mode
     initial:                         off
     icon:                            mdi:cast
+  occupancy:
+    name:                            Occupancy
+    initial:                         on
+    icon:                            mdi:human
     
 input_text:
   command:
@@ -1113,6 +1150,7 @@ input_number:
     max:                             1500000
     step:                            1000
 
+
 #         {% elif is_state_attr("lock.kwikset_touchpad_electronic_deadbolt_locked", "lock_status", "Unlocked with Keypad by user 2") %}
 #           U2
 #         {% elif is_state_attr("lock.kwikset_touchpad_electronic_deadbolt_locked", "lock_status", "Locked with Keypad by user 2") %}
@@ -1142,4 +1180,3 @@ script:                              !include script.yaml
 group:                               !include group.yaml
 
 scene:                               !include scenes.yaml
-
