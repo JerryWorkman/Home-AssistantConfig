@@ -674,7 +674,7 @@ sensor countdown_timer:
       switch:                        switch.fr_wall_switch_switch
       restart:                       True
     Garage Timed Light:
-      sensors:                       binary_sensor.garage_side_pir_sensor,binary_sensor.garage_back_pir_sensor
+      sensors:                       binary_sensor.ecolink_motion_sensor_sensor,binary_sensor.garage_back_pir_sensor
       switch:                        switch.ge_14291_inwall_smart_switch_switch
       enable_switch:                 switch.garage_light_auto
       #entity_id:                    input_number.garage_delay
@@ -778,6 +778,7 @@ sensor darksky:
       - temperature
       - humidity
       - precip_probability
+      - precip_type
       - precip_intensity
       - wind_speed
       - pressure
@@ -909,8 +910,8 @@ sensor influxdb:
 
 binary_sensor 1:
   platform:                          command_line
-#  command:                          ping -c 1 192.168.10.52 | grep "1 received" | wc -l
-  command:                           'nmap -p 80 192.168.10.52 | grep 80 | wc -l'
+  command:                           'ping -c 1 192.168.10.228 | grep "1 received" | wc -l'
+#  command:                           'nmap -p 80 192.168.10.228 | grep 80 | wc -l'
   name:                              'Front Cam Online'
   payload_on:                        1
   payload_off:                       0
@@ -972,8 +973,8 @@ binary_sensor outdoor_freeze_alert:
       outdoor_freeze_alert:
         friendly_name:               "Outdoor Freeze Alert"
         value_template:              >-
-          {{ states('sensor.out_temperature')|float <= 32.0
-            and states('sensor.out_temperature') }}
+          {{ states('sensor.out_temperature')|float <= 32.0 }}
+#            and states('sensor.out_temperature') }}
           
 #binary_sensor mfi_online:
 #  platform:                         command_line

@@ -72,8 +72,6 @@ switch.back_patio_light_switch:
   friendly_name: Back Patio Light
 switch.ge_14292_inwall_smart_toggle_switch_switch:
   friendly_name: Back Driveway Light
-binary_sensor.ecolink_motion_sensor_sensor:
-  friendly_name: Garage PIR 1
 sensor.living_room_timed_light:
   friendly_name: LivingRoom Light Timer
 binary_sensor.ecolink_motion_sensor_sensor_2:
@@ -96,9 +94,9 @@ device_tracker.dehx6700bt__:
 device_tracker.obdii:
   hidden: true
 binary_sensor.garage_back_pir_sensor:
-  friendly_name: Garage PIR 2
-binary_sensor.garage_side_pir_sensor:
-  friendly_name: Garage PIR 1
+  friendly_name: Garage Back PIR
+binary_sensor.ecolink_motion_sensor_sensor:
+  friendly_name: Garage Side PIR
 binary_sensor.back_garage_door_tilt_sensor:
   friendly_name: Back Garage Door Tilt
 binary_sensor.back_driveway_pir_sensor:

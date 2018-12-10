@@ -423,12 +423,12 @@
 
   Garage PIR Sensors:
     entities:
-      - binary_sensor.garage_side_pir_sensor
+      - binary_sensor.ecolink_motion_sensor_sensor
       - binary_sensor.garage_back_pir_sensor
-
+      
   Garage Sensors:
     entities:
-      - binary_sensor.garage_side_pir_sensor
+      - binary_sensor.ecolink_motion_sensor_sensor
       - binary_sensor.garage_back_pir_sensor
       - binary_sensor.front_garage_door_tilt_sensor
       - binary_sensor.back_garage_door_tilt_sensor
@@ -444,7 +444,7 @@
 #      - switch.garage_door_switch
       - switch.ge_14291_inwall_smart_switch_switch
       - switch.garage_light_auto
-      - switch.garage_light_switch_switch
+#      - switch.garage_light_switch_switch
       - input_number.garage_delay
       - sensor.garage_timed_light
       - switch.wemo_mini
@@ -457,7 +457,8 @@
       - binary_sensor.garage_cam_online
       - sensor.garage_temperature
       - sensor.garage_temperature_humidity
-      - binary_sensor.garage_side_pir_sensor
+      #- binary_sensor.garage_side_pir_sensor
+      - binary_sensor.ecolink_motion_sensor_sensor
       - binary_sensor.garage_back_pir_sensor
       - binary_sensor.front_garage_door_tilt_sensor
       - binary_sensor.back_garage_door_tilt_sensor
