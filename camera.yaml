@@ -42,13 +42,14 @@
 # Garage
 - platform: generic
   name: Garage
-#  still_image_url: http://home.jerryworkman.com:1027/CGIProxy.fcgi?cmd=snapPicture2&usr=admin&pwd=012749
-  still_image_url: http://192.168.10.55/CGIProxy.fcgi?cmd=snapPicture2&usr=admin&pwd=012749
+  still_image_url: http://home.jerryworkman.com:1027/CGIProxy.fcgi?cmd=snapPicture2&usr=admin&pwd=012749
+#  still_image_url: http://192.168.10.55/CGIProxy.fcgi?cmd=snapPicture2&usr=admin&pwd=012749
   
 #  still_image_url: http://192.168.10.16/garage.php
 
-# - platform: mjpeg
+#- platform: mjpeg
 #  mjpeg_url: http://admin:012749@192.168.10.55/snapshot.cgi
+#  name: Garage
 #  mjpeg_url: http://192.168.10.55/videostream.cgi?user=admin&pwd=012749
 #  mjpeg_url: http://admin:mtncad@192.168.10.55/snapshot.cgi?resolution=320X240
 

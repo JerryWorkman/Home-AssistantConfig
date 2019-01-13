@@ -30,9 +30,9 @@
   Family Room Light:
     entities:
       - switch.fr_wall_switch_switch
-  Family Room Fan:
-    entities:
-      - fan.ge_12730_fan_control_switch_level_2
+#  Family Room Fan:
+#    entities:
+#      - fan.ge_12730_fan_control_switch_level_2
   Family Room Back PIR:
     entities:
       - binary_sensor.back_02

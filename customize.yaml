@@ -31,8 +31,8 @@ input_text.light_tiles:
       icon: mdi:lightbulb
       data:
         value: right
-    - entity: switch.front_light_switch
-      label: Front
+    - entity: switch.aeotec_dsc26103_micro_switch_2nd_edition_switch
+      label: Front Light
       icon: mdi:lightbulb
     - entity: switch.back_flood_switch
       label: Back
@@ -83,7 +83,7 @@ binary_sensor.ecolink_motion_sensor_sensor_3:
 #switch.fr_light_switch:
 switch.fr_wall_switch_switch:
   friendly_name: Family Room Light
-switch.front_light_switch:
+switch.aeotec_dsc26103_micro_switch_2nd_edition_switch:
   friendly_name: Front Light
 #switch.garage_light_switch_switch:
 switch.ge_14291_inwall_smart_switch_switch:
@@ -111,8 +111,8 @@ binary_sensor.patio_pir_sensor:
   friendly_name: Back Patio PIR
 binary_sensor.front_door_pir_sensor:
   friendly_name: Front Door PIR
-binary_sensor.front_01:
-  friendly_name: Front Door
+#binary_sensor.front_01:
+#  friendly_name: Front Door
 binary_sensor.back_02:
   friendly_name: Back Sliding Glass Door
 binary_sensor.front_windows_03:
@@ -169,4 +169,19 @@ sensor.wan_traffic_out_mean:
 
 #fan.ge_12730_fan_control_switch_level:
 #  friendly_name: FR Fan Control Level
-  
+sensor.snmp_in:
+  hidden: true
+sensor.snmp_out:
+  hidden: true
+sensor.time:
+  hidden: true
+sensor.sun:
+  hidden: true
+sensor.schlage_be469_touchscreen_deadbolt_system:
+  hidden: true
+sensor.schlage_be469_touchscreen_deadbolt_access_control:
+  hidden: true
+input_number.internet_traffic_delta_in:
+  hidden: true
+input_number.internet_traffic_delta_out:
+  hidden: true

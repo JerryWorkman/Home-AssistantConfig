@@ -1,24 +1,34 @@
+#broken
+  type: entities
   entities:
-    - name: ThingSpeak
+    - type: weblink
+      name: ThingSpeak
       url: https://thingspeak.com/channels/120283/private_show
       icon: mdi:server-plus
-    - name: EmonCMS
+    - type: weblink
+      name: EmonCMS
       url: http://jerry:012749@192.168.10.17/emoncms/dashboard/view&id=4
-    - name: Losant
+    - type: weblink
+      name: Losant
       url: https://app.losant.com/#/dashboards/57aa9b429696280100b932d8
-    - name: Router
+    - type: weblink
+      name: Router
       icon: mdi:router-wireless
       url: http://192.168.10.1/
-    - name: Home Assistant
+    - type: weblink
+      name: Home Assistant
       icon: mdi:webhook
       url: https://home-assistant.io
-    - name: Office Vera
+    - type: weblink
+      name: Office Vera
       icon: mdi:webpack
       url: http://192.168.100.10/cmh/
-    - name: Power
+    - type: weblink
+      name: Power
       icon: mdi:checkbox-marked-outline
       url: http://192.168.10.2:8888/sources/1/dashboards/1
-    - name: Guages
+    - type: weblink
+      name: Guages
       icon: mdi:clock
       #url: http://192.168.10.2:8123/local/jsFiddleGuagesNew.html
       url: http://home.jerryworkman.com/local/google-guages.html

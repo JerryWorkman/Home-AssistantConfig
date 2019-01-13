@@ -1,4 +1,18 @@
-title: Home
+#title: My Awesome Home
+#views:
+    # View tab title.
+#  - title: Example
+#    panel: true
+    # Makes the first card fill the view
+#    cards:
+        # The markdown card will render markdown text.
+#      - type: markdown
+#        title: Lovelace
+#        content: >
+#          Welcome to your **Lovelace UI**.
+######################
+
+title: My Awesome Home
 # Include external resources
 resources:
   - url: /local/gauge-card.js?v=1
@@ -15,7 +29,7 @@ views:
     # View tab title.
   - title: Home
     # Optional unique id for direct access /lovelace/${id}
-    id: example
+    id: home
     # Optional background (overwrites the global background).
     background: radial-gradient(crimson, skyblue)
     # Each view can have a different theme applied. Theme should be defined in the frontend.
@@ -67,18 +81,18 @@ views:
           - switch.patio_light_switch
         camera_image: camera.family_room
 
-      - type: horizontal-stack
-        cards:
-        - type: entity-button
-          name: Family Room Light
-          icon: mdi:lightbulb
-          entity: switch.fr_wall_switch_switch
-          tap_action: toggle 
-        - type: entity-button
-          name: Patio Light
-          icon: mdi:lightbulb
-          entity: switch.patio_light_switch
-          tap_action: toggle 
+#      - type: horizontal-stack
+#        cards:
+#        - type: entity-button
+#          name: Family Room Light
+#          icon: mdi:lightbulb
+#          entity: switch.fr_wall_switch_switch
+#          tap_action: toggle 
+#        - type: entity-button
+#          name: Patio Light
+#          icon: mdi:lightbulb
+#          entity: switch.patio_light_switch
+#          tap_action: toggle 
 
       - type: horizontal-stack
         cards:
@@ -102,7 +116,7 @@ views:
         content: >
           Welcome to your **Lovelace UI**.
 
-# CLimate
+# Climate
 
   - title: Climate
     cards:

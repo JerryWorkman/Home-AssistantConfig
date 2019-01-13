@@ -3,7 +3,7 @@
 
 homeassistant:
   name:                              Home
-#  server_port:                       8123
+#  base_url:                          home.jerryworkman.com:8123
   latitude:                          !secret LATITUDE
   longitude:                         !secret LONGITUDE
   elevation:                         1057
@@ -12,6 +12,7 @@ homeassistant:
   customize:                         !include customize.yaml
   packages:                          !include_dir_named packages
 
+  # shell_command.lovelace_gen
   customize_glob:
     "*sensor.*alarm*":
       hidden:                        true
@@ -21,8 +22,9 @@ homeassistant:
       hidden:                        true
     "*sensor.*power_management*":
       hidden:                        true
-    "*sensor.*temphygro_alarm*":
-    
+    "*sensor.*temphygro_alarm*":    
+      hidden:                        true
+    "sensor.dark_sky*":
       hidden:                        true
 #    "switch.*":
 #      custom_ui_state_card:         state-card-custom-ui
@@ -30,12 +32,12 @@ homeassistant:
 # Enables the frontend
 frontend:
   javascript_version:                latest
-  extra_html_url:
-    - /local/custom_ui/state-card-custom-ui.html
-    - /local/custom_ui/state-card-tiles.html
-  extra_html_url_es5:
-    - /local/custom_ui/state-card-custom-ui-es5.html
-    - /local/custom_ui/state-card-tiles.html
+#  extra_html_url:
+#    - /local/custom_ui/state-card-custom-ui.html
+#    - /local/custom_ui/state-card-tiles.html
+#  extra_html_url_es5:
+#    - /local/custom_ui/state-card-custom-ui-es5.html
+#    - /local/custom_ui/state-card-tiles.html
 
 logger:
   default:                           warning
@@ -85,7 +87,7 @@ recorder:
       - script
       - weblink
       - updater
-      - glances
+#      - glances
     entities:
       - sun.sun
       - sensor.date
@@ -187,6 +189,8 @@ recorder:
       - sensor.garage_timed_light
       - sensor.living_room_timed_light
       - sensor.patio_timed_light
+      - input_number.internet_traffic_delta_in
+      - input_number.internet_traffic_delta_out
 
 influxdb:
   host:                              127.0.0.1
@@ -230,6 +234,13 @@ updater:
 
 # Discover some devices automatically
 discovery:
+  ignore:
+    - philips_hue
+
+# Phillips Hue
+hue:
+  bridges:
+    - host: 192.168.10.191
 
 # Allows you to issue voice commands from the frontend in enabled browsers
 #conversation:
@@ -249,7 +260,12 @@ history:
 
 # View all events in a logbook
 logbook:
-
+  exclude:
+    entities:
+      - input_number.internet_traffic_delta_in
+      - input_number.internet_traffic_delta_out
+      
+      
 # Text to speech
 tts:
   - platform:                        google
@@ -267,12 +283,14 @@ tts:
 # Track the sun
 sun:
 
+# In custom_components/battery_state.py
 battery_state:
 #  include:
 #    - sensor.garage_door_burglar_3
 #    - sensor.office_multisensor_temperature_5
 #    - sensor.frontroom_multisensor_temperature_4
 
+# In custom_components/humidity_state.py
 humidity_state:
 
 cloud:
@@ -292,7 +310,7 @@ cloud:
 #      switch.stairs:
 #        display_categories:         LIGHT
 
-# wemo:
+wemo:
 
 # This is HA alarm
 #alarm_control_panel:
@@ -302,10 +320,8 @@ cloud:
 ##  disarm_after_trigger:            True
 
 ring:
-#  username: !secret RING_USERNAME
-#  password: !secret RING_PASSWORD
-  username: jerry.workman@gmail.com
-  password: 898!Centers
+  username: !secret RING_USERNAME
+  password: !secret RING_PASSWORD
 
 #sensor version:
 #  platform: version
@@ -373,6 +389,17 @@ sensor snmp:
   - platform: statistics
     name: 'WAN Traffic OUT'
     entity_id: sensor.internet_speed_out
+
+
+sensor average_internet_in:
+  - platform: filter
+    name: "average internet in"
+    entity_id: sensor.internet_speed_in
+    filters:
+      - filter: time_simple_moving_average
+        window_size: 00:01
+        precision: 0
+
 
 twilio:
   account_sid:                       !secret TWILLIO_ACCOUNT_SID
@@ -473,10 +500,10 @@ panel_custom:
     config:
       title:                         ToDo
 
-  - name:                            lovelace
-    sidebar_title:                   Lovelace UI
-    sidebar_icon:                    mdi:hand-pointing-right
-    url_path:                        /lovelace
+#  - name:                            lovelace
+#    sidebar_title:                   Lovelace UI
+#    sidebar_icon:                    mdi:hand-pointing-right
+#    url_path:                        lovelace
 
 #  - name:                           hello
 #    sidebar_title:                  Hello World
@@ -515,15 +542,16 @@ camera louise:
   limit_refetch_to_url_change:       true
 
 amcrest:
+  # Living Room
   - host:                            192.168.10.51
     username:                        admin
     password:                        !secret AMCREST_PASSWORD
     name:                            Living Room
-#    sensors:
-#      - motion_detector
-#      - sdcard
+    sensors:
+      - motion_detector
+      - sdcard
 
-# Front Garage
+  # Front Garage
   - host:                            192.168.10.57
     username:                        admin
     password:                        !secret AMCREST_GARAGE_PASSWORD
@@ -658,16 +686,22 @@ sensor mqtt:
 
 #  platform:
 
+binary_sensor fr_camera:
+  - platform: template
+    sensors:
+      lr_camera_motion_detected:
+        friendly_name: "LR Camera Motion Detected"
+        value_template: >-
+          {{ states('sensor.living_room_motion_detected') == 'True' }}
 
 sensor countdown_timer:
   platform:                          countdown_timer
   timers:
     Living Room Timed Light:
-      sensors:                       binary_sensor.pir_09
-#      sensors:                       group.living_room_pir
+      sensors:                       binary_sensor.pir_09,binary_sensor.lr_camera_motion_detected
       enable_switch:                 switch.lr_light_auto
       switch:                        switch.evolve_guest_controls_lsm15_wall_switch_switch_2
-#    switch:                          group.living_room_light
+      restart:                       False
     Family Room Timed Light:
       sensors:                       binary_sensor.back_02,binary_sensor.ecolink_motion_sensor_sensor_2
       enable_switch:                 switch.fr_light_auto
@@ -763,6 +797,7 @@ switch mock:
 weather darksky:
   - platform:                        darksky
     api_key:                         !secret DARKSKY_API_KEY
+    mode:                            daily
 
 sensor darksky:
   - platform:                        darksky
@@ -822,15 +857,15 @@ zone home:
 #  radius:                            300
 #  icon:                              mdi:office
 
-zone Office:
-  Name:                              Charleston Area Alliance
+zone office:
+  name:                              Office
   latitude:                          38.350802
   longitude:                         -81.625556
   radius:                            300
   icon:                              mdi:office
 
 zone bailey:
-  name:                              Bailey & Wyant
+  name:                              Bailey
   latitude:                          38.351180
   longitude:                         -81.637878
   radius:                            300
@@ -858,7 +893,7 @@ camera:                              !include camera.yaml
 
 envisalink:                          !include envisalink.yaml
 
-weblink:                             !include weblink.yaml
+#weblink:                             !include weblink.yaml
 
 sensor influxdb:
   platform:                          influxdb
@@ -910,8 +945,8 @@ sensor influxdb:
 
 binary_sensor 1:
   platform:                          command_line
-  command:                           'ping -c 1 192.168.10.228 | grep "1 received" | wc -l'
-#  command:                           'nmap -p 80 192.168.10.228 | grep 80 | wc -l'
+#  command:                           'ping -c 1 192.168.10.228 | grep "1 received" | wc -l'
+  command:                           'nmap -Pn -p 80 192.168.10.228 | grep 80 | wc -l'
   name:                              'Front Cam Online'
   payload_on:                        1
   payload_off:                       0
@@ -1094,13 +1129,27 @@ media_player:
   - platform:                        vlc
     name:                            speaker
     arguments:                       '--alsa-audio-device=hw:0,0'
+  - platform:                        webostv
+    host:                            192.168.10.229
+    name:                            Living Room LG TV
 
 # Only the main box has an IP address
   - platform:                        directv
     host:                            192.168.10.213
     port:                            8080
-    name:                            LR DirecTV
+    name:                            Living Room DTV
     device:                          0
+  - platform:                        directv
+    host:                            192.168.10.213
+    port:                            8080
+    name:                            Rec Room DTV
+    device:                          D42C0FF18CBD 
+  - platform:                        directv
+    host:                            192.168.10.213
+    port:                            8080
+    name:                            Master Bed Room DTV
+    device:                          44AAF566A381
+
 
 alexa:
   #intents:
@@ -1119,11 +1168,11 @@ input_boolean:
     initial:                         on
     icon:                            mdi:human
     
-input_text:
-  command:
-    name:                            Button
-  light_tiles:
-    name:                            Buttons
+#input_text:
+#  command:
+#    name:                            Button
+#  light_tiles:
+#    name:                            Buttons
 
 input_number:
   garage_delay:
@@ -1157,6 +1206,8 @@ input_number:
 #         {% elif is_state_attr("lock.kwikset_touchpad_electronic_deadbolt_locked", "lock_status", "Locked with Keypad by user 2") %}
 #           L2
 
+# TODO:
+# lock.schlage_be469_touchscreen_deadbolt_locked
 #sensor lock_status:
 #  - platform:                        template
 #    sensors:
@@ -1169,7 +1220,28 @@ input_number:
 #        friendly_name:               'Side Door Lock Status'
 #        value_template:              '{{ states.lock.kwikset_touchpad_electronic_deadbolt_locked_2.attributes.lock_status }}'
 #        #entity_id:                  lock.kwikset_touchpad_electronic_deadbolt_locked_2
-        
+
+#shell_command lovelace:
+#  lovelace_gen: 'python /home/homeassistant/ha/lovelace-gen.py'
+
+history_graph:
+  voltage:
+    name: Line Voltage
+    entities:
+      - sensor.line_voltage
+  power:
+    name: Power Meter
+    entities:
+       - sensor.power_meter
+  down_heat_pump:
+    name: Down Heat Pump
+    entities:
+      - sensor.down_heat_pump
+  out_temperaturess:
+    name: Outside Temperature
+    entities:
+      - sensor.out_temperature
+
 intent_script:                       !include intent_script.yaml
 
 automation:                          !include automations.yaml
