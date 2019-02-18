@@ -1,0 +1,14 @@
+alias: Startup Night
+trigger:
+  platform: homeassistant
+  event: start
+condition:
+  condition: and
+  conditions:
+    - condition: sun
+      after: sunset
+    - condition: sun
+      before: sunrise
+action:
+  service: scene.turn_on
+  entity_id: scene.night

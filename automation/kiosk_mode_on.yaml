@@ -1,0 +1,12 @@
+alias:  Kiosk Mode On
+trigger:
+  platform: state
+  entity_id: input_boolean.kiosk_mode
+  from: 'off'
+  to: 'on'
+action:
+  - service: group.set_visibility
+    entity_id: group.kiosk
+    data:
+      visible: True
+

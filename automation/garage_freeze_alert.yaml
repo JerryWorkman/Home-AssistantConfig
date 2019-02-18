@@ -1,0 +1,18 @@
+alias: Garage Freeze Alert
+trigger:
+  platform: state
+  entity_id: binary_sensor.garage_freeze_alert
+  from: "off"
+  to: "on"
+action:
+#  - service: shell_command.door_bell
+  
+- service: tts.google_say
+  entity_id: media_player.speaker
+  data_template:
+    message: 'Garage Freeze Alert.'
+
+- service: notify.jerry
+  data:
+    title: "Garage Freeze Alert"
+    message: 'Garage temperature < 32 degF'

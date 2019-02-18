@@ -1,0 +1,10 @@
+alias: Notify when smoke
+trigger:
+  platform: state
+  entity_id: binary_sensor.smoke_detectors_06
+  to: "on"
+action:
+  - service: notify.jerry
+    data:
+      title: "Smoke Detected"
+      message: "Alarm: smoke detected"

@@ -1,0 +1,15 @@
+#TODO: alarm home or away must be enabled
+
+alias: Notify when alarm
+trigger:
+  platform: state
+  entity_id: group.alarms
+  from: 'off'
+  to: 'on'
+action:
+#  - service: notify.jerry
+#    data_template:
+#      title: "Alarm Detected"
+#      message: "Security Alarm"
+#  - service: shell_command.sound_alarm
+  

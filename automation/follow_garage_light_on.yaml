@@ -1,0 +1,8 @@
+alias: 'Wemo Follow Garage Light on'
+trigger:
+  platform: state
+  entity_id: switch.ge_14291_inwall_smart_switch_switch
+  to: 'on'
+action:
+  service: switch.turn_on
+  entity_id: switch.wemo_mini

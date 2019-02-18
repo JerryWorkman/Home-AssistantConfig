@@ -1,0 +1,10 @@
+alias: Notify when house watts are high
+trigger:
+  platform: numeric_state
+  entity_id: sensor.power_meter
+  above: 12000
+action:
+  - service: notify.jerry
+    data_template:
+      title: "House Watts High"
+      message: "House Power is {{ sensor.power_meter }} watts"

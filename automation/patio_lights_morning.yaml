@@ -1,0 +1,7 @@
+alias: Patio lights disabled
+trigger:
+  platform: sun
+  event: 'sunrise'
+action:
+  service: switch.turn_off
+  entity_id: switch.patio_light_auto,switch.back_patio_light_switch

@@ -1,0 +1,14 @@
+alias: Occupancy
+trigger:
+  platform: numeric_state
+  entity_id: sensor.home_occupancy_confidence
+  above: 10
+action:
+  - service: homeassistant.turn_on
+    data:
+      entity_id: input_boolean.occupancy
+#  - service: notify.jerry
+#    data:
+#      title: "Occupancy Alert"
+#      message: 'Someone is home'
+

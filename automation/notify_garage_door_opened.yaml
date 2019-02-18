@@ -1,0 +1,26 @@
+alias: Notify when front garage door opened
+trigger:
+  platform: state
+  entity_id: binary_sensor.front_garage_door_tilt_sensor
+  from: "off"
+  to: "on"
+condition:
+  condition: or
+  conditions:
+   - condition: time
+     after: "10:00"
+   - condition: time
+     before: "22:30"
+action:
+#  - service: shell_command.door_bell
+#  - service: tts.google_say
+#    entity_id: media_player.speaker
+#    data_template:
+#      message: 'Front garage door is opening.'
+      
+  - service: notify.jerry
+    data:
+      title: "Garage Door"
+      message: 'Front garage door is opening.'
+
+      

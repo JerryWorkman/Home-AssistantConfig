@@ -1,0 +1,64 @@
+# TODO: use scene to close garage door, make house secure
+
+alias: Startup
+trigger:
+  platform: homeassistant
+  event: start
+action:
+#  - service: notify.jerry
+#    data:
+#      title: "Startup"
+#      message: "Home Assistant Startup"
+
+#  - service: notify.twilio_sms
+#    data:
+#      message: 'Home Assistant Startup'
+#      target:
+#        - +13045523055
+
+#  - service: shell_command.door_bell
+  
+#  - service: tts.google_say
+#    entity_id: media_player.speaker
+#    data_template:
+#      message: 'Restarting home assistant.'
+      
+#- alias: 'Say good night'
+#  - service: tts.google_say
+#    entity_id: media_player.speaker
+#    data_template:
+#      message: >-
+#        {{ [
+#        "Good night. " ,
+#        "Good evening. " ,
+#        "Sweet dreams. " ,
+#        "See you tomorrow. " ,
+#        "Have a wonderful night. " ,
+#        "See you soon. " 
+#        ] |random }}
+
+  #make sure garage door toggle is off
+#  - service: switch.garage_door_switch.turn_off
+  - service: switch.turn_off
+    entity_id: switch.garage_door_switch
+
+  #turn off Kiosk Mode
+#  - service: group.set_visibility
+#    entity_id: group.kiosk
+#    data:
+#      visible: False
+
+    
+# Testing
+#Don't work
+
+#  - service: script.turn_on
+#    entity_id: script.flash_living_room
+
+#  - service: switch.turn_on
+#    entity_id: switch.flash
+
+  - service: notify.jerry
+    data:
+      title: "Occupancy Alert"
+      message: 'Someone is home'

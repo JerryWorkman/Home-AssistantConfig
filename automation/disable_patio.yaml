@@ -1,0 +1,14 @@
+alias: Disable Patio PIR on startup if daylight
+trigger:
+  platform: event
+  event_type: homeassistant_start
+condition:
+  condition: state
+  entity_id: sun.sun
+  state: 'above_horizon'
+action:
+  - service: switch.turn_off
+    entity_id: switch.patio_light_auto
+    
+    
+  

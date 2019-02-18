@@ -1,0 +1,14 @@
+alias: Startup Day
+trigger:
+  platform: homeassistant
+  event: start
+condition:
+  condition: and
+  conditions:
+    - condition: sun
+      after: sunrise
+    - condition: sun
+      before: sunset
+action:
+  service: scene.turn_on
+  entity_id: scene.day

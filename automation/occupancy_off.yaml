@@ -1,0 +1,14 @@
+alias: Occupancy Off
+trigger:
+  platform: numeric_state
+  entity_id: sensor.home_occupancy_confidence
+  below: 10
+action:
+  - service: homeassistant.turn_off
+    data:
+      entity_id: input_boolean.occupancy
+#  - service: notify.jerry
+#    data:
+#      title: "Occupancy Alert"
+#      message: 'No one is home'
+

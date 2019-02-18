@@ -1,0 +1,14 @@
+alias: 'Home Mode'
+#trigger:
+#  platform: zone
+#  event: enter
+#  zone: zone.home
+#  entity_id: group.people
+
+trigger:
+  platform: state
+  entity_id: group.people
+  to: 'home'
+action:
+  service: scene.turn_on
+  entity_id: scene.home

@@ -1,0 +1,17 @@
+alias: Close Front Garage Door Late
+trigger:
+  platform: time
+  # When 'at' is used, you cannot also match on hour, minute, seconds.
+  # Military time format.
+  at: '22:30:00'
+condition:
+  condition: state
+  entity_id: binary_sensor.front_garage_door_tilt_sensor
+  state: 'on'
+action:
+  - service: homeassistant.close
+    entity_id: cover.garage_door
+  - service: notify.jerry
+    data:
+      title: "Closing Front Garage Door"
+      message: "Closing Front Garage Door it's 10:30 pm"

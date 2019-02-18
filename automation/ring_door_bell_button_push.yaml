@@ -1,0 +1,30 @@
+alias: Notify when Ring Doorbell button is pressed
+trigger:
+  platform: state
+  entity_id: binary_sensor.ring_front_door_ding
+  from: "off"
+  to: "on"
+#condition:
+#  condition: state
+#  entity_id: binary_sensor.front_01
+#  state: 'off' #seems to be broken
+#action:
+#  - service: shell_command.door_bell
+
+action:
+  - service: media_player.play_media
+    entity_id: media_player.speaker
+    data:
+      media_content_id: /home/homeassistant/.homeassistant/doorbell-2.mp3
+      media_content_type: music
+
+  - service: tts.google_say
+    entity_id: media_player.speaker
+    data_template:
+      message: 'Someone is at the front door.'
+      
+#  - service: notify.jerry
+#    data:
+#      title: "Front Door"
+#      message: 'Someone is at the front door.'
+      

@@ -1,0 +1,22 @@
+alias: Notify when fire
+trigger:
+  platform: state
+  entity_id: group.fire_sensors
+  from: "off"
+  to: "on"
+action:
+  - service: notify.jerry
+    data:
+      title: "Fire Detected"
+      message: "Alarm- fire detected"
+      
+  - service: media_player.play_media
+    entity_id: media_player.speaker
+    data:
+      media_content_id: /home/homeassistant/.homeassistant/alarm.mp3
+      media_content_type: music
+ 
+  - service: tts.google_say
+    entity_id: media_player.speaker
+    data_template:
+      message: 'Fire Alarm.'
