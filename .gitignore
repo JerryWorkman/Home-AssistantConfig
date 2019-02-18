@@ -3,6 +3,9 @@
 !*.sh
 !automation
 !scenes
+!panels
+!packages
+!tts
 !.gitignore
 secrets.yaml
 known_devices.yaml
