@@ -1,0 +1,109 @@
+<html>
+<body>
+
+<div id="chart1">
+<div id="chart2">
+<div id="chart3">
+<div id="chart4">
+<div id="chart5">
+<div id="chart6">
+
+
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+<script type="text/javascript" onload="initChart()">
+
+  var MAX = 1500
+  var channel = "120283";
+  var READAPIKEY = "2WKPFONMVCUS715V";
+
+  google.load('visualization', '1', {packages:['gauge']});
+  google.setOnLoadCallback(initChart);
+
+  var power_options = {
+    width: 100, height: 100,
+    yellowFrom: 5000, yellowTo: 7500,
+    redFrom: 7500, redTo: 10000,
+    minorTicks: 5,
+    max: 10000
+  };
+
+  var options = {
+    width: 100, height: 100,
+    yellowFrom: 0.5*MAX, yellowTo: 0.75*MAX,
+    redFrom: 0.75*MAX, redTo: MAX,
+    minorTicks: 5,
+    max: MAX
+  };
+
+  var cost_options = {
+    width: 100, height: 100,
+    yellowFrom: 0.5*MAX, yellowTo: 0.75*MAX,
+    redFrom: 0.75*MAX, redTo: MAX,
+    minorTicks: 5,
+    max: MAX
+  };
+
+  var data1, data2, data3, data4, data5 data6;
+  var chart1, chart2, chart3, chart4, chart5, chart6;
+  function initChart() {
+    data1 = google.visualization.arrayToDataTable([
+      ['Label', 'Value'],
+      ['W', 0]
+    ]);
+    data2 = google.visualization.arrayToDataTable([
+      ['Label', 'Value'],
+      ['Up A/H', 0]
+    ]);
+    data3 = google.visualization.arrayToDataTable([
+      ['Label', 'Value'],
+      ['Up HP', 0]
+    ]);
+    data4 = google.visualization.arrayToDataTable([
+      ['Label', 'Value'],
+      ['Lower A/H', 0]
+    ]);
+    data5 = google.visualization.arrayToDataTable([
+      ['Label', 'Value'],
+      ['Lower HP', 0]
+    ]);
+    data6 = google.visualization.arrayToDataTable([
+      ['Label', 'Value'],
+      ['Cost / Day', 0]
+    ]);
+
+    chart1 = new google.visualization.Gauge(document.getElementById('guage1_div'));
+    chart2 = new google.visualization.Gauge(document.getElementById('guage2_div'));
+    chart3 = new google.visualization.Gauge(document.getElementById('guage3_div'));
+    chart4 = new google.visualization.Gauge(document.getElementById('guage4_div'));
+    chart5 = new google.visualization.Gauge(document.getElementById('guage5_div'));
+    chart6 = new google.visualization.Gauge(document.getElementById('guage6_div'));
+    chart1.draw(data1, options);
+    chart2.draw(data2, options);
+    chart3.draw(data3, options);
+    chart4.draw(data4, options);
+    chart5.draw(data5, options);
+    chart6.draw(data6, cost_options);
+
+    setInterval('callBack()', 20000);
+    callBack();
+  }
+
+  function callBack() {
+    $.getJSON("https://api.thingspeak.com/channels/" + channel + "/feed/last.json?apikey=" +
+              READAPIKEY + "&callback=?", function(dat) {
+      data1.setValue(0, 1, dat.field1);
+      data2.setValue(0, 1, dat.field2);
+      data3.setValue(0, 1, dat.field3);
+      data4.setValue(0, 1, dat.field4);
+      data5.setValue(0, 1, dat.field5);
+      data6.setValue(0, 1, dat.field6);
+      chart1.draw(data1, power_options);
+      chart2.draw(data2, options);
+      chart3.draw(data3, options);
+      chart4.draw(data4, options);
+      chart5.draw(data5, options);
+      chart6.draw(data6, options);
+    });
+  }
+</script>

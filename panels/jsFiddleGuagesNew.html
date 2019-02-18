@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A web interface for Home Assistant with WebSocket">
+    <title>Home Assistant with WebSocket</title>
+    <!-- script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script -->
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js'></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src='https://unpkg.com/home-assistant-js-websocket@0.4.1/dist/haws.umd.js'></script>
+    <script type="text/javascript">
+
+      var power_options = {
+        width: 100, height: 100,
+        yellowFrom: 5000, yellowTo: 7500,
+        redFrom: 7500, redTo: 10000,
+        minorTicks: 5,
+        max: 10000
+      };
+
+      var temp_options = {
+        width: 100, height: 100,
+        yellowFrom: 80, yellowTo: 90,
+        redFrom: 90, redTo: 100,
+        minorTicks: 5,
+        max: 100
+      };
+
+      var MAX = 1500;
+      var options = {
+        width: 100, height: 100,
+        yellowFrom: 0.5*MAX, yellowTo: 0.75*MAX,
+        redFrom: 0.75*MAX, redTo: MAX,
+        minorTicks: 5,
+        max: MAX
+      };
+
+      var guages = {}
+      guages["sensor.power_meter"] = {
+      	name: "Meter", div: "guage1_div",
+      	options: power_options}
+      guages["sensor.up_air_handler"] = {
+      	name: "Up A/H",
+      	div: "guage2_div",
+      	options: power_options};
+      guages["sensor.up_heat_pump"] = {
+      	name: "Up HP",
+      	div: "guage3_div",
+      	options: power_options};
+      guages["sensor.down_air_handler"] = {
+      	name: "Dn AH",
+      	div: "guage4_div",
+      	options: power_options};
+      guages["sensor.down_heat_pump"] = {
+      	name: "Dn HP",
+      	div: "guage5_div",
+      	options: power_options};
+
+
+      function init() {
+        const status = document.getElementById('status');
+        const root = document.getElementById('content');
+        google.charts.load('current', {'packages':['gauge']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function render(entities) {
+          _.each(guages, function(guage, key) {
+	  		guage["data"].setValue(0, 1, parseInt(entities[key].state));
+			guage["chart"].draw(guage["data"], guage["options"]);
+          });
+        }
+
+
+        function drawChart() {
+          _.each(guages, function(guage) {
+          	guage.data = google.visualization.arrayToDataTable([['Label', 'Value'], [guage.name, 0]]);
+            guage.chart = new google.visualization.Gauge(document.getElementById(guage.div));
+            guage.chart.draw(guage.data, guage.options);
+          });
+          HAWS.createConnection('wss://home.jerryworkman.com:8123/api/websocket').then(conn => {
+            status.innerHTML = 'yes';
+            HAWS.subscribeEntities(conn, render);
+          }, err => { status.innerHTML = `NO. Error: (${err})`; });
+        }
+
+      }
+
+    </script>
+</head>
+<body onload="init();">
+<p>Connected: <span id='status'>Connecting...</span></p>
+<h1>Power Guages</h1>
+<table>
+<tr>
+<td>Total</td><td></td>
+<td>Up A/H</td><td></td>
+<td>Up HP</td><td></td>
+</tr>
+<tr>
+<td><div id='guage1_div'></div></td>
+<td></td>
+<td><div id='guage2_div'></div></td>
+<td></td>
+<td><div id='guage3_div'></div></td>
+<td></td>
+</tr>
+<tr>
+<td>Down A/H</td><td></td>
+<td>Down HP</td><td></td>
+</tr>
+<tr>
+<td><div id='guage4_div'></div></td>
+<td></td>
+<td><div id='guage5_div'></div></td>
+</tr>
+</table>
+
+<table id='content'></table>
+
+</body>
+</html>

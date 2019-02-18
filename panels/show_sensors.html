@@ -1,0 +1,109 @@
+<!--
+Adapted from hello panel_custom example and alarm component
+Displays the value of a list of sensors
+
+In configuration.yaml
+
+panels_custom:
+  - name: show_sensors
+    sidebar_title: Power Sensors
+    sidebar_icon: mdi:hand-pointing-right
+    config:
+      sensors: sensor.power_meter,sensor.up_air_handler,sensor.up_heat_pump,sensor.down_air_handler,sensor.down_heat_pump
+-->
+
+<!-- Shadow DOM -->
+
+<dom-module id='ha-panel-show_sensors'>
+  <template>
+    <style>
+      state-card-display {
+	    font-weight: bold;
+	    font-size: 30px;
+	  }
+  	  p {
+	    font-weight: bold;
+	    font-size: 30px;
+	  }
+      .main_title {
+        font-weight: bold;
+        font-size: 36px;
+      }
+      .title {
+        font-weight: bold;
+        font-size: 30px;
+      }
+      div.name {
+        align: left;
+        width: "50%";
+        font-size: 24px;
+      }
+      div.state {
+        align: left;
+        width: "50%";
+        font-size: 24px;
+        padding-right: 10px;
+      }
+	  :host {
+		  --state-card-display-title-color: green;
+	  }
+
+    </style>
+    <app-header-layout has-scrolling-region>
+  	  <app-header slot="header" fixed>
+		<app-toolbar>
+   		  <div class=main-title>Sensors</div>
+		</app-toolbar>
+	</app-header>
+   <div class='box'>
+	<div class='title'>All Sensors</div>
+      <template is='dom-repeat' items='[[sensors]]' as='entity'>
+	    <state-card-display state-obj="[[entity]]" hass='[[hass]]'></state-card-display>
+	  </template>
+	 </div>
+    </div>
+    </app-header-layout>
+  </template>
+</dom-module>
+
+<script>
+Polymer({
+  is: 'ha-panel-show_sensors', // Must match dom-module above
+  properties: {
+    // Home Assistant object
+    hass: {
+      type: Object,
+    },
+    // If should render in narrow mode
+    narrow: {
+      type: Boolean,
+      value: false,
+    },
+    // If sidebar is currently shown
+    showMenu: {
+      type: Boolean,
+      value: false,
+    },
+    // Home Assistant panel info
+    // panel.config contains config passed to register_panel serverside
+    panel: {
+      type: Object,
+    },
+    // The list of sensors
+    sensors: {
+      type: String,
+      computed: 'computeSensors(hass, panel)'
+    }
+  },
+
+    computeSensors: function(hass, panel) {
+      ids = panel.config.sensors.trim().split(",")
+      try {
+    	  return ids.map(function (key) { return hass.states[key]; }).filter(function (e) { return e != undefined; });
+    	} catch(error) {
+    	  console.log("Exception in computeSensors" + error);
+    	}
+    },
+
+});
+</script>

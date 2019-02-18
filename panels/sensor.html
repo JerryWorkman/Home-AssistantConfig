@@ -1,0 +1,66 @@
+<!--
+Adapted from hello panel_custom example
+Displays the value of one sensor
+
+In configuration.yaml
+
+panels_custom:
+  - name: sensor
+    sidebar_title: Power Meter
+    sidebar_icon: mdi:hand-pointing-right
+    config:
+      sensor: sensor.power_meter
+-->
+
+<dom-module id='ha-panel-sensor'>
+  <template>
+    <style>
+      p {
+        font-weight: bold;
+        font-size: 24px;
+      }
+    </style>
+    <p>{{sensor}}</p>
+  </template>
+</dom-module>
+
+<script>
+Polymer({
+  is: 'ha-panel-sensor',
+  properties: {
+    // Home Assistant object
+    hass: {
+      type: Object,
+    },
+    // If should render in narrow mode
+    narrow: {
+      type: Boolean,
+      value: false,
+    },
+    // If sidebar is currently shown
+    showMenu: {
+      type: Boolean,
+      value: false,
+    },
+    // Home Assistant panel info
+    // panel.config contains config passed to register_panel serverside
+    panel: {
+      type: Object,
+    },
+    sensor: {
+      type: String,
+      computed: 'computeSensor(hass, panel)',
+    }
+  },
+
+  computeSensor: function (hass, panel) {
+    var value = parseInt(hass.states[panel.config.sensor].state);
+    return panel && panel.config && panel.config.sensor ?
+      panel.config.sensor + ": " + value + " |" +
+      Array(parseInt(value/100)).join('=') + "|" : 'No Value';
+      //Array(parseInt(value/100)).join('&#9612;') + "|" : 'No Value';
+      //Array(parseInt(value/100)).join(String.fromCharCode(9612)) + "|" : 'No Value';
+  },
+});
+</script>
+

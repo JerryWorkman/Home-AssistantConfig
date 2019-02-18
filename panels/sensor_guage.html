@@ -1,0 +1,89 @@
+<!--
+Adapted from hello panel_custom example
+Displays the value of one sensor
+
+Doesn't work
+-->
+
+<dom-module id='ha-panel-sensor'>
+  <template>
+    <style>
+      p {
+        font-weight: bold;
+        font-size: 24px;
+      }
+    </style>
+    <p>{{sensor}}</p>
+    <div id="chart1">/div>
+  </template>
+</dom-module>
+<!--
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+-->
+<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+<script>
+  var MAX = 1500
+  var channel = "120283";
+  var READAPIKEY = "2WKPFONMVCUS715V";
+
+  google.load('visualization', '1', {packages:['gauge']});
+  google.setOnLoadCallback(initChart);
+
+  var options = {
+    width: 100, height: 100,
+    yellowFrom: 5000, yellowTo: 7500,
+    redFrom: 7500, redTo: 10000,
+    minorTicks: 5,
+    max: 10000
+  };
+
+  var data1;
+  var chart1;
+
+  function initChart() {
+    data1 = google.visualization.arrayToDataTable([
+      ['Label', 'Value'],
+      ['W', 0]
+    ]);
+
+    chart1 = new google.visualization.Gauge(document.getElementById('guage1_div'));
+    chart1.draw(data1, options);
+  }
+
+
+Polymer({
+  is: 'ha-panel-sensor',
+  properties: {
+    // Home Assistant object
+    hass: {
+      type: Object,
+    },
+    // If should render in narrow mode
+    narrow: {
+      type: Boolean,
+      value: false,
+    },
+    // If sidebar is currently shown
+    showMenu: {
+      type: Boolean,
+      value: false,
+    },
+    // Home Assistant panel info
+    // panel.config contains config passed to register_panel serverside
+    panel: {
+      type: Object,
+    },
+    sensor: {
+      type: String,
+      computed: 'computeSensor(hass, panel)',
+    }
+  },
+
+  computeSensor: function (hass, panel) {
+    data1.setValue(0, 1, hass.states[panel.config.sensor].state);
+    chart1.draw(data1, options);
+    return panel && panel.config && panel.config.sensor ? panel.config.sensor + ": " + hass.states[panel.config.sensor].state : 'No Value';
+  },
+});
+</script>
+
