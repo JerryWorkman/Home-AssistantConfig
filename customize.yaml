@@ -89,8 +89,8 @@ switch.aeotec_dsc26103_micro_switch_2nd_edition_switch:
 switch.ge_14291_inwall_smart_switch_switch:
   friendly_name: Garage Light
 #  polling_intensity: 1
-device_tracker.dehx6700bt__:
-  hidden: true
+# device_tracker.dehx6700bt__:
+#  hidden: true
 device_tracker.obdii:
   hidden: true
 binary_sensor.garage_back_pir_sensor:
@@ -140,8 +140,8 @@ device_tracker.louise_lc:
   entity_picture: /local/louise.jpg
 device_tracker.jerry_s7:
   friendly_name: Jerry
-sensor.ambient_:
-  hidden: true
+# sensor.ambient_:
+#  hidden: true
 #switch.gate:
 #  friendly_name: Mikes Gate Switch
 sensor.harmony_living_room:

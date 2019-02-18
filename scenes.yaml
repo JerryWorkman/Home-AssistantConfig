@@ -16,14 +16,14 @@
   - name: Night
     entities:
       switch.aeotec_dsc26103_micro_switch_2nd_edition_switch: on
-      switch.back_flood_switch: on
+      switch.outside_back_swi_switch: on
       switch.patio_light_auto: on
       switch.back_driveway_auto: on
 
   - name: Day
     entities:
       switch.aeotec_dsc26103_micro_switch_2nd_edition_switch: off
-      switch.back_flood_switch: off
+      switch.outside_back_swi_switch: off
       switch.patio_light_auto: off
       switch.back_patio_light_switch: off
       switch.back_driveway_auto: off

@@ -12,6 +12,11 @@ homeassistant:
   customize:                         !include customize.yaml
   packages:                          !include_dir_named packages
 
+  auth_providers:
+    - type: homeassistant
+    - type: legacy_api_password
+    - type: trusted_networks
+
   # shell_command.lovelace_gen
   customize_glob:
     "*sensor.*alarm*":
@@ -222,6 +227,12 @@ influxdb:
 http:
   base_url:                          !secret BASE_URL
   api_password:                      !secret API_PASSWORD
+  trusted_networks:
+    - 127.0.0.1
+    - ::1
+    - 192.168.10.0/24
+    - fd00::/8
+
 #  ssl_certificate:                  /home/homeassistant/.homeassistant/certbot/fullchain.pem
 #  ssl_key:                          /home/homeassistant/.homeassistant/certbot/privkey.pem
 
@@ -333,7 +344,7 @@ binary_sensor:
     - ding
     - motion
     
-#alarm_control_panel:                 !include alarm.yaml
+# alarm_control_panel:                 !include alarm.yaml
 
 #Mike's mFi
 #switch:
@@ -626,7 +637,7 @@ sensor mqtt:
     value_template: '{{ value_json.confidence }}'
     unit_of_measurement: '%'
     name: 'Jerry Home'
-    gravatar: jerry.workman@gmail.com
+    # gravatar: jerry.workman@gmail.com
 
   - platform: mqtt
     state_topic: 'monitor/familyroom/94:76:B7:80:B2:86'
@@ -1191,13 +1202,13 @@ input_number:
     name:                            Internet Traffic Delta In
     initial:                         0
     min:                             0
-    max:                             1500000
+    max:                             2000000
     step:                            1000
   internet_traffic_delta_out:
     name:                            Internet Traffic Delta Out
     initial:                         0
     min:                             0
-    max:                             1500000
+    max:                             2000000
     step:                            1000
 
 
@@ -1227,18 +1238,22 @@ input_number:
 history_graph:
   voltage:
     name: Line Voltage
+    refresh: 300
     entities:
       - sensor.line_voltage
   power:
     name: Power Meter
+    refresh: 300
     entities:
        - sensor.power_meter
   down_heat_pump:
     name: Down Heat Pump
+    refresh: 300
     entities:
       - sensor.down_heat_pump
   out_temperaturess:
     name: Outside Temperature
+    refresh: 300
     entities:
       - sensor.out_temperature
 
