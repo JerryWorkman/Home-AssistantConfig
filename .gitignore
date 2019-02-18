@@ -3,6 +3,7 @@
 !*.sh
 !*.mp3
 !*.html
+!lovelace
 !automation
 !scenes
 !panels
