@@ -1,4 +1,5 @@
 alias: Lock Front and Side Doors Late
+initial_state: true
 trigger:
   platform: time
   # When 'at' is used, you cannot also match on hour, minute, seconds.

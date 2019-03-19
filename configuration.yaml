@@ -17,6 +17,8 @@ homeassistant:
     - type: legacy_api_password
     - type: trusted_networks
 
+system_health:
+
   # shell_command.lovelace_gen
   customize_glob:
     "*sensor.*alarm*":
@@ -130,7 +132,6 @@ recorder:
       
       - sensor.back_driveway_pir_alarm_level
       - sensor.back_garage_door_tilt_alarm_level
-      - sensor.front_door_pir_alarm_level
       - sensor.front_garage_door_tilt_alarm_level
       - sensor.fr_pir_2_alarm_level
       - sensor.fr_pir_alarm_level
@@ -142,7 +143,6 @@ recorder:
       - sensor.patio_pir_alarm_level
       - sensor.back_driveway_pir_alarm_type
       - sensor.back_garage_door_tilt_alarm_type
-      - sensor.front_door_pir_alarm_type
       - sensor.front_garage_door_tilt_alarm_type
       - sensor.fr_pir_2_alarm_type
       - sensor.fr_pir_alarm_type
@@ -154,7 +154,6 @@ recorder:
       - sensor.patio_pir_alarm_type
       - sensor.back_driveway_pir_burglar
       - sensor.back_garage_door_tilt_burglar
-      - sensor.front_door_pir_burglar
       - sensor.front_garage_door_tilt_burglar
       - sensor.fr_pir_2_burglar
       - sensor.fr_pir_burglar
@@ -164,7 +163,6 @@ recorder:
       - sensor.patio_pir_burglar
       - sensor.back_driveway_pir_sourcenodeid
       - sensor.back_garage_door_tilt_sourcenodeid
-      - sensor.front_door_pir_sourcenodeid
       - sensor.front_garage_door_tilt_sourcenodeid
       - sensor.fr_pir_2_sourcenodeid
       - sensor.fr_pir_sourcenodeid
@@ -179,7 +177,6 @@ recorder:
       - sensor.up_temperature_battery
       - zwave.back_driveway_pir_battery
       - zwave.back_garage_door_tilt_battery
-      - zwave.front_door_pir_battery
       - zwave.front_garage_door_tilt_battery
       - zwave.fr_pir_2_battery
       - zwave.fr_pir_battery
@@ -543,7 +540,7 @@ ffmpeg:
 camera jerry:
   name:                              Jerry
   platform:                          generic
-  still_image_url:                   https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.jerry_s7.attributes.latitude }},{{ states.device_tracker.jerry_S7.attributes.longitude }}&zoom=13&size=500x500&maptype=roadmap&markers=color:blue%7Clabel:J%7C{{ states.device_tracker.jerry_S7.attributes.latitude }},{{ states.device_tracker.jerry_s7.attributes.longitude }}&key=AIzaSyBaGYOI7p4Iofh6MzKoAKAIxmtGt_7uAVc
+  still_image_url:                   https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.jerry_pixel3.attributes.latitude }},{{ states.device_tracker.jerry_pixel3.attributes.longitude }}&zoom=13&size=500x500&maptype=roadmap&markers=color:blue%7Clabel:J%7C{{ states.device_tracker.jerry_pixel3.attributes.latitude }},{{ states.device_tracker.jerry_pixel3.attributes.longitude }}&key=AIzaSyBaGYOI7p4Iofh6MzKoAKAIxmtGt_7uAVc
   limit_refetch_to_url_change:       true
 
 camera louise:
@@ -633,14 +630,16 @@ sensor mqtt:
 # monitor.sh
 
   - platform: mqtt
-    state_topic: 'monitor/livingroom/94:76:B7:80:B2:86'
+#    state_topic: 'monitor/livingroom/94:76:B7:80:B2:86'
+    state_topic: 'monitor/livingroom/3C:28:6D:00:BC:55'
     value_template: '{{ value_json.confidence }}'
     unit_of_measurement: '%'
     name: 'Jerry Home'
     # gravatar: jerry.workman@gmail.com
 
   - platform: mqtt
-    state_topic: 'monitor/familyroom/94:76:B7:80:B2:86'
+#    state_topic: 'monitor/familyroom/94:76:B7:80:B2:86'
+    state_topic: 'monitor/livingroom/3C:28:6D:00:BC:55'
     value_template: '{{ value_json.confidence }}'
     unit_of_measurement: '%'
     name: 'Jerry Family Room'
@@ -755,14 +754,29 @@ sensor countdown_timer:
 #      #- 'process_sleeping'
 #      #- 'cpu_temp'
 
-cover tilt:
-  platform:                          tilt
-  covers:
-    front_garage_door:
-      tilt_sensor:                   binary_sensor.front_garage_door_tilt_sensor
-      switch:                        switch.garage_door_switch
-      contact_delay:                 1
-      run_time:                      10
+#cover front_garage_door:
+#  - platform: template
+#    covers:
+#      garage_door:
+#        friendly_name: "Garage Door"
+#        value_template: "{{ states('binary_sensor.front_garage_door_tilt_sensor')|float > 0 }}"
+#        open_cover:
+#          service: script.open_garage_door
+#        close_cover:
+#          service: script.close_garage_door
+#        stop_cover:
+#          service: script.stop_garage_door
+
+cover  front_garage_door:
+  - platform: tilt
+    covers:
+      garage_door:
+        friendly_name:                 "Garage Door"
+        device_class:                  tilt
+        tilt_sensor:                   binary_sensor.front_garage_door_tilt_sensor
+        switch:                        switch.garage_door_switch
+        contact_delay:                 1
+        run_time:                      10
 
 ## garage_door.py must be on PATH
 #switch command_line:
@@ -816,7 +830,7 @@ sensor darksky:
     forecast:
       - 1
       - 7
-    update_interval:
+    scan_interval:
       minutes:                       10
     monitored_conditions:
       - summary
@@ -1257,11 +1271,28 @@ history_graph:
     entities:
       - sensor.out_temperature
 
+person:
+  - name: Jerry
+    id: jw
+    user_id: 6d121fa286574a83af0680973aa79f3c
+    device_trackers:
+      - device_tracker.jerry_pixel3
+      
+  - name: Louise  
+    id: lc
+#    user_id: 2
+    device_trackers:
+      - device_tracker.louise_lc
+
+device_tracker:
+  - platform: bluetooth_tracker
+
+
 intent_script:                       !include intent_script.yaml
 
-automation:                          !include automations.yaml
+# automation:                          !include automations.yaml
 
-automation manual:                   !include_dir_list automation
+automation:                          !include_dir_list automation/
 
 script:                              !include script.yaml
 

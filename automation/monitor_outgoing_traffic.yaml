@@ -1,4 +1,5 @@
 alias: Monitor Outgoing Traffic
+initial_state: true
 trigger:
   platform: state
   entity_id: sensor.snmp_wan_out

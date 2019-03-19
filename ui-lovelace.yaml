@@ -39,7 +39,7 @@ views:
         # The filter card will filter entities for their state
       - type: entity-filter
         entities:
-          - device_tracker.jerry_s7
+          - device_tracker.jerry_pixel3
           - device_tracker.louise_lc
         state_filter:
           - 'home'

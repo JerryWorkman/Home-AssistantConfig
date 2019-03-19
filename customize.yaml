@@ -89,7 +89,7 @@ switch.aeotec_dsc26103_micro_switch_2nd_edition_switch:
 switch.ge_14291_inwall_smart_switch_switch:
   friendly_name: Garage Light
 #  polling_intensity: 1
-# device_tracker.dehx6700bt__:
+# device_[Btracker.dehx6700bt__:
 #  hidden: true
 device_tracker.obdii:
   hidden: true
@@ -109,8 +109,6 @@ binary_sensor.front_garage_door_tilt_sensor:
   friendly_name: Front Garage Door Tilt
 binary_sensor.patio_pir_sensor:
   friendly_name: Back Patio PIR
-binary_sensor.front_door_pir_sensor:
-  friendly_name: Front Door PIR
 #binary_sensor.front_01:
 #  friendly_name: Front Door
 binary_sensor.back_02:
@@ -138,8 +136,9 @@ media_player.mast:
 device_tracker.louise_lc:
   friendly_name: Louise
   entity_picture: /local/louise.jpg
-device_tracker.jerry_s7:
+device_tracker.jerry_pixel3:
   friendly_name: Jerry
+  entity_picture: https://www.gravatar.com/avatar/dc713d40e20e28d76b6ad636fce7d2d1.jpg?s=80&d=wavatar
 # sensor.ambient_:
 #  hidden: true
 #switch.gate:

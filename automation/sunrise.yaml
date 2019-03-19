@@ -1,4 +1,5 @@
-alias: 'Security Lights off at sunrise'
+alias: 'Outside Lights off at sunrise'
+initial_state: true
 trigger:
   platform: sun
   event: 'sunrise'
@@ -6,7 +7,7 @@ action:
   - service: scene.turn_on
     entity_id: scene.day
 
-  - service: notify.jerry
-    data:
-      title: "Sunrise"
-      message: "Sunrise"
+#  - service: notify.jerry
+#    data:
+#      title: "Sunrise"
+#      message: "Sunrise"

@@ -1,4 +1,5 @@
 alias: Startup Day
+initial_state: true
 trigger:
   platform: homeassistant
   event: start

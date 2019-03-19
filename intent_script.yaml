@@ -5,12 +5,12 @@ WhereAreWeIntent:
   speech:
     type: plaintext
     text: >
-      {%- if is_state('device_tracker.jerry_s7', 'home') and
+      {%- if is_state('device_tracker.jerry_pixel3', 'home') and
              is_state('device_tracker.louise_lc', 'home') -%}
         You are both home, you silly
       {%- else -%}
         Louise is at {{ states("device_tracker.louise_lc") }}
-        and Jerry is at {{ states("device_tracker.jerry_s7") }}
+        and Jerry is at {{ states("device_tracker.jerry_pixel3") }}
       {% endif %}
 LocateIntent:
   action:

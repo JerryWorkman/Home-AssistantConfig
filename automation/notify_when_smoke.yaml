@@ -1,4 +1,5 @@
 alias: Notify when smoke
+initial_state: true
 trigger:
   platform: state
   entity_id: binary_sensor.smoke_detectors_06

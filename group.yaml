@@ -81,14 +81,16 @@
     control: hidden
     entities:
 #    - zone.home
-    - device_tracker.jerry_s7
-    - sensor.jerry_home
-    - sensor.jerry_family_room
+#    - person.jerry
+    - device_tracker.jerry_pixel3
+#    - sensor.jerry_home
+#    - sensor.jerry_family_room
+#    - person.louise
     - device_tracker.louise_lc
-    - sensor.louise_home
-    - sensor.louise_family_room
-    - sensor.home_occupancy_confidence
-    - input_boolean.occupancy
+#    - sensor.louise_home
+#    - sensor.louise_family_room
+#    - sensor.home_occupancy_confidence
+#    - input_boolean.occupancy
 
   Media:
     view: no
@@ -322,7 +324,7 @@
     control: hidden
     entities:
       - sun.sun
-      - binary_sensor.front_door_pir_sensor
+#      - binary_sensor.front_door_pir_sensor
       - sensor.out_temperature
       - sensor.out_humidity
       #- sensor.ambient_outdoor_humidity

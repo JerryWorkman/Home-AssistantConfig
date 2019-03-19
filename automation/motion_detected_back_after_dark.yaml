@@ -1,4 +1,5 @@
 alias: Motion detected after dark back driveway
+initial_state: true
 trigger:
   platform: state
   entity_id: binary_sensor.back_driveway_pir_sensor

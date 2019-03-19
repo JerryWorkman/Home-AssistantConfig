@@ -1,4 +1,5 @@
 alias: Garage Freeze Alert
+initial_state: true
 trigger:
   platform: state
   entity_id: binary_sensor.garage_freeze_alert

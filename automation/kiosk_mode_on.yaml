@@ -1,4 +1,5 @@
 alias:  Kiosk Mode On
+initial_state: true
 trigger:
   platform: state
   entity_id: input_boolean.kiosk_mode

@@ -1,4 +1,5 @@
 alias: Back Driveway lights evening
+initial_state: true
 trigger:
   platform: sun
   event: sunset

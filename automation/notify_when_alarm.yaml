@@ -1,6 +1,7 @@
 #TODO: alarm home or away must be enabled
 
 alias: Notify when alarm
+initial_state: true
 trigger:
   platform: state
   entity_id: group.alarms

@@ -26,7 +26,7 @@
 
 # Front Door
 - platform: ring
-  name: Front Door
+#  name: Front Door
   scan_interval: 90
 
 # Front Garage

@@ -1,4 +1,5 @@
 alias: 'Wemo Follow Garage Light on'
+initial_state: true
 trigger:
   platform: state
   entity_id: switch.ge_14291_inwall_smart_switch_switch

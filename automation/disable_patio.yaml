@@ -1,4 +1,5 @@
 alias: Disable Patio PIR on startup if daylight
+initial_state: true
 trigger:
   platform: event
   event_type: homeassistant_start

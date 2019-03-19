@@ -1,4 +1,5 @@
 alias: Back Driveway lights disabled
+initial_state: true
 trigger:
   platform: sun
   event: 'sunrise'

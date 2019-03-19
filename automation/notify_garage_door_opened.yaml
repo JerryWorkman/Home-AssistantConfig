@@ -1,4 +1,5 @@
 alias: Notify when front garage door opened
+initial_state: true
 trigger:
   platform: state
   entity_id: binary_sensor.front_garage_door_tilt_sensor

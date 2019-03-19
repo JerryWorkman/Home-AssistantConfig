@@ -1,6 +1,7 @@
 # TODO: use scene to close garage door, make house secure
 
 alias: Startup
+initial_state: true
 trigger:
   platform: homeassistant
   event: start
@@ -60,5 +61,5 @@ action:
 
   - service: notify.jerry
     data:
-      title: "Occupancy Alert"
-      message: 'Someone is home'
+      title: "HA Startup"
+      message: 'Home Assistant'
