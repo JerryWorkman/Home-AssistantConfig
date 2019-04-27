@@ -1,5 +1,7 @@
 cover.front_garage_door:
   friendly_name: Front Garage Door
+switch.fr_fan_switch:
+  friendly_name: Family Room Fans
 group.all_scripts:
   hidden: true
 binary_sensor.floorplan:
@@ -52,7 +54,7 @@ input_text.light_tiles:
       label: GL Auto
       icon: mdi:lightbulb
     - entity: cover.front_garage_door
-      label: Garage
+      label: Front Garage Door
       icon: mdi:garage
 lock.kwikset_touchpad_electronic_deadbolt_locked_2:
   friendly_name: Side Door Lock
@@ -91,13 +93,16 @@ switch.ge_14291_inwall_smart_switch_switch:
 #  polling_intensity: 1
 # device_[Btracker.dehx6700bt__:
 #  hidden: true
+device_tracker.lg_tv_lg_webos_tv:
+  hidden: true
 device_tracker.obdii:
   hidden: true
 binary_sensor.garage_back_pir_sensor:
   friendly_name: Garage Back PIR
 binary_sensor.ecolink_motion_sensor_sensor:
   friendly_name: Garage Side PIR
-binary_sensor.back_garage_door_tilt_sensor:
+#binary_sensor.back_garage_door_tilt_sensor:
+binary_sensor.ecolink_tilt_sensor_sensor:
   friendly_name: Back Garage Door Tilt
 binary_sensor.back_driveway_pir_sensor:
   friendly_name: Back Driveway PIR Sensor
@@ -105,7 +110,8 @@ sensor.garage_temphygro_temperature:
   hidden: true
 sensor.garage_temphygro_relative_humidity:
   hidden: true
-binary_sensor.front_garage_door_tilt_sensor:
+#binary_sensor.front_garage_door_tilt_sensor:
+binary_sensor.ecolink_tilt_sensor_sensor_2:
   friendly_name: Front Garage Door Tilt
 binary_sensor.patio_pir_sensor:
   friendly_name: Back Patio PIR
@@ -166,8 +172,8 @@ sensor.wan_traffic_out_mean:
   friendly_name: 'WAN Upload Average'
   icon: mdi:upload
 
-#fan.ge_12730_fan_control_switch_level:
-#  friendly_name: FR Fan Control Level
+timer.fr_light:
+  friendly_name: Family Room Light Timer  
 sensor.snmp_in:
   hidden: true
 sensor.snmp_out:

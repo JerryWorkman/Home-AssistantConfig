@@ -15,25 +15,30 @@ homeassistant:
   auth_providers:
     - type: homeassistant
     - type: legacy_api_password
+      api_password: !secret API_PASSWORD
     - type: trusted_networks
+      trusted_networks:
+        - 192.168.10.0/24
+        - 127.0.0.1/32
+        - fd00::/8
 
 system_health:
 
   # shell_command.lovelace_gen
   customize_glob:
-    "*sensor.*alarm*":
+    'sensor.*alarm*':
       hidden:                        true
-    "*sensor.*burglar*":
+    'sensor.*burglar*':
       hidden:                        true
-    "*sensor.*sourcenodeid*":
+    'sensor.*sourcenodeid*"':
       hidden:                        true
-    "*sensor.*power_management*":
+    'sensor.*power_management*':
       hidden:                        true
-    "*sensor.*temphygro_alarm*":    
-      hidden:                        true
-    "sensor.dark_sky*":
-      hidden:                        true
-#    "switch.*":
+#    '*sensor.*temphygro_alarm*':    
+#      hidden:                        true
+#    'sensor.dark_sky*':
+#      hidden:                        true
+#    'switch.*':
 #      custom_ui_state_card:         state-card-custom-ui
       
 # Enables the frontend
@@ -64,7 +69,7 @@ logger:
 #    homeassistant.components.mqtt:  debug
 #    sensor.power_meter:             debug
 #    custom_components.sensor.ambient: debug
-#    custom_components.sensor.countdown_timer: debug
+#    custom_components.countdown_timer.sensor: debug
 #    sensor.torque:                  debug
 #    hdmi_cec:                       debug
 #    components.climate.nest:        debug
@@ -223,12 +228,6 @@ influxdb:
 
 http:
   base_url:                          !secret BASE_URL
-  api_password:                      !secret API_PASSWORD
-  trusted_networks:
-    - 127.0.0.1
-    - ::1
-    - 192.168.10.0/24
-    - fd00::/8
 
 #  ssl_certificate:                  /home/homeassistant/.homeassistant/certbot/fullchain.pem
 #  ssl_key:                          /home/homeassistant/.homeassistant/certbot/privkey.pem
@@ -246,9 +245,9 @@ discovery:
     - philips_hue
 
 # Phillips Hue
-hue:
-  bridges:
-    - host: 192.168.10.191
+#hue:
+#  bridges:
+#    - host: 192.168.10.191
 
 # Allows you to issue voice commands from the frontend in enabled browsers
 #conversation:
@@ -276,7 +275,7 @@ logbook:
       
 # Text to speech
 tts:
-  - platform:                        google
+  - platform:                        google_translate
   
 #  - platform:                       amazon_polly
 #    aws_access_key_id:              !secret AWS_ACCESS_KEY_ID
@@ -367,12 +366,14 @@ sensor snmp:
   - platform: snmp
     name: snmp_wan_in
     host: 192.168.10.1
-    baseoid: 1.3.6.1.2.1.2.2.1.10.5
+#    baseoid: 1.3.6.1.2.1.2.2.1.10.5
+    baseoid: 1.3.6.1.2.1.2.2.1.10.1
 
   - platform: snmp
     name: snmp_wan_out
     host: 192.168.10.1
-    baseoid: 1.3.6.1.2.1.2.2.1.16.5
+#    baseoid: 1.3.6.1.2.1.2.2.1.16.5
+    baseoid: 1.3.6.1.2.1.2.2.1.16.1
 
   - platform: template
     sensors:
@@ -540,7 +541,7 @@ ffmpeg:
 camera jerry:
   name:                              Jerry
   platform:                          generic
-  still_image_url:                   https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.jerry_pixel3.attributes.latitude }},{{ states.device_tracker.jerry_pixel3.attributes.longitude }}&zoom=13&size=500x500&maptype=roadmap&markers=color:blue%7Clabel:J%7C{{ states.device_tracker.jerry_pixel3.attributes.latitude }},{{ states.device_tracker.jerry_pixel3.attributes.longitude }}&key=AIzaSyBaGYOI7p4Iofh6MzKoAKAIxmtGt_7uAVc
+  still_image_url:                   https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.jerry_jw.attributes.latitude }},{{ states.device_tracker.jerry_jw.attributes.longitude }}&zoom=13&size=500x500&maptype=roadmap&markers=color:blue%7Clabel:J%7C{{ states.device_tracker.jerry_jw.attributes.latitude }},{{ states.device_tracker.jerry_jw.attributes.longitude }}&key=AIzaSyBaGYOI7p4Iofh6MzKoAKAIxmtGt_7uAVc
   limit_refetch_to_url_change:       true
 
 camera louise:
@@ -556,7 +557,7 @@ amcrest:
     password:                        !secret AMCREST_PASSWORD
     name:                            Living Room
     sensors:
-      - motion_detector
+#      - motion_detector
       - sdcard
 
   # Front Garage
@@ -564,6 +565,8 @@ amcrest:
     username:                        admin
     password:                        !secret AMCREST_GARAGE_PASSWORD
     name:                            Front Garage
+    sensors:
+      - sdcard
 
 #mqtt:
 #  embeded
@@ -580,6 +583,44 @@ mqtt:
   password:                          !secret MQTT_PASSWORD
 #  protocol:                         3.1
 #  certificate:                      /home/paulus/dev/addtrustexternalcaroot.crt
+  birth_message:
+    topic: "tele/sonos1/LWT"
+    payload: "Online"
+    qos: 1
+    retain: true
+  will_message:
+    topic: "tele/sonos1/LWT"
+    payload: "Offline"
+    qos: 1
+    retain: true
+
+switch mqtt_garage_front:
+  - platform: mqtt
+    name: "Front Garage Door Switch"
+    state_topic: "stat/sonoff1/RESULT"
+    value_template: "{{ value_json.POWER }}"
+    command_topic: "cmnd/sonoff1/POWER"
+    availability_topic: "tele/sonoff1/LWT"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: false
+
+switch mqtt_garage_back:
+  - platform: mqtt
+    name: "Back Garage Door Switch"
+    state_topic: "stat/sonoff4/RESULT"
+    value_template: "{{ value_json.POWER }}"
+    command_topic: "cmnd/sonoff4/POWER"
+    availability_topic: "tele/sonoff4/LWT"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: false
 
 sensor mqtt:
 
@@ -704,6 +745,8 @@ binary_sensor fr_camera:
         value_template: >-
           {{ states('sensor.living_room_motion_detected') == 'True' }}
 
+#TODO: https://www.home-assistant.io/components/light.template/
+
 sensor countdown_timer:
   platform:                          countdown_timer
   timers:
@@ -712,11 +755,11 @@ sensor countdown_timer:
       enable_switch:                 switch.lr_light_auto
       switch:                        switch.evolve_guest_controls_lsm15_wall_switch_switch_2
       restart:                       False
-    Family Room Timed Light:
-      sensors:                       binary_sensor.back_02,binary_sensor.ecolink_motion_sensor_sensor_2
-      enable_switch:                 switch.fr_light_auto
-      switch:                        switch.fr_wall_switch_switch
-      restart:                       True
+#    Family Room Timed Light:
+#      sensors:                       binary_sensor.back_02,binary_sensor.ecolink_motion_sensor_sensor_2
+#      enable_switch:                 switch.fr_light_auto
+#      switch:                        switch.fr_wall_switch_switch
+#      restart:                       True
     Garage Timed Light:
       sensors:                       binary_sensor.ecolink_motion_sensor_sensor,binary_sensor.garage_back_pir_sensor
       switch:                        switch.ge_14291_inwall_smart_switch_switch
@@ -733,6 +776,11 @@ sensor countdown_timer:
       switch:                        switch.ge_14292_inwall_smart_toggle_switch_switch
       enable_switch:                 switch.back_driveway_auto
       delay:                         5
+
+timer:
+  fr_light:
+    duration: '00:20:00'
+    icon: mdi:timer-sand
 
 #sensor glances:
 #  - platform:                        glances
@@ -754,29 +802,37 @@ sensor countdown_timer:
 #      #- 'process_sleeping'
 #      #- 'cpu_temp'
 
-#cover front_garage_door:
-#  - platform: template
-#    covers:
-#      garage_door:
-#        friendly_name: "Garage Door"
-#        value_template: "{{ states('binary_sensor.front_garage_door_tilt_sensor')|float > 0 }}"
-#        open_cover:
-#          service: script.open_garage_door
-#        close_cover:
-#          service: script.close_garage_door
-#        stop_cover:
-#          service: script.stop_garage_door
-
-cover  front_garage_door:
-  - platform: tilt
+#From: https://www.home-assistant.io/components/cover.template/
+cover:
+  - platform: template
     covers:
-      garage_door:
-        friendly_name:                 "Garage Door"
-        device_class:                  tilt
-        tilt_sensor:                   binary_sensor.front_garage_door_tilt_sensor
-        switch:                        switch.garage_door_switch
-        contact_delay:                 1
-        run_time:                      10
+      front_garage_door:
+        friendly_name: "Front Garage Door"
+        #check front PIR
+        value_template: "{{ states('binary_sensor.ecolink_tilt_sensor_sensor_2') == 'on' }}"
+        open_cover:
+          service: script.toggle_front_garage_door
+        close_cover:
+          service: script.toggle_front_garage_door
+        stop_cover:
+          service: script.toggle_front_garage_door
+      back_garage_door:
+        friendly_name: "Back Garage Door"
+        #check back PIR name
+        value_template: "{{ states('binary_sensor.ecolink_tilt_sensor_sensor') == 'on' }}"
+        open_cover:
+          service: script.toggle_back_garage_door
+        close_cover:
+          service: script.toggle_back_garage_door
+        stop_cover:
+          service: script.toggle_back_garage_door
+
+#cover front_garage_door:
+#  platform: tilt
+#  tilt_sensor:                   binary_sensor.front_garage_door_tilt_sensor
+#  switch:                        switch.garage_door_switch
+#  contact_delay:                 1
+#  run_time:                      10
 
 ## garage_door.py must be on PATH
 #switch command_line:
@@ -819,6 +875,29 @@ switch mock:
 #sensor Weather:
 #  platform:                         yr
 
+# See https://gist.github.com/ispiropoulos/90a5f215e71f4dde635e3e3407fb5804
+switch shelly:
+  - platform: shelly
+    switches:
+      #Shelly1
+      front_garage_door_switch:
+        path:                         /relay/0 #(optional, defaults to /relay/0)
+        host:                         192.168.10.70
+        username:                     jerry
+        password:                     898!Centers
+      #Shelly2
+      back_garage_door_switch:
+        path:                         /relay/0 #(optional, defaults to /relay/0)
+        host:                         192.168.10.71
+        username:                     jerry
+        password:                     898!Centers
+      #Shelly3
+      fr_fan_switch:
+        path:                         /relay/0 #(optional, defaults to /relay/0)
+        host:                         192.168.10.72
+        username:                     jerry
+        password:                     898!Centers
+
 weather darksky:
   - platform:                        darksky
     api_key:                         !secret DARKSKY_API_KEY
@@ -831,7 +910,7 @@ sensor darksky:
       - 1
       - 7
     scan_interval:
-      minutes:                       10
+      minutes:                       30
     monitored_conditions:
       - summary
       - icon
@@ -971,7 +1050,7 @@ sensor influxdb:
 binary_sensor 1:
   platform:                          command_line
 #  command:                           'ping -c 1 192.168.10.228 | grep "1 received" | wc -l'
-  command:                           'nmap -Pn -p 80 192.168.10.228 | grep 80 | wc -l'
+  command:                           'nmap -Pn -p 80 192.168.10.52  | grep 80 | wc -l'
   name:                              'Front Cam Online'
   payload_on:                        1
   payload_off:                       0
@@ -1045,12 +1124,12 @@ binary_sensor outdoor_freeze_alert:
 
 
 #Doesn't work - rate limited
-#climate:
-#  platform:                         honeywell
-#  username:                         jerry.workman@gmail.com
-#  password:                         secret! HONEYWELL_PASSWORD
-#  region:                           us
-#  scan_interval:                    600
+climate LR:
+  platform:                         honeywell
+  username:                         jerry.workman@gmail.com
+  password:                         secret! HONEYWELL_PASSWORD
+  region:                           us
+  scan_interval:                    600
     
 #  platform:                         radiotherm
 #  host:
@@ -1115,11 +1194,11 @@ configurator:
 
 #  philips_hue
 
-light hue1:
-  platform:                         hue
-  host:                             192.168.10.169
-  allow_unreachable:                false
-  filename:                         my_hue_hub_token.conf
+#light hue1:
+#  platform:                         hue
+#  host:                             192.168.10.169
+#  allow_unreachable:                false
+#  filename:                         my_hue_hub_token.conf
 
 #sensor temp:
 #  - platform:                       template
@@ -1155,22 +1234,22 @@ media_player:
     name:                            speaker
     arguments:                       '--alsa-audio-device=hw:0,0'
   - platform:                        webostv
-    host:                            192.168.10.229
+    host:                            192.168.10.113
     name:                            Living Room LG TV
 
 # Only the main box has an IP address
   - platform:                        directv
-    host:                            192.168.10.213
+    host:                            192.168.10.60
     port:                            8080
     name:                            Living Room DTV
     device:                          0
   - platform:                        directv
-    host:                            192.168.10.213
+    host:                            192.168.10.60
     port:                            8080
     name:                            Rec Room DTV
     device:                          D42C0FF18CBD 
   - platform:                        directv
-    host:                            192.168.10.213
+    host:                            192.168.10.60
     port:                            8080
     name:                            Master Bed Room DTV
     device:                          44AAF566A381
@@ -1276,7 +1355,7 @@ person:
     id: jw
     user_id: 6d121fa286574a83af0680973aa79f3c
     device_trackers:
-      - device_tracker.jerry_pixel3
+      - device_tracker.jerry_jw
       
   - name: Louise  
     id: lc
@@ -1287,12 +1366,22 @@ person:
 device_tracker:
   - platform: bluetooth_tracker
 
+  - platform: life360
+    username: !secret life360_username
+    password: !secret life360_password
+    max_gps_accuracy: 200
+    prefix: life360
+    show_as_state: driving, moving, places
+
+
+# camera streaming
+# stream:
 
 intent_script:                       !include intent_script.yaml
 
-# automation:                          !include automations.yaml
+# automation:                          !include_dir_list automation/
 
-automation:                          !include_dir_list automation/
+automation:                          !include_dir_merge_list automation_merged/
 
 script:                              !include script.yaml
 

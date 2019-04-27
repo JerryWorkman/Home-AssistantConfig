@@ -1,3 +1,15 @@
 zwave.__2:
   ignored: false
   polling_intensity: 1
+binary_sensor.fr_pir_2_sensor:
+  ignored: false
+  polling_intensity: 0
+switch.fr_wall_switch_switch:
+  ignored: false
+  polling_intensity: 0
+switch.aeotec_dsc26103_micro_switch_2nd_edition_switch:
+  ignored: false
+  polling_intensity: 1
+binary_sensor.ecolink_motion_sensor_sensor_2:
+  ignored: false
+  polling_intensity: 10

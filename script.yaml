@@ -104,3 +104,23 @@ unlock_front_door:
       data:
         entity_id: lock.schlage_be469_touchscreen_deadbolt_locked
         code: 0127
+
+toggle_front_garage_door:
+  alias: Open/Close Front Garage Door
+  sequence:
+    - service:  switch.turn_on
+      entity_id: switch.front_garage_door_switch
+    - delay: '00:00:02'
+    - service:  switch.turn_off
+      data:
+        entity_id: switch.front_garage_door_switch
+
+toggle_back_garage_door:
+  alias: Open/Close Back Garage Door
+  sequence:
+    - service:  switch.turn_on
+      entity_id: switch.back_garage_door_switch
+    - delay: '00:00:02'
+    - service:  switch.turn_off
+      data:
+        entity_id: switch.back_garage_door_switch

@@ -43,6 +43,7 @@
 - platform: generic
   name: Garage
   still_image_url: http://home.jerryworkman.com:1027/CGIProxy.fcgi?cmd=snapPicture2&usr=admin&pwd=012749
+  stream_source: rtsp://192.168.10.55:554
 #  still_image_url: http://192.168.10.55/CGIProxy.fcgi?cmd=snapPicture2&usr=admin&pwd=012749
   
 #  still_image_url: http://192.168.10.16/garage.php

@@ -1,8 +1,0 @@
-alias: Back Driveway lights evening
-initial_state: true
-trigger:
-  platform: sun
-  event: sunset
-action:
-  service: switch.turn_on
-  entity_id: switch.back_driveway_auto

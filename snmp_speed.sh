@@ -6,7 +6,8 @@
 check () {
 community_string='public'
 hostname='192.168.10.1'
-INTNUMBER=5
+#INTNUMBER=5
+INTNUMBER=1
 OUT=$(snmpget -v2c -c $community_string $hostname iso.3.6.1.2.1.2.2.1.10.$INTNUMBER | awk '{print $4}')
 IN=$(snmpget -v2c -c $community_string $hostname iso.3.6.1.2.1.2.2.1.16.$INTNUMBER | awk '{print $4}')
 #SPEED=$(snmpget -v2c -c $community_string $hostname ifSpeed.$INTNUMBER | awk '{print $4}')

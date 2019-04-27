@@ -82,7 +82,7 @@
     entities:
 #    - zone.home
 #    - person.jerry
-    - device_tracker.jerry_pixel3
+    - device_tracker.jerry_jw
 #    - sensor.jerry_home
 #    - sensor.jerry_family_room
 #    - person.louise
@@ -427,7 +427,8 @@
     entities:
       - switch.fr_light_auto
       - switch.fr_wall_switch_switch
-      - sensor.family_room_timed_light
+#      - sensor.family_room_timed_light
+      - timer.fr_light
 
   Family Room:
     view: yes
@@ -436,7 +437,7 @@
       - sensor.fr_temperature
       - sensor.fr_temperature_humidity
       - switch.fr_wall_switch_switch
-#      - fan.ge_12730_fan_control_switch_level_2
+      - switch.fr_fan_switch
       - binary_sensor.back_02
       - binary_sensor.ecolink_motion_sensor_sensor_2
       - binary_sensor.fr_pir_2_sensor
