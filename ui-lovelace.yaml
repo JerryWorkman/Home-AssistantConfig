@@ -20,6 +20,18 @@ resources:
   - url: /local/my-webfont.css
     type: css
 
+#resources:
+  - url: /local/custom-lovelace/thermostat-card/thermostat-card.js?v=1
+    type: module
+name: Home
+views:
+  - title: Main
+    cards:
+      - type: custom:thermostat-card
+        title: Living Room
+        entity: climate.honeywell
+
+
 # Optional background for all views. Check https://developer.mozilla.org/en-US/docs/Web/CSS/background for more examples.
 background: center / cover no-repeat url("/background.png") fixed
 # Exclude entities from "Unused entities" view

@@ -2,27 +2,32 @@
   - name: Home
     entities:
       group.living_room_light: on
-      climate.homelr:
+      climate.living_room:
         state: auto
         away_mode: off
+
   - name: Away
     entities:
       group.living_room_light: off
       group.fr_light: off
-#      climate.homelr:
-#        state: auto
-#        away_mode: on
+      climate.living_room:
+        state: auto
+        away_mode: on
 
   - name: Night
     entities:
+      # Front Outside Light
       switch.aeotec_dsc26103_micro_switch_2nd_edition_switch: on
+      # Back Flood Lights
       switch.outside_back_swi_switch: on
       switch.patio_light_auto: on
       switch.back_driveway_auto: on
 
   - name: Day
     entities:
+      # Front Outside Light
       switch.aeotec_dsc26103_micro_switch_2nd_edition_switch: off
+      # Back Flood Lights
       switch.outside_back_swi_switch: off
       switch.patio_light_auto: off
       switch.back_patio_light_switch: off

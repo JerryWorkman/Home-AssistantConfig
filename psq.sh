@@ -1,1 +1,1 @@
-psql -h 192.168.10.3 -U hass hass
+psql -h 192.168.10.2 -U hass hass

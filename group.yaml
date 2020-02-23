@@ -82,11 +82,11 @@
     entities:
 #    - zone.home
 #    - person.jerry
-    - device_tracker.jerry_jw
+    - device_tracker.life360_jerry_workman
 #    - sensor.jerry_home
 #    - sensor.jerry_family_room
 #    - person.louise
-    - device_tracker.louise_lc
+    - device_tracker.life_360_louise_cleek
 #    - sensor.louise_home
 #    - sensor.louise_family_room
 #    - sensor.home_occupancy_confidence
@@ -437,7 +437,7 @@
       - sensor.fr_temperature
       - sensor.fr_temperature_humidity
       - switch.fr_wall_switch_switch
-      - switch.fr_fan_switch
+#      - switch.fr_fan_switch
       - binary_sensor.back_02
       - binary_sensor.ecolink_motion_sensor_sensor_2
       - binary_sensor.fr_pir_2_sensor
@@ -483,12 +483,15 @@
     control: hidden
     entities:
       - cover.front_garage_door
-#      - switch.garage_door_switch
+      - cover.back_garage_door
+      - switch.front_garage_door_switch
+# Door Switches
+      - switch.back_garage_door_switch
       - switch.ge_14291_inwall_smart_switch_switch
-      - switch.garage_light_auto
+#      - switch.garage_light_auto
 #      - switch.garage_light_switch_switch
       - input_number.garage_delay
-      - sensor.garage_timed_light
+      - sensor.garage_countdown_timer
       - switch.wemo_mini
 
   Garage:

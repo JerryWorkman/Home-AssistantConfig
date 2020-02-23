@@ -109,18 +109,24 @@ toggle_front_garage_door:
   alias: Open/Close Front Garage Door
   sequence:
     - service:  switch.turn_on
-      entity_id: switch.front_garage_door_switch
-    - delay: '00:00:02'
-    - service:  switch.turn_off
-      data:
-        entity_id: switch.front_garage_door_switch
+      entity_id: switch.shelly_shsw_1_246e36
+# Turns off automatically
+#    - delay: '00:00:02'
+#    - service:  switch.turn_off
+#      data:
+#        entity_id: switch.front_garage_door_switch
 
 toggle_back_garage_door:
   alias: Open/Close Back Garage Door
   sequence:
     - service:  switch.turn_on
-      entity_id: switch.back_garage_door_switch
-    - delay: '00:00:02'
-    - service:  switch.turn_off
-      data:
-        entity_id: switch.back_garage_door_switch
+      entity_id: switch.shelly_shsw_1_246581
+#    - delay: '00:00:02'
+#    - service:  switch.turn_off
+#      data:
+#        entity_id: switch.back_garage_door_switch
+
+update_speedtest:
+  sequence:
+    - service: speedtestdotnet.speedtest
+  

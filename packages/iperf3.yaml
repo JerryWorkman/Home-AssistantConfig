@@ -1,0 +1,52 @@
+#iperf3 servers on 66.118.80.12 (Pittsburgh) and 66.118.64.98 (Bridgeport).
+#iperf3 -P5 -c 66.118.64.98
+#iperf3 -P5 -c iperf.he.net
+#iperf3:
+#  parallel: 10
+#  scan_interval: '00:20'
+#  hosts:
+#    - host: 66.118.80.12 # (Pittsburgh)
+#    - host: 66.118.64.98 # (Bridgeport)
+#    - host: iperf.he.net
+
+#iperf3:
+#  scan_interval: 600
+#  hosts:
+#    - host: 66.118.80.12 # (Pittsburgh)
+#     parallel: 5
+#    - host: 66.118.64.98 # (Bridgeport)
+
+# Use shell script
+
+#  - platform: command_line
+#    name: hawk Internet Up
+#    command: "/home/homeassistant/ha/snmp.php 192.168.10.1 2 Out"
+#    unit_of_measurement: Mbit/s
+#    scan_interval: 10
+
+sensor iperf3:
+  - platform: command_line
+    name: hawk Internet Down
+#    command: "/usr/bin/iperf3 -R -c hawk 2>&1 | tail -4 | head -1 | awk '{ print $7 }' | sed 's/[a-z]\\+//g'"
+    command: "/usr/bin/iperf3 -R -c hawk 2>&1 | tail -4 | head -1 | awk '{ print $7 }'"
+    unit_of_measurement: Mbit/s
+    scan_interval: 1200
+
+  - platform: command_line
+    name: cdns2.citynet.net Internet Down
+    command: "/usr/bin/iperf3 -R -c cdns2.citynet.net 2>&1 | tail -4 | head -1 | awk '{ print $7 }' | sed 's/[a-z]\\+//g' | sed 's/^$/None/'"
+    unit_of_measurement: Mbit/s
+    scan_interval: 1200
+
+  - platform: command_line
+    name: cdns3.citynet.net Internet Down
+    command: "/usr/bin/iperf3 -R -c cdns3.citynet.net 2>&1 | tail -4 | head -1 | awk '{ print $7 }' | sed 's/[a-z]\\+//g' | sed 's/^$/None/'"
+    unit_of_measurement: Mbit/s
+    scan_interval: 1200
+
+#  - platform: command_line
+#    name: Amazon ec2 Internet Down
+##    command: "/usr/bin/iperf3 -R -c ec2 2>&1 | tail -4 | head -1 | awk '{ print $7 }' | sed 's/[a-z]\\+//g' | sed 's/^$/None/'"
+#    command: "/usr/bin/iperf3 -R -c ec2 2>&1 | tail -4 | head -1 | awk '{ print $7 }' | sed 's/[a-z]\\+//g'"
+#    unit_of_measurement: Mbit/s
+#    scan_interval: 1200

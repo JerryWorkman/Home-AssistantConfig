@@ -8,9 +8,11 @@ community_string='public'
 hostname='192.168.10.1'
 #INTNUMBER=5
 INTNUMBER=1
-OUT=$(snmpget -v2c -c $community_string $hostname iso.3.6.1.2.1.2.2.1.10.$INTNUMBER | awk '{print $4}')
-IN=$(snmpget -v2c -c $community_string $hostname iso.3.6.1.2.1.2.2.1.16.$INTNUMBER | awk '{print $4}')
-#SPEED=$(snmpget -v2c -c $community_string $hostname ifSpeed.$INTNUMBER | awk '{print $4}')
+OUT=$(snmpget -v2c -c $community_string $hostname 1.3.6.1.2.1.2.2.1.10.$INTNUMBER | awk '{print $4}')
+#print $OUT
+IN=$(snmpget -v2c -c $community_string $hostname  1.3.6.1.2.1.2.2.1.16.$INTNUMBER | awk '{print $4}')
+#print $IN
+
 TIME=5
 SPEED=10000000
 #PIPE=10000
@@ -25,8 +27,10 @@ PIPE=10000000
         else
                 #wait $TIME before running the same check, this way we can confirm how much the data has changed in two periods.
                 sleep $TIME
-                OUT2=$(snmpget -v2c -c $community_string $hostname iso.3.6.1.2.1.2.2.1.$INTNUMBER | awk '{print $4}')
-                IN2=$(snmpget -v2c -c $community_string $hostname iso.3.6.1.2.1.2.2.1.$INTNUMBER | awk '{print $4}')
+#                OUT2=$(snmpget -v2c -c $community_string $hostname iso.3.6.1.2.1.2.2.1.$INTNUMBER | awk '{print $4}')
+#                IN2=$(snmpget -v2c -c $community_string $hostname iso.3.6.1.2.1.2.2.1.$INTNUMBER | awk '{print $4}')
+                OUT2=$(snmpget -v2c -c $community_string $hostname 1.3.6.1.2.1.2.2.1.10.$INTNUMBER | awk '{print $4}')
+                IN2=$(snmpget -v2c -c $community_string $hostname 1.3.6.1.2.1.2.2.1.16.$INTNUMBER | awk '{print $4}')
                 DELTAOUT=$(( $OUT2 - $OUT))
                 DELTAIN=$(( $IN2 - $IN))
                 #Value is in octets so will need to be divided by 8 to get bytes, this is then divided by 1024 to give kilobytes.

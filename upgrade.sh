@@ -3,7 +3,7 @@
 cd /home/homeassistant/.homeassistant
 source /srv/homeassistant/bin/activate
 
-pip3 install --upgrade homeassistant
+pip install --upgrade homeassistant
 
 #sudo docker pull homeassistant/home-assistant:latest
 #sudo docker container ls 

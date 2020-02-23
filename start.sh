@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo Starting home-assistant@homeassistant
 /usr/bin/ansible-playbook /opt/ansible-playbooks/restart-monitor.yml
 
 cd /home/homeassistant/.homeassistant

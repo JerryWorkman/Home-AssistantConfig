@@ -1,7 +1,7 @@
 cover.front_garage_door:
   friendly_name: Front Garage Door
-switch.fr_fan_switch:
-  friendly_name: Family Room Fans
+# switch.fr_fan_switch:
+#   friendly_name: Family Room Fans
 group.all_scripts:
   hidden: true
 binary_sensor.floorplan:
@@ -66,7 +66,8 @@ switch.fr_light_switch:
 switch.outside_back_swi_switch:
   friendly_name: Back Flood Light
   icon: mdi:sunglasses
-switch.evolve_guest_controls_lsm15_wall_switch_switch_2:
+#switch.evolve_guest_controls_lsm15_wall_switch_switch_2:
+switch.jasco_products_14291_in_wall_smart_switch_switch:
   friendly_name: Living Room Wall Light
 #switch.unknown_switch_5_0:
 #  friendly_name: Unknown Switch
@@ -101,9 +102,6 @@ binary_sensor.garage_back_pir_sensor:
   friendly_name: Garage Back PIR
 binary_sensor.ecolink_motion_sensor_sensor:
   friendly_name: Garage Side PIR
-#binary_sensor.back_garage_door_tilt_sensor:
-binary_sensor.ecolink_tilt_sensor_sensor:
-  friendly_name: Back Garage Door Tilt
 binary_sensor.back_driveway_pir_sensor:
   friendly_name: Back Driveway PIR Sensor
 sensor.garage_temphygro_temperature:
@@ -113,6 +111,8 @@ sensor.garage_temphygro_relative_humidity:
 #binary_sensor.front_garage_door_tilt_sensor:
 binary_sensor.ecolink_tilt_sensor_sensor_2:
   friendly_name: Front Garage Door Tilt
+binary_sensor.ecolink_tilt_sensor_sensor:
+  friendly_name: Back Garage Door Tilt
 binary_sensor.patio_pir_sensor:
   friendly_name: Back Patio PIR
 #binary_sensor.front_01:
@@ -164,20 +164,12 @@ sensor.ping_time_mean:
   friendly_name: 'Speedtest Ping Average'
   icon: mdi:clock-fast
 
-sensor.wan_traffic_in_mean:
-  friendly_name: 'WAN Download Average'
-  icon: mdi:download
-
-sensor.wan_traffic_out_mean:
-  friendly_name: 'WAN Upload Average'
-  icon: mdi:upload
-
 timer.fr_light:
   friendly_name: Family Room Light Timer  
-sensor.snmp_in:
-  hidden: true
-sensor.snmp_out:
-  hidden: true
+#sensor.snmp_in:
+#  hidden: true
+#sensor.snmp_out:
+#  hidden: true
 sensor.time:
   hidden: true
 sensor.sun:
@@ -186,7 +178,7 @@ sensor.schlage_be469_touchscreen_deadbolt_system:
   hidden: true
 sensor.schlage_be469_touchscreen_deadbolt_access_control:
   hidden: true
-input_number.internet_traffic_delta_in:
-  hidden: true
-input_number.internet_traffic_delta_out:
-  hidden: true
+sensor.living_room_countdown_timer:
+  friendly_name: LR Light Timer
+sensor.family_room_countdown_timer:
+  friendly_name: FR Light Timer
