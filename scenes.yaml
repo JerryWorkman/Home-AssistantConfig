@@ -1,35 +1,31 @@
-#scene:
-  - name: Home
-    entities:
-      group.living_room_light: on
-      climate.living_room:
-        state: auto
-        away_mode: off
-
-  - name: Away
-    entities:
-      group.living_room_light: off
-      group.fr_light: off
-      climate.living_room:
-        state: auto
-        away_mode: on
-
-  - name: Night
-    entities:
-      # Front Outside Light
-      switch.aeotec_dsc26103_micro_switch_2nd_edition_switch: on
-      # Back Flood Lights
-      switch.outside_back_swi_switch: on
-      switch.patio_light_auto: on
-      switch.back_driveway_auto: on
-
-  - name: Day
-    entities:
-      # Front Outside Light
-      switch.aeotec_dsc26103_micro_switch_2nd_edition_switch: off
-      # Back Flood Lights
-      switch.outside_back_swi_switch: off
-      switch.patio_light_auto: off
-      switch.back_patio_light_switch: off
-      switch.back_driveway_auto: off
-      switch.back_driveway_switch: off
+- name: Home
+  entities:
+    group.living_room_light: true
+    climate.living_room:
+      state: auto
+      away_mode: false
+  id: df7da3e6cf4e419bba27405e11cd982b
+- name: Away
+  entities:
+    group.living_room_light: false
+    group.fr_light: false
+    climate.living_room:
+      state: auto
+      away_mode: true
+  id: bee30b87ee884db1b3e476a3e0c84c6e
+- name: Night
+  entities:
+    #switch.aeotec_dsc26103_micro_switch_2nd_edition_switch: true
+    switch.back_flood: true
+    switch.patio_light_auto: true
+    switch.back_driveway_auto: true
+  id: ce1a9dc1a7084d33b31e845b843e9494
+- name: Day
+  entities:
+    #switch.aeotec_dsc26103_micro_switch_2nd_edition_switch: false
+    switch.back_flood: false
+    switch.patio_light_auto: false
+    switch.back_driveway_light: false
+    switch.back_driveway_auto: false
+    switch.back_driveway_switch: false
+  id: 0079c6de1b2145288ab9767a6ff3ce64

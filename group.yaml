@@ -1,6 +1,6 @@
   X default_view:
-    view: yes
-    control: hidden
+    #view: yes
+    #control: hidden
     entities:
       - group.people
       - climate.thermostat76b427
@@ -28,7 +28,7 @@
 #      - group.cameras
 
   Battery Levels:
-    control: hidden
+#    control: hidden
     entities:
 #      - zwave.lr_pir_battery
 #      - zwave.fr_pir_battery
@@ -77,8 +77,8 @@
 ##      - group.weblink
 
   People:
-    view: no
-    control: hidden
+#    view: no
+#    control: hidden
     entities:
 #    - zone.home
 #    - person.jerry
@@ -93,8 +93,8 @@
 #    - input_boolean.occupancy
 
   Media:
-    view: no
-    control: hidden
+#    view: no
+#    control: hidden
     entities:
       - media_player.living_room_lg_tv
       - media_player.living_room_dtv
@@ -104,8 +104,8 @@
 #      - media_player.firetv
 
   Cameras:
-    view: yes
-    control: hidden
+    #view: yes
+    #control: hidden
     entities:
       - camera.front_door
       - camera.front_garage
@@ -115,8 +115,8 @@
       - camera.garage
 
   DarkSky:
-    view: no
-    control: hidden
+    #view: no
+    #control: hidden
     entities:
       - sensor.dark_sky_summary
       - sensor.dark_sky_apparent_temperature
@@ -154,8 +154,8 @@
 #      - sensor.ambient_uvi
 
   Climate:
-    view: yes
-    control: hidden
+    #view: yes
+    #control: hidden
     entities:
       - sensor.yr_symbol
       - sun.sun
@@ -202,8 +202,8 @@
 #      - sensor.internet_time
 
   Power:
-    view: yes
-    control: hidden
+    #view: yes
+    #control: hidden
     entities:
       - sensor.line_voltage
       - sensor.power_meter
@@ -220,8 +220,8 @@
 ################## Alarm ###################
 
   Perimeter Sensors:
-    view: no
-    control: hidden
+    #view: no
+    #control: hidden
     entities:
       - alarm_control_panel.home_alarm
       - binary_sensor.front_01
@@ -231,8 +231,8 @@
       - binary_sensor.glass_break_05
   
   Away Sensors:
-    view: no
-    control: hidden
+    #view: no
+    #control: hidden
     entities:
       - binary_sensor.pir_08
       - binary_sensor.pir_09
@@ -242,15 +242,15 @@
       - group.garage_sensors
 
   Fire Sensors:
-    control: hidden
-    view: no
+    #control: hidden
+    #view: no
     entities:
       - binary_sensor.smoke_detectors_06
       - binary_sensor.heat_detectors_07
 
   Alarm Sensors:
-    control: hidden
-    view: no
+    #control: hidden
+    #view: no
     entities:
       - group.perimeter_sensors
       - binary_sensor.front_01
@@ -273,8 +273,8 @@
   
   
   Alarms:
-    control: hidden
-    view: yes
+    #control: hidden
+    #view: yes
     entities:
 #      - alarm_control_panel.ha_alarm
       - alarm_control_panel.home_alarm
@@ -304,7 +304,7 @@
 #      - switch.fr_light_switch
 
   Patio:
-    control: hidden
+    #control: hidden
     entities:
       - binary_sensor.patio_pir_sensor
       - switch.patio_light_switch
@@ -312,7 +312,7 @@
       - sensor.patio_timed_light
   
   Back Driveway:
-    control: hidden
+    #control: hidden
     entities:
       - binary_sensor.ecolink_motion_detector_sensor
       - switch.ge_14292_inwall_smart_toggle_switch_switch
@@ -320,8 +320,8 @@
       - sensor.back_driveway_timed_light
   
   Outside:
-    view: yes
-    control: hidden
+    #view: yes
+    #control: hidden
     entities:
       - sun.sun
 #      - binary_sensor.front_door_pir_sensor
@@ -351,7 +351,7 @@
       - light.hue_white_lamp_2
 
   Living Room Lights:
-    control: hidden
+    #control: hidden
     entities:
       - binary_sensor.pir_09
 #       - group.living_room_pir
@@ -363,7 +363,7 @@
       - switch.lr_flashing_light
 
   Door Locks:
-    view: no
+    #view: no
     entities:
       - lock.schlage_be469_touchscreen_deadbolt_locked
 #      - sensor.lock_front_door_status
@@ -372,8 +372,8 @@
       - lock.side_door_lock_locked
 
   Living Room:
-    view: yes
-    control: hidden
+    #view: yes
+    #control: hidden
     entities:
       - group.living_room_lights
       - group.hue_lights
@@ -423,7 +423,7 @@
 ##################### FR ####################
 
   FR Light:
-    control: hidden
+    #control: hidden
     entities:
       - switch.fr_light_auto
       - switch.fr_wall_switch_switch
@@ -431,8 +431,8 @@
       - timer.fr_light
 
   Family Room:
-    view: yes
-    control: hidden
+    #view: yes
+    #control: hidden
     entities:
       - sensor.fr_temperature
       - sensor.fr_temperature_humidity
@@ -450,20 +450,20 @@
 ##################### Garage ####################
 
   Garage Switches:
-    control: hidden
+    #control: hidden
     entities:
 #    - switch.garage_light_switch_switch
     - switch.ge_14291_inwall_smart_switch_switch
     - switch.wemo_mini
 
   Garage PIR Sensors:
-    control: hidden
+    #control: hidden
     entities:
       - binary_sensor.ecolink_motion_sensor_sensor
       - binary_sensor.garage_back_pir_sensor
       
   Garage Sensors:
-    control: hidden
+    #control: hidden
     entities:
       - binary_sensor.ecolink_motion_sensor_sensor
       - binary_sensor.garage_back_pir_sensor
@@ -474,13 +474,13 @@
       - binary_sensor.garage_freeze_alert
 
   Garage Door:
-    control: hidden
+    #control: hidden
     entities:
       - group.garage_sensors
       - group.garage_door_actions
 
   Garage Door Actions:
-    control: hidden
+    #control: hidden
     entities:
       - cover.front_garage_door
       - cover.back_garage_door
@@ -495,8 +495,8 @@
       - switch.wemo_mini
 
   Garage:
-    view: yes
-    control: hidden
+    #view: yes
+    #control: hidden
     entities:
       #- sensor.garage_temphygro_temperature
       #- sensor.garage_temphygro_relative_humidity
@@ -536,8 +536,8 @@
 #      - sensor.glances_process_sleeping
 
   Monitoring:
-    view: yes
-    control: hidden
+    #view: yes
+    #control: hidden
     entities:
       - binary_sensor.lr_cam_online
       - binary_sensor.fr_cam_online

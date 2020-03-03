@@ -1,0 +1,1 @@
+sudo docker run --init -d --name="home-assistant" -e "TZ=America/New_York" -v /home/homeassistant/.homeassistant:/config --net=host  --device=/dev/ttyACM0 --device=/dev/rfxcom homeassistant/home-assistant:stable

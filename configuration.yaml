@@ -77,7 +77,7 @@ logger:
 #    notify:                         debug
     notify.livingroom_tv:            debug
     media_player.livingroom_tv:      debug
-#    homeassistant.components.rfxtrx: debug
+    homeassistant.components.rfxtrx: debug
 #    homeassistant.components.zwave: debug
 #    zwave.front_door_lock:          debug
 #    custom_components.alarm_control_panel.bwalarm: debug
@@ -339,10 +339,10 @@ cloud:
 #        display_categories:         LIGHT
 
 wemo:
-  discovery: false
-  static:
-    - 192.168.10.166
-    - 192.168.10.223
+  discovery: true
+#  static:
+#    - 192.168.10.166
+#    - 192.168.10.223
 
 # This is HA alarm
 #alarm_control_panel:
@@ -400,7 +400,7 @@ notify:
     from_number:                     !secret TTWILIO_SMS_FROM_NUMBER
   - name:                            livingroom_tv
     platform:                        webostv
-    host:                            192.168.10.171
+    host:                            192.168.10.133
     icon:                            /api/media_player_proxy/media_player.livingroom_tv?token=e5ad6c4333f7bb34d753b1d094e76ecded2ddc43d5b9f39fe729b9057055d8a1&cache=aca1dceff42e2f1d
     filename:                        webostv.conf
     
@@ -756,36 +756,38 @@ sensor timed_switch:
     switches:
       living_room_countdown_timer:
         name: Living Room Timed Light
-        sensors:                       binary_sensor.pir_09,binary_sensor.lr_camera_motion_detected
+#        sensors:                       binary_sensor.pir_09,binary_sensor.lr_camera_motion_detected
+        sensors:                       binary_sensor.lr_pir_motion,binary_sensor.lr_camera_motion_detected
         enable_switch:                 switch.lr_light_auto
-        switch:                        switch.evolve_guest_controls_lsm15_wall_switch_switch_2
+#        switch:                        switch.evolve_guest_controls_lsm15_wall_switch_switch_2
+        switch:                        switch.lr_sconce
         restart:                       False
 
       family_room_countdown_timer:
         name: Family Room Timed Light
         sensors:                       binary_sensor.back_02,binary_sensor.ecolink_motion_sensor_sensor_2
         enable_switch:                 switch.fr_light_auto
-        switch:                        switch.fr_wall_switch_switch
+        switch:                        switch.family_room_light
         restart:                       True
 
       garage_countdown_timer:
         name: Garage Timed Light
         sensors:                       binary_sensor.ecolink_motion_sensor_sensor,binary_sensor.garage_back_pir_sensor
-        switch:                        switch.ge_14291_inwall_smart_switch_switch
+        switch:                        switch.garage_light
         enable_switch:                 switch.garage_light_auto
         restart:                       True
 
       patio_countdown_timer:
         name: Patio Timed Light
         sensors:                       binary_sensor.patio_pir_sensor
-        switch:                        switch.patio_light_switch
+        switch:                        switch.patio_light
         enable_switch:                 switch.patio_light_auto
         delay:                         5
 
       back_driveway_countdown_timer:
         name: Back Driveway Timed Light
         sensors:                       binary_sensor.ecolink_motion_detector_sensor
-        switch:                        switch.ge_14292_inwall_smart_toggle_switch_switch
+        switch:                        switch.back_driveway_light
         enable_switch:                 switch.back_driveway_auto
         delay:                         5
 
@@ -966,26 +968,24 @@ weather openweathermap:
 #    home_interval:                   10
 
 # This will override the default home zone
-zone home:
-  name:                              Home
-  latitude:                          38.340593
-  longitude:                         -81.603318
-  radius:                            200
-  icon:                              mdi:home
+zone:
+  - name:                              Home
+    latitude:                          38.340593
+    longitude:                         -81.603318
+    radius:                            200
+    icon:                              mdi:home
 
-zone office:
-  name:                              Office
-  latitude:                          38.350802
-  longitude:                         -81.625556
-  radius:                            150
-  icon:                              mdi:office
+  - name:                              Office
+    latitude:                          38.350802
+    longitude:                         -81.625556
+    radius:                            150
+    icon:                              mdi:office
 
-zone bailey:
-  name:                              Bailey
-  latitude:                          38.351180
-  longitude:                         -81.637878
-  radius:                            150
-  icon:                              mdi:office
+  - name:                              Bailey
+    latitude:                          38.351180
+    longitude:                         -81.637878
+    radius:                            150
+    icon:                              mdi:office
 
 #remote:
 #  - platform:                       harmony
@@ -1296,10 +1296,10 @@ speedtestdotnet:
     
 rfxtrx:
   device:                            /dev/rfxcom
+  debug:                             True
 # device:                            /dev/ttyUSB1
 # device:                            /dev/serial/by-id/usb-RFXCOM_RFXrec433_04XOSET4-if00-port0
 # set by udev rule. see:             http://domogik-plugin-ozwave.readthedocs.io/en/master/ozwave.html#create-the-udev-rule-for-controller
-# debug:                             True
 # dummy:                             False
 
 #Device_id: f304
@@ -1319,8 +1319,8 @@ sensor rfxtrx:
   devices:
 #    0a5201021e0200d8150269:
 #    0a52014dee0400fa370179:
+#    0a52010cf10200fc380059:
     0a52010af10200fa390159:
-    # 0a52010cf10200fc380059:
       name:                          UP # sensor.up_temperature
     # d101
     0a520152d10101053d0059:
@@ -1340,9 +1340,9 @@ sensor rfxtrx:
     0a520110bf0400d7200279:
       name:                          LR
 
-#      data_type:
-#       - Humidity
-#       - Temperature
+      data_type:
+       - Humidity
+       - Temperature
 
 configurator:
 
@@ -1382,27 +1382,29 @@ configurator:
     #DirecTV DVR:                    2.0.0.0
     #Amazon Fire:                    f.f.f.f
 
+wake_on_lan: # enables `wake_on_lan` domain
 
 media_player:
   - platform:                        vlc
     name:                            speaker
     arguments:                       '--alsa-audio-device=hw:0,0'
+
   - platform:                        webostv
-    host:                            192.168.10.171
+    host:                            192.168.10.133
     name:                            Living Room TV
     filename:                        webostv.conf
     timeout:                         5
     turn_on_action:
-      service:                       persistant_notification.create
-      data:
-        message:                       "Turn on Action"
+      service: wake_on_lan.send_magic_packet
+    data:
+      mac: "a8:23:fe:6c:c2:5f"
     customize:
       sources:
         - livetv
         - directv
         - youtube
         - netflix
-        
+
 # Only the main box has an IP address
   - platform:                        directv
     host:                            192.168.10.60
@@ -1552,9 +1554,11 @@ intent_script:                       !include intent_script.yaml
 
 # automation:                          !include_dir_list automation/
 
-automation:                          !include_dir_merge_list automation_merged/
+automation old:                       !include_dir_merge_list automation_merged/
 
-script:                              !include script.yaml
+automation:                          !include automations.yaml
+
+script:                              !include scripts.yaml
 
 group:                               !include group.yaml
 
