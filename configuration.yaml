@@ -72,12 +72,11 @@ logger:
 #    homeassistant.components.automation:        info
     homeassistant.components.camera: critical
     input_boolean:                   debug
-#    battery_state:                  debug
 #    influxdb:                        debug
 #    notify:                         debug
     notify.livingroom_tv:            debug
     media_player.livingroom_tv:      debug
-    homeassistant.components.rfxtrx: debug
+#    homeassistant.components.rfxtrx: debug
 #    homeassistant.components.zwave: debug
 #    zwave.front_door_lock:          debug
 #    custom_components.alarm_control_panel.bwalarm: debug
@@ -192,22 +191,7 @@ recorder:
       - sensor.garage_side_pir_sourcenodeid
       - sensor.lr_pir_sourcenodeid
       - sensor.patio_pir_sourcenodeid
-      - sensor.fr_temperature_battery
-      - sensor.garage_temperature_battery
-      - sensor.lock_side_door_battery
-      - sensor.out_temperature_battery
-      - sensor.up_temperature_battery
-      - zwave.back_driveway_pir_battery
-      - zwave.back_garage_door_tilt_battery
-      - zwave.front_garage_door_tilt_battery
-      - zwave.fr_pir_2_battery
-      - zwave.fr_pir_battery
-      - zwave.garage_back_pir_battery
-      - zwave.garage_side_pir_battery
-      - zwave.garage_temphygro_battery
 #      - zwave.kwikset_touchpad_electronic_deadbolt_battery
-      - zwave.lr_pir_battery
-      - zwave.patio_pir_battery
       - sensor.back_driveway_countdown_timer
       - sensor.family_room_countdown_timer
       - sensor.garage_countdown_timer
@@ -312,7 +296,7 @@ tts:
 sun:
 
 # In custom_components/battery_state.py
-battery_state:
+#battery_state:
 #  include:
 #    - sensor.garage_door_burglar_3
 #    - sensor.office_multisensor_temperature_5
@@ -391,6 +375,22 @@ twilio:
   account_sid:                       !secret TWILLIO_ACCOUNT_SID
   auth_token:                        !secret TWILLIO_AUTH_TOKEN
 
+# Example configuration.yaml entry
+webostv:
+  host: 192.168.10.133
+  name: Living Room TV
+  turn_on_action:
+    service: persistent_notification.create
+    data:
+      message: "Turn on action"
+  customize:
+    sources:
+      - livetv
+      - youtube
+      - makotv
+      - netflix
+      - espn+
+
 notify:
   - name:                            jerry
     platform:                        pushbullet
@@ -434,6 +434,11 @@ panel_iframe:
 #    title:                          'EmonCMS'
 #    icon:                           mdi:chart-line
 #    url:                            !secret EMONCMS_URL
+
+  configurator:
+    title: Configurator
+    icon: mdi:wrench
+    url: http://192.168.10.2:3218
 
   charts:
     title:                           Google Charts
@@ -756,23 +761,21 @@ sensor timed_switch:
     switches:
       living_room_countdown_timer:
         name: Living Room Timed Light
-#        sensors:                       binary_sensor.pir_09,binary_sensor.lr_camera_motion_detected
         sensors:                       binary_sensor.lr_pir_motion,binary_sensor.lr_camera_motion_detected
         enable_switch:                 switch.lr_light_auto
-#        switch:                        switch.evolve_guest_controls_lsm15_wall_switch_switch_2
         switch:                        switch.lr_sconce
         restart:                       False
 
       family_room_countdown_timer:
         name: Family Room Timed Light
-        sensors:                       binary_sensor.back_02,binary_sensor.ecolink_motion_sensor_sensor_2
+        sensors:                       binary_sensor.fr_side_pir_motion,binary_sensor.fr_corner_pir_motion_2,binary_sensor.rfx433_pir1
         enable_switch:                 switch.fr_light_auto
         switch:                        switch.family_room_light
         restart:                       True
 
       garage_countdown_timer:
         name: Garage Timed Light
-        sensors:                       binary_sensor.ecolink_motion_sensor_sensor,binary_sensor.garage_back_pir_sensor
+        sensors:                       binary_sensor.garage_side_pir_motion,binary_sensor.garage_back_pir_motion
         switch:                        switch.garage_light
         enable_switch:                 switch.garage_light_auto
         restart:                       True
@@ -1396,8 +1399,8 @@ media_player:
     timeout:                         5
     turn_on_action:
       service: wake_on_lan.send_magic_packet
-    data:
-      mac: "a8:23:fe:6c:c2:5f"
+      data:
+        mac: "a8:23:fe:6c:c2:5f"
     customize:
       sources:
         - livetv

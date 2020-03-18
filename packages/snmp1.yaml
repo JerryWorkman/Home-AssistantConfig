@@ -1,0 +1,22 @@
+sensor snmp1:
+  - platform: command_line
+    name: Internet Speed Down
+    command: "/home/homeassistant/ha/snmp_bw.php 192.168.10.1 1 In"
+    value_template: '{{ [0.0, value | float] | max | round(2) }}'
+    unit_of_measurement: Mbit/s
+    scan_interval: 10
+
+  - platform: command_line
+    name: Internet Speed Up
+    command: "/home/homeassistant/ha/snmp_bw.php 192.168.10.1 1 Out"
+    value_template: '{{ [0.0, value | float] | max | round(2) }}'
+    unit_of_measurement: Mbit/s
+    scan_interval: 10
+
+#  - platform: template
+#    sensors:
+#        internet_speed_down2:
+#          friendly_name: 'Internet Down'
+#          value_template: '{{ ((sensor.internet_speed_down | float ) / 1000 ) | round(2) }}'
+#          unit_of_measurement: 'Kbit/s'
+

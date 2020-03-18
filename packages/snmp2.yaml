@@ -1,0 +1,14 @@
+sensor snmp2:
+  - platform: command_line
+    name: LAN Internet Down
+    command: "/home/homeassistant/ha/snmp.php 192.168.10.1 2 In"
+    value_template: '{{ [0.0, value | float] | max | round(2) }}'
+    unit_of_measurement: Mbit/s
+    scan_interval: 10
+
+  - platform: command_line
+    name: LAN Internet Up
+    value_template: '{{ [0.0, value | float] | max | round(2) }}'
+    command: "/home/homeassistant/ha/snmp.php 192.168.10.1 2 Out"
+    unit_of_measurement: Mbit/s
+    scan_interval: 10

@@ -27,33 +27,6 @@
 #      # - group.zones
 #      - group.cameras
 
-  Battery Levels:
-#    control: hidden
-    entities:
-#      - zwave.lr_pir_battery
-#      - zwave.fr_pir_battery
-      - zwave.fr_pir_2_battery
-#      - zwave.front_garage_door_tilt_battery
-      - zwave.garage_back_pir_battery
-#      - zwave.garage_side_pir_battery
-      - zwave.ecolink_motion_sensor_battery
-#      - zwave.garage_temperature_battery
-#      - zwave.back_driveway_pir_battery
-#      - zwave.back_garage_door_tilt_battery
-      - zwave.patio_pir_battery
-#      - zwave.__battery
-      - zwave.front_light_battery
-      - zwave.garage_side_pir_battery
-      - zwave.patio_pir_2_battery
-      - zwave.schlage_be469_touchscreen_deadbolt_battery
-
-      - sensor.fr_temperature_battery
-      - sensor.garage_temperature_battery
-      - sensor.out_temperature_battery
-      - sensor.up_temperature_battery
-      - sensor.lr_temperature_battery
-
-
 #  Weblink:
 #    control: hidden
 #    entities:

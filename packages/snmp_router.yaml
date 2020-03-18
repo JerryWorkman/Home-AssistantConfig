@@ -1,0 +1,42 @@
+sensor:
+  - platform: snmp
+    name: 'Router WAN in'
+    host: 192.168.10.1
+# Cumlative ??
+    baseoid: 1.3.6.1.2.1.31.1.1.1.6.2
+# Need to strip off text
+#    baseoid:  1.3.6.1.2.1.2.2.1.6.2
+    community: 'public'
+    version: '2c'
+    scan_interval: 10
+  - platform: snmp
+    name: 'Router WAN out'
+    host: 192.168.10.1
+    baseoid: 1.3.6.1.2.1.31.1.1.1.10.2
+#    baseoid:  1.3.6.1.2.1.2.2.1.10.2
+    community: 'public'
+    version: '2c'
+    scan_interval: 10
+  - platform: statistics
+    name: 'Router WAN in Stats'                      
+    entity_id: sensor.router_wan_in                  
+    sampling_size: 4                              
+    max_age:                                      
+      hours: 24                                   
+  - platform: statistics                          
+    name: 'Router WAN out Stats'                     
+    entity_id: sensor.router_wan_out
+    sampling_size: 4
+    max_age:
+      hours: 24
+  - platform: template
+    sensors:
+      internet_in_mbps:
+        value_template: "{{ (state_attr('sensor.router_wan_in_stats_mean','change_rate')|float*8*(state_attr('sensor.router_wan_in_stats_mean', 'sampling_size')-1)/1000000)|round(2) }}"
+        unit_of_measurement: 'MBps'
+        entity_id: sensor.router_wan_in_stats_mean
+      internet_out_mbps:
+        value_template: "{{ (state_attr('sensor.router_wan_out_stats_mean','change_rate')|float*8*(state_attr('sensor.router_wan_out_stats_mean', 'sampling_size')-1)/1000000)|round(2) }}"
+        unit_of_measurement: 'MBps'
+        entity_id: sensor.router_wan_out_stats_mean
+

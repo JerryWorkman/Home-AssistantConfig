@@ -15,14 +15,14 @@
   id: bee30b87ee884db1b3e476a3e0c84c6e
 - name: Night
   entities:
-    #switch.aeotec_dsc26103_micro_switch_2nd_edition_switch: true
+    switch.front_light_switch: true
     switch.back_flood: true
     switch.patio_light_auto: true
     switch.back_driveway_auto: true
   id: ce1a9dc1a7084d33b31e845b843e9494
 - name: Day
   entities:
-    #switch.aeotec_dsc26103_micro_switch_2nd_edition_switch: false
+    switch.front_light_switch: false
     switch.back_flood: false
     switch.patio_light_auto: false
     switch.back_driveway_light: false

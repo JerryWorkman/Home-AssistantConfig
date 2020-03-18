@@ -1,0 +1,14 @@
+sensor snmp3:
+  - platform: command_line
+    name: TV Internet Down
+    command: "/home/homeassistant/ha/snmp.php 192.168.10.1 3 In"
+    value_template: '{{ [0.0, value | float] | max | round(2) }}'
+    unit_of_measurement: Mbit/s
+    scan_interval: 10
+
+  - platform: command_line
+    name: TV Internet Up
+    command: "/home/homeassistant/ha/snmp.php 192.168.10.1 3 Out"
+    value_template: '{{ [0.0, value | float] | max | round(2) }}'
+    unit_of_measurement: Mbit/s
+    scan_interval: 10
