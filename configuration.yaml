@@ -335,19 +335,19 @@ wemo:
 #  pending_time:                     60
 ##  disarm_after_trigger:            True
 
-ring:
-  username: !secret RING_USERNAME
-  password: !secret RING_PASSWORD
+#ring:
+#  username: !secret RING_USERNAME
+#  password: !secret RING_PASSWORD
 
 #sensor version:
 #  platform: version
 
-binary_sensor:
-  platform: ring
-  scan_interval: 20
-  monitored_conditions:
-    - ding
-    - motion
+#binary_sensor:
+#  platform: ring
+#  scan_interval: 20
+#  monitored_conditions:
+#    - ding
+#    - motion
     
 # alarm_control_panel:                 !include alarm.yaml
 
@@ -781,15 +781,15 @@ sensor timed_switch:
         restart:                       True
 
       patio_countdown_timer:
-        name: Patio Timed Light
-        sensors:                       binary_sensor.patio_pir_sensor
+        name:                          Patio Timed Light
+        sensors:                       binary_sensor.patio_pir_motion
         switch:                        switch.patio_light
         enable_switch:                 switch.patio_light_auto
         delay:                         5
 
       back_driveway_countdown_timer:
-        name: Back Driveway Timed Light
-        sensors:                       binary_sensor.ecolink_motion_detector_sensor
+        name:                          Back Driveway Timed Light
+        sensors:                       binary_sensor.back_driveway_pir_motion
         switch:                        switch.back_driveway_light
         enable_switch:                 switch.back_driveway_auto
         delay:                         5
@@ -1385,28 +1385,41 @@ configurator:
     #DirecTV DVR:                    2.0.0.0
     #Amazon Fire:                    f.f.f.f
 
-wake_on_lan: # enables `wake_on_lan` domain
+wake_on_lan: # enables wake_on_lan domain
 
+switch LG:
+  - platform: wake_on_lan
+    name: lg
+#     mac_address: "aa:bb:cc:dd:ee:ff"
+    mac: "A8:23:FE:6C:C2:5F"
+
+#media_player.living_room_lg_tv
 media_player:
-  - platform:                        vlc
-    name:                            speaker
-    arguments:                       '--alsa-audio-device=hw:0,0'
-
   - platform:                        webostv
     host:                            192.168.10.133
-    name:                            Living Room TV
+    name:                            Living Room LG TV
     filename:                        webostv.conf
     timeout:                         5
+    
     turn_on_action:
       service: wake_on_lan.send_magic_packet
-      data:
-        mac: "a8:23:fe:6c:c2:5f"
+#      data:
+#        mac: "A8:23:FE:6C:C2:5F"
     customize:
       sources:
         - livetv
         - directv
         - youtube
         - netflix
+
+      turn_on_action:
+        service: switch.turn_on
+        entity_id: switch.lg
+
+
+  - platform:                        vlc
+    name:                            speaker
+    arguments:                       '--alsa-audio-device=hw:0,0'
 
 # Only the main box has an IP address
   - platform:                        directv
