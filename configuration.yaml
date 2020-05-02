@@ -1017,8 +1017,8 @@ envisalink:                          !include envisalink.yaml
 sensor integration:
   - platform: integration
     source: sensor.power_meter
-    name: Power Meter KWH
-    unit_prefix: k
+    name: Power Meter W
+#    unit_prefix: W
     round: 0
 
 # Example configuration.yaml entry
@@ -1393,11 +1393,17 @@ switch LG:
 #     mac_address: "aa:bb:cc:dd:ee:ff"
     mac: "A8:23:FE:6C:C2:5F"
 
-#media_player.living_room_lg_tv
 media_player:
+  - platform: vlc
+    name: vlc
+    arguments: '--alsa-audio-device=hw:0,0'
+
+#media_player.living_room_lg_tv
+media_player TV:
   - platform:                        webostv
     host:                            192.168.10.133
     name:                            Living Room LG TV
+    device_class:                    tv
     filename:                        webostv.conf
     timeout:                         5
     
@@ -1579,3 +1585,4 @@ script:                              !include scripts.yaml
 group:                               !include group.yaml
 
 scene:                               !include scenes.yaml
+    

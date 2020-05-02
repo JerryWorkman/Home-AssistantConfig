@@ -19,10 +19,11 @@ resources:
     type: js
   - url: /local/my-webfont.css
     type: css
-
-#resources:
   - url: /local/custom-lovelace/thermostat-card/thermostat-card.js?v=1
     type: module
+  - url: /local/mini-graph-card-bundle.js?v=0.9.3
+    type: module
+
 name: Home
 views:
   - title: Main
@@ -67,6 +68,21 @@ views:
       - type: picture-entity
         image: https://www.home-assistant.io/images/default-social.png
         entity: switch.fr_light_switch
+
+Power:
+  - type: horizontal-stack
+        cards:
+          - type: "custom:mini-graph-card"
+            entity: sensor.power_meter
+            name: Power
+            line_color: '#FF0000'
+            line_width: 8
+#          - type: "custom:mini-graph-card"
+#            entity: sensor.
+#            name: Leistung
+#            line_color: '#FF0000'
+#            line_width: 8
+#      - type: horizontal-stack
 
 # Family Room
 
